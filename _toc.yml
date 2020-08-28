@@ -1,0 +1,16 @@
+- file: intro
+- part: NOTEBOOKS
+  chapters: 
+     - file: Maps
+     - file: Restrict_Regionally
+     - file: Compare_Means
+     - file: Thickness_And_Type
+     - file: PIOMAS
+     - file: Drift
+- part: MISC
+  chapters: 
+     - file: Data_Wrangling
+     - file: utils_notebook
+
+
+
