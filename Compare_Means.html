@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Winter comparison &#8212; ICESat-2 Sea Ice Data Analysis and Visualization</title>
+    <title>Winter 18-19 vs. Winter 19-20: seasonal differences &#8212; ICESat-2 Sea Ice Data Analysis and Visualization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
@@ -90,7 +90,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Winter comparison
+   Winter 18-19 vs. Winter 19-20: seasonal differences
   </a>
  </li>
  <li class="toctree-l1">
@@ -240,6 +240,33 @@
    Calculate mean monthly values for each data variable
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#call-function-to-plot-data">
+   Call function to plot data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#icesat-2-sea-ice-thickness">
+     ICESat-2 sea ice thickness
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#osi-saf-ice-type">
+     OSI-SAF ice type
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#era5-2-meter-temperature">
+     ERA5 2-meter temperature
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#era5-mean-surface-downward-long-wave-radiation-flux">
+     ERA5 mean surface downward long-wave radiation flux
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
         </nav>
@@ -250,8 +277,8 @@
         
               <div>
                 
-  <div class="section" id="winter-comparison">
-<h1>Winter comparison<a class="headerlink" href="#winter-comparison" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="winter-18-19-vs-winter-19-20-seasonal-differences">
+<h1>Winter 18-19 vs. Winter 19-20: seasonal differences<a class="headerlink" href="#winter-18-19-vs-winter-19-20-seasonal-differences" title="Permalink to this headline">¶</a></h1>
 <p>This notebook calculates mean monthly values for each data variable, and then compares mean values between winter 2018-19 and winter 2019-20. This allows us to visualize any differences between the two winter seasons.</p>
 <p><strong>Input</strong>:</p>
 <ul class="simple">
@@ -261,9 +288,13 @@
 <ul class="simple">
 <li><p>Line plots displayed in notebook</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Try running this notebook in Google Colab! Toggle over the rocketship icon at the top of the page and click Colab to open a new window and run the notebook. <br><br>To run a single cell, type <strong>Shift+Enter</strong> or under <strong>Runtime</strong> click <strong>Run all</strong>. Note that you will have to run the notebook from the very beginning and load all the Google Colab dependencies for the code to work.</p>
+</div>
 <div class="section" id="import-notebook-dependencies">
 <h2>Import notebook dependencies<a class="headerlink" href="#import-notebook-dependencies" title="Permalink to this headline">¶</a></h2>
-<div class="cell tag_hide-output docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import os
 import numpy as np
@@ -298,302 +329,15 @@ import utils
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Copying gs://icesat2-book-data/utils.py...
-/ [0 files][    0.0 B/ 14.5 KiB]                                                
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [1 files][ 14.5 KiB/ 14.5 KiB]                                                
-
-Operation completed over 1 objects/14.5 KiB.                                     
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 <div class="section" id="load-data-into-notebook">
 <h2>Load data into notebook<a class="headerlink" href="#load-data-into-notebook" title="Permalink to this headline">¶</a></h2>
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
-<div class="cell tag_hide-output docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-dataset.nc ./
 dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Copying gs://icesat2-book-data/icesat2-book-dataset.nc...
-/ [0/1 files][    0.0 B/138.4 MiB]   0% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][  3.9 MiB/138.4 MiB]   2% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 10.0 MiB/138.4 MiB]   7% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 17.8 MiB/138.4 MiB]  12% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 23.0 MiB/138.4 MiB]  16% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 28.9 MiB/138.4 MiB]  20% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 33.0 MiB/138.4 MiB]  23% Done                                    
-\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 35.3 MiB/138.4 MiB]  25% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 37.4 MiB/138.4 MiB]  27% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 38.9 MiB/138.4 MiB]  28% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 39.7 MiB/138.4 MiB]  28% Done                                    
-/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 40.5 MiB/138.4 MiB]  29% Done   1.4 MiB/s ETA 00:01:13           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 41.5 MiB/138.4 MiB]  29% Done   1.1 MiB/s ETA 00:01:29           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 42.5 MiB/138.4 MiB]  30% Done 904.0 KiB/s ETA 00:01:49           
-/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 44.1 MiB/138.4 MiB]  31% Done  1006 KiB/s ETA 00:01:36           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 46.2 MiB/138.4 MiB]  33% Done   1.3 MiB/s ETA 00:01:12           
-|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 51.3 MiB/138.4 MiB]  37% Done   2.2 MiB/s ETA 00:00:40           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 56.2 MiB/138.4 MiB]  40% Done   2.9 MiB/s ETA 00:00:28           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 60.1 MiB/138.4 MiB]  43% Done   3.5 MiB/s ETA 00:00:22           
-/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 63.9 MiB/138.4 MiB]  46% Done   3.9 MiB/s ETA 00:00:19           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 68.1 MiB/138.4 MiB]  49% Done   4.3 MiB/s ETA 00:00:16           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 72.7 MiB/138.4 MiB]  52% Done   4.2 MiB/s ETA 00:00:16           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 77.1 MiB/138.4 MiB]  55% Done   4.0 MiB/s ETA 00:00:15           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 82.5 MiB/138.4 MiB]  59% Done   4.4 MiB/s ETA 00:00:13           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 88.2 MiB/138.4 MiB]  63% Done   4.8 MiB/s ETA 00:00:10           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 94.4 MiB/138.4 MiB]  68% Done   5.2 MiB/s ETA 00:00:09           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 99.3 MiB/138.4 MiB]  71% Done   5.2 MiB/s ETA 00:00:07           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][105.4 MiB/138.4 MiB]  76% Done   5.6 MiB/s ETA 00:00:06           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][111.6 MiB/138.4 MiB]  80% Done   5.7 MiB/s ETA 00:00:05           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][117.0 MiB/138.4 MiB]  84% Done   5.7 MiB/s ETA 00:00:04           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][121.7 MiB/138.4 MiB]  87% Done   5.4 MiB/s ETA 00:00:03           
-|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][124.5 MiB/138.4 MiB]  89% Done   4.9 MiB/s ETA 00:00:03           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][125.8 MiB/138.4 MiB]  90% Done   2.9 MiB/s ETA 00:00:04           
-|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][127.4 MiB/138.4 MiB]  92% Done   2.0 MiB/s ETA 00:00:05           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][129.4 MiB/138.4 MiB]  93% Done   1.5 MiB/s ETA 00:00:06           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][131.2 MiB/138.4 MiB]  94% Done   1.4 MiB/s ETA 00:00:05           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][136.1 MiB/138.4 MiB]  98% Done   2.5 MiB/s ETA 00:00:01           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [1/1 files][138.4 MiB/138.4 MiB] 100% Done   2.8 MiB/s ETA 00:00:00           
-
-Operation completed over 1 objects/138.4 MiB.                                    
 </pre></div>
 </div>
 </div>
@@ -620,6 +364,7 @@ Operation completed over 1 objects/138.4 MiB.
 </div>
 <div class="section" id="calculate-mean-monthly-values-for-each-data-variable">
 <h2>Calculate mean monthly values for each data variable<a class="headerlink" href="#calculate-mean-monthly-values-for-each-data-variable" title="Permalink to this headline">¶</a></h2>
+<p>Define a function that calculates and plots mean monthly values for each data variable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span><span class="p">):</span>
@@ -669,6 +414,12 @@ Operation completed over 1 objects/138.4 MiB.
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="call-function-to-plot-data">
+<h2>Call function to plot data<a class="headerlink" href="#call-function-to-plot-data" title="Permalink to this headline">¶</a></h2>
+<p>Call the function on different data variables in the dataset to visualize how the mean values differed between winter seasons.</p>
+<div class="section" id="icesat-2-sea-ice-thickness">
+<h3>ICESat-2 sea ice thickness<a class="headerlink" href="#icesat-2-sea-ice-thickness" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">)</span>
@@ -676,9 +427,13 @@ Operation completed over 1 objects/138.4 MiB.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Compare_Means_10_0.png" src="_images/Compare_Means_10_0.png" />
+<img alt="_images/Compare_Means_13_0.png" src="_images/Compare_Means_13_0.png" />
 </div>
 </div>
+</div>
+<div class="section" id="osi-saf-ice-type">
+<h3>OSI-SAF ice type<a class="headerlink" href="#osi-saf-ice-type" title="Permalink to this headline">¶</a></h3>
+<p>Ice type is either multi-year ice (set to 1) or first-year ice (set to 0).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;ice_type_filled&#39;</span><span class="p">)</span>
@@ -686,9 +441,12 @@ Operation completed over 1 objects/138.4 MiB.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Compare_Means_11_0.png" src="_images/Compare_Means_11_0.png" />
+<img alt="_images/Compare_Means_15_0.png" src="_images/Compare_Means_15_0.png" />
 </div>
 </div>
+</div>
+<div class="section" id="era5-2-meter-temperature">
+<h3>ERA5 2-meter temperature<a class="headerlink" href="#era5-2-meter-temperature" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;t2m&#39;</span><span class="p">)</span>
@@ -696,9 +454,12 @@ Operation completed over 1 objects/138.4 MiB.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Compare_Means_12_0.png" src="_images/Compare_Means_12_0.png" />
+<img alt="_images/Compare_Means_17_0.png" src="_images/Compare_Means_17_0.png" />
 </div>
 </div>
+</div>
+<div class="section" id="era5-mean-surface-downward-long-wave-radiation-flux">
+<h3>ERA5 mean surface downward long-wave radiation flux<a class="headerlink" href="#era5-mean-surface-downward-long-wave-radiation-flux" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;msdwlwrf&#39;</span><span class="p">)</span>
@@ -706,7 +467,8 @@ Operation completed over 1 objects/138.4 MiB.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Compare_Means_13_0.png" src="_images/Compare_Means_13_0.png" />
+<img alt="_images/Compare_Means_19_0.png" src="_images/Compare_Means_19_0.png" />
+</div>
 </div>
 </div>
 </div>
