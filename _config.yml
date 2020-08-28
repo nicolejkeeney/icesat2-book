@@ -14,3 +14,11 @@ html:
   use_repository_button: true
 launch_buttons:
   colab_url: "https://colab.research.google.com"
+
+home_page_in_navbar: true 
+
+html:
+    extra_footer: |
+        <div>
+            [ICESat-2 mission](https://icesat-2.gsfc.nasa.gov/)
+        </div>
