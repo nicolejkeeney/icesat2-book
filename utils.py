@@ -106,6 +106,45 @@ def getRegionMask(dataPath):
 
 
 
+def getPIOMASData(dataPath, startYear = 1978, endYear = 2020): 
+    """Gets PIOMAS mean monthly sea ice thickness data for an input time range. 
+    
+    Args: 
+        dataPath (str): path to local directory of PIOMAS data 
+        startYear (int): year to start loading data from (defaul to 1978)
+        endYear (int): year to stop loading data from (default to 2020)
+    
+    Returns: 
+        PIOMAS_data (xarray DataArray): PIOMAS data with descriptive coordinates and attributes
+        
+    Note: last available PIOMAS data was from July 2020 at the time of creation of this function
+    """
+    dataList = [] #empty list for compiling data
+
+    for year in range(startYear, endYear + 1, 1):     
+        data = open(dataPath + '/heff.H' + str(year), 'rb') 
+        if year == 2020: #need special reshaping for 2020 because we dont have a full year of data
+            period = 7
+        else:
+            period = 12
+        dataList += list(np.fromfile(file = data, dtype='f').reshape([period, 120, 360]))
+    
+    #add latitude and longitude 
+    gridP = np.loadtxt(dataPath + 'grid.dat.txt')
+    lonsP = gridP[0:4320, :].flatten()
+    lonsP = np.reshape(lonsP, [120,360])
+    latsP = gridP[4320:, :].flatten()
+    latsP = np.reshape(latsP, [120,360])
+    
+    #load dataList as an xarray DataArray with descriptive attributes and coordinates
+    time = pd.date_range(start = str(startYear), end = str(endYear) + '-07', freq = 'MS')
+    PIOMAS_attrs = {'units': 'meters', 'long_name': 'PIOMAS sea ice thickness', 'data description': 'PIOMAS monthly mean sea ice thickness', 'citation': 'Zhang, J.L. and D.A. Rothrock, “Modeling global sea ice with a thickness and enthalpy distribution model in generalized curvilinear coordinates“, Mon. Weather Rev., 131, 845-861, 2003'}
+    PIOMAS_data = xr.DataArray(dataList, dims = ['time','x','y'], coords = {'time': time, 'longitude': (('x','y'), lonsP), 'latitude': (('x','y'), latsP)}, attrs = PIOMAS_attrs)
+    
+    return PIOMAS_data
+
+
+
 def plotOneMonth(dataset, dataVar, month, minval, maxval, cbarTicks = None, cmap = 'viridis'): 
     """Plots map of the arctic on North Pole Stereo projection with one month of data overlayed, along with the sea ice edge for each month.
    

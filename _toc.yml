@@ -1,8 +1,8 @@
 - file: home
 - part: NOTEBOOKS
   chapters: 
-     - file: Maps
      - file: Restrict_Regionally
+     - file: Maps
      - file: Compare_Means
      - file: Thickness_And_Type
      - file: PIOMAS
