@@ -38,8 +38,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Sea ice drift" href="Drift.html" />
-    <link rel="prev" title="Sea ice growth: thickness &amp; type" href="Thickness_And_Type.html" />
+    <link rel="next" title="Data wrangling" href="Data_Wrangling.html" />
+    <link rel="prev" title="Sea ice type" href="Thickness_And_Type.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -79,33 +79,28 @@
 </p>
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Maps.html">
-   Data visualization
+  <a class="reference internal" href="Restrict_Regionally.html">
+   Regional analysis
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Restrict_Regionally.html">
-   Restrict data regionally
+  <a class="reference internal" href="Maps.html">
+   Mapping
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Compare_Means.html">
-   Winter 18-19 vs. winter 19-20 comparison
+   Winter comparison
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Thickness_And_Type.html">
-   Sea ice growth: thickness &amp; type
+   Sea ice type
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Historical ice thickness
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Drift.html">
-   Sea ice drift
   </a>
  </li>
 </ul>
@@ -174,6 +169,19 @@
 </div>
         <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/nicolejkeeney/icesat2-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
         <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -206,7 +214,19 @@
             <i class="fas fa-list"></i> Contents
         </div>
         <nav id="bd-toc-nav">
-            
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import-notebook-dependencies">
+   Import notebook dependencies
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-data-into-notebook">
+   Load data into notebook
+  </a>
+ </li>
+</ul>
+
         </nav>
     </div>
 </div>
@@ -217,7 +237,70 @@
                 
   <div class="section" id="historical-ice-thickness">
 <h1>Historical ice thickness<a class="headerlink" href="#historical-ice-thickness" title="Permalink to this headline">¶</a></h1>
-<p>This notebook will plot PIOMAS vs. ICESat-2 ice thickness</p>
+<p>This notebook plots ICESat-2 sea ice thickness vs. PIOMAS sea ice thickness.</p>
+<p><strong>Input</strong>:</p>
+<ul class="simple">
+<li><p>NETCDF4 file from the jupyter book’s google bucket</p></li>
+</ul>
+<p><strong>Output</strong>:</p>
+<ul class="simple">
+<li><p>Plots of sea ice thickness</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Try running this notebook in Google Colab! Toggle over the rocketship icon at the top of the page and click Colab to open a new window and run the notebook. <br><br>To run a single cell, type <strong>Shift+Enter</strong>. To run the whole notebook, under <strong>Runtime</strong> click <strong>Run all</strong>. Note that you will have to run the notebook from the very beginning and load all the Google Colab dependencies for the code to work.</p>
+</div>
+<div class="section" id="import-notebook-dependencies">
+<h2>Import notebook dependencies<a class="headerlink" href="#import-notebook-dependencies" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import os
+import numpy as np
+import xarray as xr
+import pandas as pd
+import scipy.interpolate
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+import pyproj
+from datetime import date
+import matplotlib.pyplot as plt
+import numpy.ma as ma
+
+#axes needed for plotting
+from matplotlib.axes import Axes
+from cartopy.mpl.geoaxes import GeoAxes
+GeoAxes._pcolormesh_patched = Axes.pcolormesh
+
+# Ignore warnings in the notebook to improve display
+# You might want to remove this when debugging/writing new code
+import warnings
+warnings.filterwarnings(&#39;ignore&#39;)
+ 
+#increase resolution for notebook outputs
+%matplotlib inline 
+%config InlineBackend.figure_format = &#39;retina&#39; 
+
+#import utils function 
+if &#39;utils.py&#39; not in os.listdir(os.getcwd()): 
+    !gsutil cp gs://icesat2-book-data/utils.py ./
+import utils
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load-data-into-notebook">
+<h2>Load data into notebook<a class="headerlink" href="#load-data-into-notebook" title="Permalink to this headline">¶</a></h2>
+<p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
+dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -248,8 +331,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Thickness_And_Type.html" title="previous page">Sea ice growth: thickness &amp; type</a>
-    <a class='right-next' id="next-link" href="Drift.html" title="next page">Sea ice drift</a>
+    <a class='left-prev' id="prev-link" href="Thickness_And_Type.html" title="previous page">Sea ice type</a>
+    <a class='right-next' id="next-link" href="Data_Wrangling.html" title="next page">Data wrangling</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
@@ -259,11 +342,6 @@
           By Nicole Keeney<br/>
         
             &copy; Copyright 2020.<br/>
-          <div class="extra_footer">
-            <div>
-    [ICESat-2 mission](https://icesat-2.gsfc.nasa.gov/)
-</div>
-          </div>
       </p>
     </div>
   </footer>

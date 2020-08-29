@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Winter 18-19 vs. winter 19-20 comparison &#8212; ICESat-2 Sea Ice Data Analysis and Visualization</title>
+    <title>Winter comparison &#8212; ICESat-2 Sea Ice Data Analysis and Visualization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
@@ -38,8 +38,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Sea ice growth: thickness &amp; type" href="Thickness_And_Type.html" />
-    <link rel="prev" title="Restrict data regionally" href="Restrict_Regionally.html" />
+    <link rel="next" title="Sea ice type" href="Thickness_And_Type.html" />
+    <link rel="prev" title="Mapping" href="Maps.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -79,33 +79,28 @@
 </p>
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Maps.html">
-   Data visualization
+  <a class="reference internal" href="Restrict_Regionally.html">
+   Regional analysis
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Restrict_Regionally.html">
-   Restrict data regionally
+  <a class="reference internal" href="Maps.html">
+   Mapping
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Winter 18-19 vs. winter 19-20 comparison
+   Winter comparison
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Thickness_And_Type.html">
-   Sea ice growth: thickness &amp; type
+   Sea ice type
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="PIOMAS.html">
    Historical ice thickness
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Drift.html">
-   Sea ice drift
   </a>
  </li>
 </ul>
@@ -174,6 +169,19 @@
 </div>
         <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/nicolejkeeney/icesat2-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
         <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -233,8 +241,13 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#icesat-2-sea-ice-thickness">
-     ICESat-2 sea ice thickness
+    <a class="reference internal nav-link" href="#icesat-2-ice-thickness">
+     ICESat-2 ice thickness
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#piomas-ice-thickness">
+     PIOMAS ice thickness
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -264,8 +277,8 @@
         
               <div>
                 
-  <div class="section" id="winter-18-19-vs-winter-19-20-comparison">
-<h1>Winter 18-19 vs. winter 19-20 comparison<a class="headerlink" href="#winter-18-19-vs-winter-19-20-comparison" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="winter-comparison">
+<h1>Winter comparison<a class="headerlink" href="#winter-comparison" title="Permalink to this headline">¶</a></h1>
 <p>This notebook calculates mean monthly values for each data variable, and then compares mean values between winter 2018-19 and winter 2019-20. This allows us to visualize any differences between the two winter seasons.</p>
 <p><strong>Input</strong>:</p>
 <ul class="simple">
@@ -310,8 +323,9 @@ import warnings
 %matplotlib inline 
 %config InlineBackend.figure_format = &#39;retina&#39; 
 
-#import utils function from google bucket 
-!gsutil cp gs://icesat2-book-data/utils.py ./
+#import utils function 
+if &#39;utils.py&#39; not in os.listdir(os.getcwd()): 
+    !gsutil cp gs://icesat2-book-data/utils.py ./
 import utils
 </pre></div>
 </div>
@@ -323,8 +337,8 @@ import utils
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-dataset.nc ./
-dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
+dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </pre></div>
 </div>
 </div>
@@ -405,8 +419,8 @@ dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
 <div class="section" id="call-function-to-plot-data">
 <h2>Call function to plot data<a class="headerlink" href="#call-function-to-plot-data" title="Permalink to this headline">¶</a></h2>
 <p>Call the function on different data variables in the dataset to visualize how the mean values differed between winter seasons.</p>
-<div class="section" id="icesat-2-sea-ice-thickness">
-<h3>ICESat-2 sea ice thickness<a class="headerlink" href="#icesat-2-sea-ice-thickness" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="icesat-2-ice-thickness">
+<h3>ICESat-2 ice thickness<a class="headerlink" href="#icesat-2-ice-thickness" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">)</span>
@@ -415,6 +429,19 @@ dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/Compare_Means_13_0.png" src="_images/Compare_Means_13_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="piomas-ice-thickness">
+<h3>PIOMAS ice thickness<a class="headerlink" href="#piomas-ice-thickness" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;PIOMAS_ice_thickness&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Compare_Means_15_0.png" src="_images/Compare_Means_15_0.png" />
 </div>
 </div>
 </div>
@@ -428,7 +455,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Compare_Means_15_0.png" src="_images/Compare_Means_15_0.png" />
+<img alt="_images/Compare_Means_17_0.png" src="_images/Compare_Means_17_0.png" />
 </div>
 </div>
 </div>
@@ -441,7 +468,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Compare_Means_17_0.png" src="_images/Compare_Means_17_0.png" />
+<img alt="_images/Compare_Means_19_0.png" src="_images/Compare_Means_19_0.png" />
 </div>
 </div>
 </div>
@@ -454,7 +481,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Compare_Means_19_0.png" src="_images/Compare_Means_19_0.png" />
+<img alt="_images/Compare_Means_21_0.png" src="_images/Compare_Means_21_0.png" />
 </div>
 </div>
 </div>
@@ -489,8 +516,8 @@ dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Restrict_Regionally.html" title="previous page">Restrict data regionally</a>
-    <a class='right-next' id="next-link" href="Thickness_And_Type.html" title="next page">Sea ice growth: thickness &amp; type</a>
+    <a class='left-prev' id="prev-link" href="Maps.html" title="previous page">Mapping</a>
+    <a class='right-next' id="next-link" href="Thickness_And_Type.html" title="next page">Sea ice type</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
@@ -500,11 +527,6 @@ dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
           By Nicole Keeney<br/>
         
             &copy; Copyright 2020.<br/>
-          <div class="extra_footer">
-            <div>
-    [ICESat-2 mission](https://icesat-2.gsfc.nasa.gov/)
-</div>
-          </div>
       </p>
     </div>
   </footer>

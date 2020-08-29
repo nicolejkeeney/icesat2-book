@@ -78,33 +78,28 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Maps.html">
-   Data visualization
+  <a class="reference internal" href="Restrict_Regionally.html">
+   Regional analysis
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Restrict_Regionally.html">
-   Restrict data regionally
+  <a class="reference internal" href="Maps.html">
+   Mapping
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Compare_Means.html">
-   Winter 18-19 vs. winter 19-20 comparison
+   Winter comparison
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Thickness_And_Type.html">
-   Sea ice growth: thickness &amp; type
+   Sea ice type
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="PIOMAS.html">
    Historical ice thickness
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Drift.html">
-   Sea ice drift
   </a>
  </li>
 </ul>
@@ -173,6 +168,19 @@
 </div>
         <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/nicolejkeeney/icesat2-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
         <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -234,6 +242,11 @@
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#getregionmask">
      getRegionMask
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#getpiomasdata">
+     getPIOMASData
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -411,6 +424,52 @@
     <span class="n">shapedLats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="n">maskLats</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;&lt;i4&#39;</span><span class="p">)</span><span class="o">/</span><span class="mf">100000.</span><span class="p">,</span> <span class="n">gridShape</span><span class="p">)</span> <span class="c1">#reshape latitudes to grid shape</span>
 
     <span class="k">return</span> <span class="n">shapedMask</span><span class="p">,</span> <span class="n">shapedLons</span><span class="p">,</span> <span class="n">shapedLats</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="getpiomasdata">
+<h3>getPIOMASData<a class="headerlink" href="#getpiomasdata" title="Permalink to this headline">¶</a></h3>
+<p>Gets PIOMAS mean monthly sea ice thickness data for an input time range</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getPIOMASData</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="n">startYear</span> <span class="o">=</span> <span class="mi">1978</span><span class="p">,</span> <span class="n">endYear</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot;Gets PIOMAS mean monthly sea ice thickness data for an input time range. </span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        dataPath (str): path to local directory of PIOMAS data </span>
+<span class="sd">        startYear (int): year to start loading data from (defaul to 1978)</span>
+<span class="sd">        endYear (int): year to stop loading data from (default to 2020)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        PIOMAS_data (xarray DataArray): PIOMAS data with descriptive coordinates and attributes</span>
+<span class="sd">        </span>
+<span class="sd">    Note: last available PIOMAS data was from July 2020 at the time of creation of this function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dataList</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#empty list for compiling data</span>
+
+    <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">startYear</span><span class="p">,</span> <span class="n">endYear</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>     
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">dataPath</span> <span class="o">+</span> <span class="s1">&#39;/heff.H&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> 
+        <span class="k">if</span> <span class="n">year</span> <span class="o">==</span> <span class="mi">2020</span><span class="p">:</span> <span class="c1">#need special reshaping for 2020 because we dont have a full year of data</span>
+            <span class="n">period</span> <span class="o">=</span> <span class="mi">7</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">period</span> <span class="o">=</span> <span class="mi">12</span>
+        <span class="n">dataList</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="n">period</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">360</span><span class="p">]))</span>
+    
+    <span class="c1">#add latitude and longitude </span>
+    <span class="n">gridP</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">dataPath</span> <span class="o">+</span> <span class="s1">&#39;grid.dat.txt&#39;</span><span class="p">)</span>
+    <span class="n">lonsP</span> <span class="o">=</span> <span class="n">gridP</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4320</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">lonsP</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">lonsP</span><span class="p">,</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span><span class="mi">360</span><span class="p">])</span>
+    <span class="n">latsP</span> <span class="o">=</span> <span class="n">gridP</span><span class="p">[</span><span class="mi">4320</span><span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">latsP</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">latsP</span><span class="p">,</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span><span class="mi">360</span><span class="p">])</span>
+    
+    <span class="c1">#load dataList as an xarray DataArray with descriptive attributes and coordinates</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">startYear</span><span class="p">),</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">endYear</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-07&#39;</span><span class="p">,</span> <span class="n">freq</span> <span class="o">=</span> <span class="s1">&#39;MS&#39;</span><span class="p">)</span>
+    <span class="n">PIOMAS_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;units&#39;</span><span class="p">:</span> <span class="s1">&#39;meters&#39;</span><span class="p">,</span> <span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;PIOMAS sea ice thickness&#39;</span><span class="p">,</span> <span class="s1">&#39;data description&#39;</span><span class="p">:</span> <span class="s1">&#39;PIOMAS monthly mean sea ice thickness&#39;</span><span class="p">,</span> <span class="s1">&#39;citation&#39;</span><span class="p">:</span> <span class="s1">&#39;Zhang, J.L. and D.A. Rothrock, “Modeling global sea ice with a thickness and enthalpy distribution model in generalized curvilinear coordinates“, Mon. Weather Rev., 131, 845-861, 2003&#39;</span><span class="p">}</span>
+    <span class="n">PIOMAS_data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">dataList</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">time</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">lonsP</span><span class="p">),</span> <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">latsP</span><span class="p">)},</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">PIOMAS_attrs</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">PIOMAS_data</span>
 </pre></div>
 </div>
 </div>
@@ -689,11 +748,6 @@
           By Nicole Keeney<br/>
         
             &copy; Copyright 2020.<br/>
-          <div class="extra_footer">
-            <div>
-    [ICESat-2 mission](https://icesat-2.gsfc.nasa.gov/)
-</div>
-          </div>
       </p>
     </div>
   </footer>

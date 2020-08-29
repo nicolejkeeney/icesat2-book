@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Restrict data regionally &#8212; ICESat-2 Sea Ice Data Analysis and Visualization</title>
+    <title>Regional analysis &#8212; ICESat-2 Sea Ice Data Analysis and Visualization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
@@ -38,8 +38,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Winter 18-19 vs. winter 19-20 comparison" href="Compare_Means.html" />
-    <link rel="prev" title="Data visualization" href="Maps.html" />
+    <link rel="next" title="Mapping" href="Maps.html" />
+    <link rel="prev" title="ICESat-2 Sea Ice Thickness Data Analysis and Visualization" href="home.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -78,34 +78,29 @@
  </span>
 </p>
 <ul class="current nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="Maps.html">
-   Data visualization
-  </a>
- </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Restrict data regionally
+   Regional analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Maps.html">
+   Mapping
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Compare_Means.html">
-   Winter 18-19 vs. winter 19-20 comparison
+   Winter comparison
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Thickness_And_Type.html">
-   Sea ice growth: thickness &amp; type
+   Sea ice type
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="PIOMAS.html">
    Historical ice thickness
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Drift.html">
-   Sea ice drift
   </a>
  </li>
 </ul>
@@ -173,6 +168,19 @@
     
 </div>
         <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/nicolejkeeney/icesat2-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
 
 
         <!-- Full screen (wrap in <a> to have style consistency -->
@@ -252,8 +260,8 @@
         
               <div>
                 
-  <div class="section" id="restrict-data-regionally">
-<h1>Restrict data regionally<a class="headerlink" href="#restrict-data-regionally" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="regional-analysis">
+<h1>Regional analysis<a class="headerlink" href="#regional-analysis" title="Permalink to this headline">¶</a></h1>
 <p>Maybe you’re just interested in a particular region of the Arctic. Here, we want to filter our dataset to only include data from that region. We can do this using the NSIDC region mask for the Arctic, which is included in the NETCDF file available in the jupyter bucket. The function used in this notebook relies on the NSIDC region mask for the arctic included in the NETCDF from the jupyter book’s google bucket, where the function is also available as part of the utils.py script.</p>
 <p><strong>Input</strong>:</p>
 <ul class="simple">
@@ -297,20 +305,10 @@ warnings.filterwarnings(&#39;ignore&#39;)
 %matplotlib inline 
 %config InlineBackend.figure_format = &#39;retina&#39; 
 
-#import utils function from google bucket 
-!gsutil cp gs://icesat2-book-data/utils.py ./
+#import utils function 
+if &#39;utils.py&#39; not in os.listdir(os.getcwd()): 
+    !gsutil cp gs://icesat2-book-data/utils.py ./
 import utils
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Copying gs://icesat2-book-data/utils.py...
-/ [0 files][    0.0 B/ 14.5 KiB]                                                
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [1 files][ 14.5 KiB/ 14.5 KiB]                                                
-
-Operation completed over 1 objects/14.5 KiB.                                     
 </pre></div>
 </div>
 </div>
@@ -321,42 +319,26 @@ Operation completed over 1 objects/14.5 KiB.
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
 <div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-dataset.nc ./
-dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
+dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Copying gs://icesat2-book-data/icesat2-book-dataset.nc...
-/ [0/1 files][    0.0 B/138.4 MiB]   0% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Copying gs://icesat2-book-data/icesat2-book-winter-data.nc...
+/ [0/1 files][    0.0 B/144.7 MiB]   0% Done                                    
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][  3.4 MiB/138.4 MiB]   2% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][792.0 KiB/144.7 MiB]   0% Done                                    
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 10.0 MiB/138.4 MiB]   7% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 17.3 MiB/138.4 MiB]  12% Done                                    
--
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 25.0 MiB/138.4 MiB]  18% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][  3.6 MiB/144.7 MiB]   2% Done                                    
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
@@ -365,20 +347,22 @@ dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 30.9 MiB/138.4 MiB]  22% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][  8.8 MiB/144.7 MiB]   6% Done                                    
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 36.1 MiB/138.4 MiB]  26% Done                                    
-\
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 20.1 MiB/144.7 MiB]  13% Done                                    
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 43.8 MiB/138.4 MiB]  31% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 43.8 MiB/144.7 MiB]  30% Done                                    
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
@@ -387,126 +371,28 @@ dataset = xr.open_dataset(&#39;icesat2-book-dataset.nc&#39;)
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 53.6 MiB/138.4 MiB]  38% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 71.2 MiB/144.7 MiB]  49% Done                                    
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 63.2 MiB/138.4 MiB]  45% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 92.6 MiB/144.7 MiB]  63% Done                                    
+|
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 68.1 MiB/138.4 MiB]  49% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][123.5 MiB/144.7 MiB]  85% Done                                    
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 73.7 MiB/138.4 MiB]  53% Done   7.4 MiB/s ETA 00:00:09           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 79.9 MiB/138.4 MiB]  57% Done   7.0 MiB/s ETA 00:00:08           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 86.1 MiB/138.4 MiB]  62% Done   6.2 MiB/s ETA 00:00:08           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-| [0/1 files][ 93.3 MiB/138.4 MiB]  67% Done   5.9 MiB/s ETA 00:00:08           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][102.1 MiB/138.4 MiB]  73% Done   6.7 MiB/s ETA 00:00:05           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][107.0 MiB/138.4 MiB]  77% Done   6.5 MiB/s ETA 00:00:05           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][111.1 MiB/138.4 MiB]  80% Done   6.1 MiB/s ETA 00:00:04           
-/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][113.7 MiB/138.4 MiB]  82% Done   5.3 MiB/s ETA 00:00:05           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][117.0 MiB/138.4 MiB]  84% Done   4.5 MiB/s ETA 00:00:05           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][121.4 MiB/138.4 MiB]  87% Done   3.6 MiB/s ETA 00:00:05           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][126.3 MiB/138.4 MiB]  91% Done   3.6 MiB/s ETA 00:00:03           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][131.0 MiB/138.4 MiB]  94% Done   3.9 MiB/s ETA 00:00:02           
-/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][136.6 MiB/138.4 MiB]  98% Done   4.6 MiB/s ETA 00:00:00           
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [1/1 files][138.4 MiB/138.4 MiB] 100% Done   4.8 MiB/s ETA 00:00:00           
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [1/1 files][144.7 MiB/144.7 MiB] 100% Done                                    
 
-Operation completed over 1 objects/138.4 MiB.                                    
+Operation completed over 1 objects/144.7 MiB.                                    
 </pre></div>
 </div>
 </div>
@@ -536,74 +422,74 @@ Operation completed over 1 objects/138.4 MiB.
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_705995c4_e983_11ea_be26_784f43711573" ><thead>    <tr>        <th class="col_heading level0 col0" >key</th>        <th class="col_heading level0 col1" >label</th>    </tr></thead><tbody>
+</style><table id="T_1f3bb360_ea38_11ea_934e_784f43711573" ><thead>    <tr>        <th class="col_heading level0 col0" >key</th>        <th class="col_heading level0 col1" >label</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row0_col0" class="data row0 col0" >1</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row0_col1" class="data row0 col1" >non-region oceans</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row0_col0" class="data row0 col0" >1</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row0_col1" class="data row0 col1" >non-region oceans</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row1_col0" class="data row1 col0" >2</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row1_col1" class="data row1 col1" >Sea of Okhotsk and Japan</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row1_col0" class="data row1 col0" >2</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row1_col1" class="data row1 col1" >Sea of Okhotsk and Japan</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row2_col0" class="data row2 col0" >3</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row2_col1" class="data row2 col1" >Bering Sea</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row2_col0" class="data row2 col0" >3</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row2_col1" class="data row2 col1" >Bering Sea</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row3_col0" class="data row3 col0" >4</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row3_col1" class="data row3 col1" >Hudson Bay</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row3_col0" class="data row3 col0" >4</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row3_col1" class="data row3 col1" >Hudson Bay</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row4_col0" class="data row4 col0" >5</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row4_col1" class="data row4 col1" >Gulf of St. Lawrence</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row4_col0" class="data row4 col0" >5</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row4_col1" class="data row4 col1" >Gulf of St. Lawrence</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row5_col0" class="data row5 col0" >6</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row5_col1" class="data row5 col1" >Baffin Bay, Davis Strait & Labrador Sea</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row5_col0" class="data row5 col0" >6</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row5_col1" class="data row5 col1" >Baffin Bay, Davis Strait & Labrador Sea</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row6_col0" class="data row6 col0" >7</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row6_col1" class="data row6 col1" >Greenland Sea</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row6_col0" class="data row6 col0" >7</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row6_col1" class="data row6 col1" >Greenland Sea</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row7_col0" class="data row7 col0" >8</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row7_col1" class="data row7 col1" >Barents Seas</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row7_col0" class="data row7 col0" >8</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row7_col1" class="data row7 col1" >Barents Seas</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row8_col0" class="data row8 col0" >9</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row8_col1" class="data row8 col1" >Kara Sea</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row8_col0" class="data row8 col0" >9</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row8_col1" class="data row8 col1" >Kara Sea</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row9_col0" class="data row9 col0" >10</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row9_col1" class="data row9 col1" >Laptev Sea</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row9_col0" class="data row9 col0" >10</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row9_col1" class="data row9 col1" >Laptev Sea</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row10_col0" class="data row10 col0" >11</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row10_col1" class="data row10 col1" >East Siberian Sea</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row10_col0" class="data row10 col0" >11</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row10_col1" class="data row10 col1" >East Siberian Sea</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row11_col0" class="data row11 col0" >12</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row11_col1" class="data row11 col1" >Chukchi Sea</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row11_col0" class="data row11 col0" >12</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row11_col1" class="data row11 col1" >Chukchi Sea</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row12_col0" class="data row12 col0" >13</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row12_col1" class="data row12 col1" >Beaufort Sea</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row12_col0" class="data row12 col0" >13</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row12_col1" class="data row12 col1" >Beaufort Sea</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row13_col0" class="data row13 col0" >14</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row13_col1" class="data row13 col1" >Canadian Archipelago</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row13_col0" class="data row13 col0" >14</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row13_col1" class="data row13 col1" >Canadian Archipelago</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row14_col0" class="data row14 col0" >15</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row14_col1" class="data row14 col1" >Arctic Ocean</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row14_col0" class="data row14 col0" >15</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row14_col1" class="data row14 col1" >Arctic Ocean</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row15_col0" class="data row15 col0" >20</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row15_col1" class="data row15 col1" >Land</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row15_col0" class="data row15 col0" >20</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row15_col1" class="data row15 col1" >Land</td>
             </tr>
             <tr>
-                                <td id="T_705995c4_e983_11ea_be26_784f43711573row16_col0" class="data row16 col0" >21</td>
-                        <td id="T_705995c4_e983_11ea_be26_784f43711573row16_col1" class="data row16 col1" >Coast</td>
+                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row16_col0" class="data row16 col0" >21</td>
+                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row16_col1" class="data row16 col1" >Coast</td>
             </tr>
     </tbody></table></div></div>
 </div>
@@ -777,8 +663,8 @@ Operation completed over 1 objects/138.4 MiB.
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Maps.html" title="previous page">Data visualization</a>
-    <a class='right-next' id="next-link" href="Compare_Means.html" title="next page">Winter 18-19 vs. winter 19-20 comparison</a>
+    <a class='left-prev' id="prev-link" href="home.html" title="previous page">ICESat-2 Sea Ice Thickness Data Analysis and Visualization</a>
+    <a class='right-next' id="next-link" href="Maps.html" title="next page">Mapping</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
@@ -788,11 +674,6 @@ Operation completed over 1 objects/138.4 MiB.
           By Nicole Keeney<br/>
         
             &copy; Copyright 2020.<br/>
-          <div class="extra_footer">
-            <div>
-    [ICESat-2 mission](https://icesat-2.gsfc.nasa.gov/)
-</div>
-          </div>
       </p>
     </div>
   </footer>

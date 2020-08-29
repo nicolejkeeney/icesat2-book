@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Utils" href="utils_notebook.html" />
-    <link rel="prev" title="Sea ice drift" href="Drift.html" />
+    <link rel="prev" title="Historical ice thickness" href="PIOMAS.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -79,33 +79,28 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Maps.html">
-   Data visualization
+  <a class="reference internal" href="Restrict_Regionally.html">
+   Regional analysis
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Restrict_Regionally.html">
-   Restrict data regionally
+  <a class="reference internal" href="Maps.html">
+   Mapping
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Compare_Means.html">
-   Winter 18-19 vs. winter 19-20 comparison
+   Winter comparison
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Thickness_And_Type.html">
-   Sea ice growth: thickness &amp; type
+   Sea ice type
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="PIOMAS.html">
    Historical ice thickness
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Drift.html">
-   Sea ice drift
   </a>
  </li>
 </ul>
@@ -173,6 +168,19 @@
     
 </div>
         <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/nicolejkeeney/icesat2-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
 
 
         <!-- Full screen (wrap in <a> to have style consistency -->
@@ -263,6 +271,11 @@
      </li>
     </ul>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#piomas-sea-ice-thickness-data">
+     PIOMAS sea ice thickness data
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -278,18 +291,35 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#regrid-era5-data-to-icesat-2-grid">
-   Regrid ERA5 data to ICESat-2 grid
+  <a class="reference internal nav-link" href="#regrid-additional-datasets-to-icesat-2-grid">
+   Regrid additional datasets to ICESat-2 grid
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#choose-data-variables-of-interest">
-     Choose data variables of interest
+    <a class="reference internal nav-link" href="#define-regridding-function">
+     Define regridding function
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#regrid-era5-data-add-to-icesat-2-dataset">
-     Regrid ERA5 data &amp; add to ICESat-2 dataset
+    <a class="reference internal nav-link" href="#regrid-era5-data">
+     Regrid ERA5 data
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#choose-data-variables-of-interest">
+       Choose data variables of interest
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#regrid-era5-data-add-to-icesat-2-dataset">
+       Regrid ERA5 data &amp; add to ICESat-2 dataset
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regrid-piomas-data">
+     Regrid PIOMAS data
     </a>
    </li>
   </ul>
@@ -350,8 +380,9 @@ from datetime import date
 import warnings
 warnings.filterwarnings(&#39;ignore&#39;)
 
-#import utils function from google bucket 
-!gsutil cp gs://icesat2-book-data/utils.py ./
+#import utils function 
+if &#39;utils.py&#39; not in os.listdir(os.getcwd()): 
+    !gsutil cp gs://icesat2-book-data/utils.py ./
 import utils
 </pre></div>
 </div>
@@ -391,10 +422,7 @@ import utils
 </div>
 <div class="section" id="load-in-data">
 <h2>Load in data<a class="headerlink" href="#load-in-data" title="Permalink to this headline">¶</a></h2>
-<p>Data is loaded into notebook using functions from Nicole’s utils.py script</p>
-<ul class="simple">
-<li><p>See <a class="reference external" href="https://nicolejkeeney.github.io/icesat2_intern_book/utils_notebook.html">utils</a> chapter for more infomation on functions used</p></li>
-</ul>
+<p>Data is loaded into notebook using functions from the utils.py script</p>
 <p>Set desired date range for data</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -537,6 +565,24 @@ import utils
 </div>
 </div>
 </div>
+<div class="section" id="piomas-sea-ice-thickness-data">
+<h3>PIOMAS sea ice thickness data<a class="headerlink" href="#piomas-sea-ice-thickness-data" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">piomasData</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getPIOMASData</span><span class="p">(</span><span class="n">PIOMAS_path</span><span class="p">,</span> <span class="n">startYear</span> <span class="o">=</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">endYear</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Restrict to winter months</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">piomasData</span> <span class="o">=</span> <span class="n">piomasData</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="interpolate-missing-icesat-2-data">
 <h2>Interpolate missing ICESat-2 data<a class="headerlink" href="#interpolate-missing-icesat-2-data" title="Permalink to this headline">¶</a></h2>
@@ -594,11 +640,43 @@ import utils
 </div>
 </div>
 </div>
-<div class="section" id="regrid-era5-data-to-icesat-2-grid">
-<h2>Regrid ERA5 data to ICESat-2 grid<a class="headerlink" href="#regrid-era5-data-to-icesat-2-grid" title="Permalink to this headline">¶</a></h2>
-<p>In order to merge ERA5 data to the same dataset as ICESat-2, it needs to be on the same grid.</p>
+<div class="section" id="regrid-additional-datasets-to-icesat-2-grid">
+<h2>Regrid additional datasets to ICESat-2 grid<a class="headerlink" href="#regrid-additional-datasets-to-icesat-2-grid" title="Permalink to this headline">¶</a></h2>
+<p>In order to merge ERA5 and PIOMAS data to the same dataset as ICESat-2, it needs to be on the same grid.</p>
+<div class="section" id="define-regridding-function">
+<h3>Define regridding function<a class="headerlink" href="#define-regridding-function" title="Permalink to this headline">¶</a></h3>
+<p>This function will grid data to the ICESat-2 grid using the scipy.interpolate.griddata function</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">regridToICESat2</span><span class="p">(</span><span class="n">dataArrayNEW</span><span class="p">,</span> <span class="n">xptsNEW</span><span class="p">,</span> <span class="n">yptsNEW</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">):</span>  
+    <span class="sd">&quot;&quot;&quot; Regrid new data to ICESat-2 grid </span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        dataArrayNEW (xarray DataArray): DataArray to be gridded to ICESat-2 grid </span>
+<span class="sd">        xptsNEW (numpy array): x-values of dataArrayNEW projected to ICESat-2 map projection </span>
+<span class="sd">        yptsNEW (numpy array): y-values of dataArrayNEW projected to ICESat-2 map projection </span>
+<span class="sd">        xptsIS2 (numpy array): ICESat-2 longitude projected to ICESat-2 map projection</span>
+<span class="sd">        yptsIS2 (numpy array): ICESat-2 latitude projected to ICESat-2 map projection</span>
+<span class="sd">    </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        gridded (numpy array): data regridded to ICESat-2 map projection</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gridded</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">)):</span> 
+        <span class="n">monthlyGridded</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">griddata</span><span class="p">((</span><span class="n">xptsNEW</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span><span class="n">yptsNEW</span><span class="o">.</span><span class="n">flatten</span><span class="p">()),</span> <span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="p">(</span><span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+        <span class="n">gridded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">monthlyGridded</span><span class="p">)</span>
+        <span class="c1">#utils.progressBar(i, len(dataArrayNEW.values))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gridded</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="regrid-era5-data">
+<h3>Regrid ERA5 data<a class="headerlink" href="#regrid-era5-data" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="choose-data-variables-of-interest">
-<h3>Choose data variables of interest<a class="headerlink" href="#choose-data-variables-of-interest" title="Permalink to this headline">¶</a></h3>
+<h4>Choose data variables of interest<a class="headerlink" href="#choose-data-variables-of-interest" title="Permalink to this headline">¶</a></h4>
 <p>ERA5 provides climate reananalysis data for many different variables. Here, choose data variables to maintain in the final gridded data product.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -615,7 +693,7 @@ import utils
 </div>
 </div>
 <div class="section" id="regrid-era5-data-add-to-icesat-2-dataset">
-<h3>Regrid ERA5 data &amp; add to ICESat-2 dataset<a class="headerlink" href="#regrid-era5-data-add-to-icesat-2-dataset" title="Permalink to this headline">¶</a></h3>
+<h4>Regrid ERA5 data &amp; add to ICESat-2 dataset<a class="headerlink" href="#regrid-era5-data-add-to-icesat-2-dataset" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#map projection from ICESat-2 data (can be viewed in is2.projection.attrs[&#39;srid&#39;])</span>
@@ -628,10 +706,8 @@ import utils
 
 <span class="c1">#grid data</span>
 <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">ERA5Vars</span><span class="p">:</span> 
-    <span class="n">ERA5gridded</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ERA5</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)):</span> 
-        <span class="n">monthlyGriddedERA5</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">griddata</span><span class="p">((</span><span class="n">xptsERA</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span><span class="n">yptsERA</span><span class="o">.</span><span class="n">flatten</span><span class="p">()),</span> <span class="n">ERA5</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="p">(</span><span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
-        <span class="n">ERA5gridded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">monthlyGriddedERA5</span><span class="p">)</span>
+    <span class="c1">#regrid data by calling function</span>
+    <span class="n">ERA5gridded</span> <span class="o">=</span> <span class="n">regridToICESat2</span><span class="p">(</span><span class="n">ERA5</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="n">xptsERA</span><span class="p">,</span> <span class="n">yptsERA</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">)</span>
     
     <span class="c1">#create xarray DataArray object with descriptive coordinates </span>
     <span class="n">ERAArray</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">ERA5gridded</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">is2Lats</span><span class="p">),</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">is2Lons</span><span class="p">)})</span>
@@ -640,6 +716,28 @@ import utils
 
     <span class="c1">#add to ICESat-2 dataset</span>
     <span class="n">is2</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">ERAArray</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="regrid-piomas-data">
+<h3>Regrid PIOMAS data<a class="headerlink" href="#regrid-piomas-data" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#project data to ICESat-2 map projection</span>
+<span class="n">xptsPIO</span><span class="p">,</span> <span class="n">yptsPIO</span> <span class="o">=</span> <span class="n">mapProj</span><span class="p">(</span><span class="n">piomasData</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">piomasData</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="c1">#regrid data by calling function</span>
+<span class="n">PIOgridded</span> <span class="o">=</span> <span class="n">regridToICESat2</span><span class="p">(</span><span class="n">piomasData</span><span class="p">,</span> <span class="n">xptsPIO</span><span class="p">,</span> <span class="n">yptsPIO</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">)</span>
+
+<span class="c1">#create xarray DataArray object with descriptive coordinates </span>
+<span class="n">PIOArray</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">PIOgridded</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">is2Lats</span><span class="p">),</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">is2Lons</span><span class="p">)})</span>
+<span class="n">PIOArray</span> <span class="o">=</span> <span class="n">PIOArray</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">piomasData</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+
+<span class="c1">#add to ICESat-2 dataset</span>
+<span class="n">is2</span><span class="p">[</span><span class="s1">&#39;PIOMAS_ice_thickness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PIOArray</span>
 </pre></div>
 </div>
 </div>
@@ -695,10 +793,11 @@ Data variables:
     ice_density_filled        (time, x, y) float32 nan nan nan ... nan nan nan
     t2m                       (time, x, y) float32 nan nan nan ... nan nan nan
     msdwlwrf                  (time, x, y) float32 nan nan nan ... nan nan nan
+    PIOMAS_ice_thickness      (time, x, y) float32 0.0 0.0 0.0 ... 0.0 0.0 0.0
 Attributes:
     description:    data used in nicolejkeeney ICESat-2 jupyter book
     note:           see individual data variables for references
-    creation date:  2020-08-28
+    creation date:  2020-08-29
 </pre></div>
 </div>
 </div>
@@ -709,7 +808,7 @@ Attributes:
 <p>We will use this dataset in other notebooks to plot and analyze the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;icesat2-book-dataset.nc&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;icesat2-book-winter-data.nc&#39;</span>
 <span class="n">is2</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">localDirectory</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s1">&#39;NETCDF4&#39;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39; saved to directory &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">localDirectory</span><span class="p">)</span>
 <span class="n">is2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -717,7 +816,7 @@ Attributes:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-dataset.nc&quot; saved to directory &quot;/Users/nicolekeeney/Desktop/notebook_data/&quot;
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-winter-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/Desktop/notebook_data/&quot;
 </pre></div>
 </div>
 </div>
@@ -753,7 +852,7 @@ Attributes:
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Drift.html" title="previous page">Sea ice drift</a>
+    <a class='left-prev' id="prev-link" href="PIOMAS.html" title="previous page">Historical ice thickness</a>
     <a class='right-next' id="next-link" href="utils_notebook.html" title="next page">Utils</a>
 
     </div>
@@ -764,11 +863,6 @@ Attributes:
           By Nicole Keeney<br/>
         
             &copy; Copyright 2020.<br/>
-          <div class="extra_footer">
-            <div>
-    [ICESat-2 mission](https://icesat-2.gsfc.nasa.gov/)
-</div>
-          </div>
       </p>
     </div>
   </footer>
