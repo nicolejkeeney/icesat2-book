@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Sea ice type &#8212; ICESat-2 Sea Ice Data Analysis and Visualization</title>
+    <title>Winter sea ice growth &#8212; ICESat-2 Sea Ice Data Analysis and Visualization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Historical ice thickness" href="PIOMAS.html" />
-    <link rel="prev" title="Winter comparison" href="Compare_Means.html" />
+    <link rel="prev" title="Winter comparison" href="winter-comparison.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -79,23 +79,23 @@
 </p>
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Restrict_Regionally.html">
-   Regional analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Maps.html">
+  <a class="reference internal" href="mapping.html">
    Mapping
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Compare_Means.html">
+  <a class="reference internal" href="regional-analysis.html">
+   Regional analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="winter-comparison.html">
    Winter comparison
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Sea ice type
+   Winter sea ice growth
   </a>
  </li>
  <li class="toctree-l1">
@@ -111,12 +111,12 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Data_Wrangling.html">
+  <a class="reference internal" href="data-wrangling.html">
    Data wrangling
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="utils_notebook.html">
+  <a class="reference internal" href="utils.html">
    Utils
   </a>
  </li>
@@ -158,7 +158,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Thickness_And_Type.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="_sources/winter-ice-growth.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -197,7 +197,7 @@
         
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/nicolejkeeney/icesat2-book/blob/master/Thickness_And_Type.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+        <a class="colab-button" href="https://colab.research.google.com/github/nicolejkeeney/icesat2-book/blob/master/winter-ice-growth.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
                 title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
                     src="_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
@@ -248,7 +248,7 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
+  <a class="reference internal nav-link" href="#sea-ice-type">
    Sea ice type
   </a>
   <ul class="nav section-nav flex-column">
@@ -284,8 +284,8 @@
         
               <div>
                 
-  <div class="section" id="sea-ice-type">
-<h1>Sea ice type<a class="headerlink" href="#sea-ice-type" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="winter-sea-ice-growth">
+<h1>Winter sea ice growth<a class="headerlink" href="#winter-sea-ice-growth" title="Permalink to this headline">¶</a></h1>
 <p>This notebook plots change in ice thickness and change in ice type to get a better clearer picture of the dynamics of sea ice growth and differences between winter 2018-19 and 2019-20.</p>
 <p><strong>Input</strong>:</p>
 <ul class="simple">
@@ -500,13 +500,13 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Thickness_And_Type_17_0.png" src="_images/Thickness_And_Type_17_0.png" />
+<img alt="_images/winter-ice-growth_17_0.png" src="_images/winter-ice-growth_17_0.png" />
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h2>Sea ice type<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sea-ice-type">
+<h2>Sea ice type<a class="headerlink" href="#sea-ice-type" title="Permalink to this headline">¶</a></h2>
 <p>Now we want to know the percentage of each ice type (multi year vs. first year ice) in the region/s of interest, and add to our dataset. We will define a function that generates a plot to visualize the data.</p>
 <div class="section" id="calculate-percent-ice-type-and-add-to-dataset">
 <h3>Calculate percent ice type and add to dataset<a class="headerlink" href="#calculate-percent-ice-type-and-add-to-dataset" title="Permalink to this headline">¶</a></h3>
@@ -652,7 +652,7 @@ ylimits for percent multi year ice axis: [13.3, 46.9] (%)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Thickness_And_Type_28_0.png" src="_images/Thickness_And_Type_28_0.png" />
+<img alt="_images/winter-ice-growth_28_0.png" src="_images/winter-ice-growth_28_0.png" />
 </div>
 </div>
 </div>
@@ -667,7 +667,7 @@ ylimits for percent multi year ice axis: [13.3, 46.9] (%)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Thickness_And_Type_30_0.png" src="_images/Thickness_And_Type_30_0.png" />
+<img alt="_images/winter-ice-growth_30_0.png" src="_images/winter-ice-growth_30_0.png" />
 </div>
 </div>
 </div>
@@ -702,7 +702,7 @@ ylimits for percent multi year ice axis: [13.3, 46.9] (%)
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Compare_Means.html" title="previous page">Winter comparison</a>
+    <a class='left-prev' id="prev-link" href="winter-comparison.html" title="previous page">Winter comparison</a>
     <a class='right-next' id="next-link" href="PIOMAS.html" title="next page">Historical ice thickness</a>
 
     </div>

@@ -38,8 +38,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Data wrangling" href="Data_Wrangling.html" />
-    <link rel="prev" title="Sea ice type" href="Thickness_And_Type.html" />
+    <link rel="next" title="Data wrangling" href="data-wrangling.html" />
+    <link rel="prev" title="Winter sea ice growth" href="winter-ice-growth.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -79,23 +79,23 @@
 </p>
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Restrict_Regionally.html">
-   Regional analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Maps.html">
+  <a class="reference internal" href="mapping.html">
    Mapping
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Compare_Means.html">
+  <a class="reference internal" href="regional-analysis.html">
+   Regional analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="winter-comparison.html">
    Winter comparison
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Thickness_And_Type.html">
-   Sea ice type
+  <a class="reference internal" href="winter-ice-growth.html">
+   Winter sea ice growth
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -111,12 +111,12 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Data_Wrangling.html">
+  <a class="reference internal" href="data-wrangling.html">
    Data wrangling
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="utils_notebook.html">
+  <a class="reference internal" href="utils.html">
    Utils
   </a>
  </li>
@@ -224,6 +224,96 @@
   <a class="reference internal nav-link" href="#load-data-into-notebook">
    Load data into notebook
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-icesat-2-dataset">
+     Load ICESat-2 dataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-piomas-dataset">
+     Load PIOMAS dataset
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#restrict-datasets-to-region-of-interest">
+   Restrict datasets to region of interest
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#icesat-2-mean-monthly-ice-thickness-uncertainty">
+   ICESat-2 mean monthly ice thickness &amp; uncertainty
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compile-into-one-dataset">
+     Compile into one dataset
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#piomas-mean-monthly-ice-thickness-uncertainty">
+   PIOMAS mean monthly ice thickness &amp; uncertainty
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mean-monthly-ice-thickness">
+     Mean monthly ice thickness
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mean-detrended-uncertainty">
+     Mean detrended uncertainty
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#define-functions-used-in-calculation">
+       Define functions used in calculation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#call-functions-to-perform-uncertainty-calculation">
+       Call functions to perform uncertainty calculation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Compile into one dataset
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#winter-comparison-piomas-vs-icesat-2">
+   Winter comparison: PIOMAS vs. ICESat-2
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#define-plotting-function">
+     Define plotting function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-comparison-for-winter-18-19">
+     Plot comparison for winter 18-19
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot-piomas-with-overlayed-icesat-2-data">
+   Plot PIOMAS with overlayed ICESat-2 data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#understanding-detrended-uncertainty">
+   Understanding detrended uncertainty
+  </a>
  </li>
 </ul>
 
@@ -265,6 +355,7 @@ import pyproj
 from datetime import date
 import matplotlib.pyplot as plt
 import numpy.ma as ma
+import scipy.stats
 
 #axes needed for plotting
 from matplotlib.axes import Axes
@@ -292,12 +383,307 @@ import utils
 <div class="section" id="load-data-into-notebook">
 <h2>Load data into notebook<a class="headerlink" href="#load-data-into-notebook" title="Permalink to this headline">¶</a></h2>
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
+<div class="section" id="load-icesat-2-dataset">
+<h3>Load ICESat-2 dataset<a class="headerlink" href="#load-icesat-2-dataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
-dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
+IS2dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+<div class="section" id="load-piomas-dataset">
+<h3>Load PIOMAS dataset<a class="headerlink" href="#load-piomas-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/piomas-regridded-data.nc ./
+PIOdataset = xr.open_dataset(&#39;piomas-regridded-data.nc&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="restrict-datasets-to-region-of-interest">
+<h2>Restrict datasets to region of interest<a class="headerlink" href="#restrict-datasets-to-region-of-interest" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#myKeys = [10,11,12,13,15] #Inner Arctic</span>
+<span class="n">myKeys</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">]</span> 
+<span class="n">IS2dataset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">restrictRegionally</span><span class="p">(</span><span class="n">IS2dataset</span><span class="p">,</span> <span class="n">regionKeyList</span> <span class="o">=</span> <span class="n">myKeys</span><span class="p">)</span>
+<span class="n">PIOdataset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">restrictRegionally</span><span class="p">(</span><span class="n">PIOdataset</span><span class="p">,</span> <span class="n">regionKeyList</span> <span class="o">=</span> <span class="n">myKeys</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Regions selected: Arctic Ocean
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Regions selected: Arctic Ocean
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="icesat-2-mean-monthly-ice-thickness-uncertainty">
+<h2>ICESat-2 mean monthly ice thickness &amp; uncertainty<a class="headerlink" href="#icesat-2-mean-monthly-ice-thickness-uncertainty" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#calculate mean monthly ICESat-2 sea ice thickness </span>
+<span class="n">IS2means</span> <span class="o">=</span> <span class="n">IS2dataset</span><span class="p">[</span><span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">skipna</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">IS2means</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ICESat-2 mean ice thickness&#39;</span>
+
+<span class="c1">#calculate mean monthly ICESat-2 sea ice thickness uncertainty</span>
+<span class="n">IS2uncs</span> <span class="o">=</span> <span class="n">IS2dataset</span><span class="p">[</span><span class="s1">&#39;ice_thickness_unc_filled&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">skipna</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">IS2uncs</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ICESat-2 mean uncertainty&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="compile-into-one-dataset">
+<h3>Compile into one dataset<a class="headerlink" href="#compile-into-one-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IS2</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">data_vars</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">:</span> <span class="n">IS2means</span><span class="p">,</span> <span class="s1">&#39;mean_ice_thickness_unc&#39;</span><span class="p">:</span> <span class="n">IS2uncs</span><span class="p">})</span>
+<span class="n">IS2</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">IS2dataset</span><span class="o">.</span><span class="n">attrs</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="piomas-mean-monthly-ice-thickness-uncertainty">
+<h2>PIOMAS mean monthly ice thickness &amp; uncertainty<a class="headerlink" href="#piomas-mean-monthly-ice-thickness-uncertainty" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mean-monthly-ice-thickness">
+<h3>Mean monthly ice thickness<a class="headerlink" href="#mean-monthly-ice-thickness" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PIOmeans</span> <span class="o">=</span> <span class="n">PIOdataset</span><span class="p">[</span><span class="s1">&#39;PIOMAS_ice_thickness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">skipna</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">PIOmeans</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;PIOMAS mean ice thickness&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="mean-detrended-uncertainty">
+<h3>Mean detrended uncertainty<a class="headerlink" href="#mean-detrended-uncertainty" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="define-functions-used-in-calculation">
+<h4>Define functions used in calculation<a class="headerlink" href="#define-functions-used-in-calculation" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_varDT</span><span class="p">(</span><span class="n">Years</span><span class="p">,</span> <span class="n">Thickness</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Detrend linear time series  </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">trendT</span><span class="p">,</span> <span class="n">interceptT</span><span class="p">,</span> <span class="n">r_valsT</span><span class="p">,</span> <span class="n">probT</span><span class="p">,</span> <span class="n">stderrT</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">Years</span><span class="p">,</span> <span class="n">Thickness</span><span class="p">)</span>
+    <span class="n">lineT</span> <span class="o">=</span> <span class="p">(</span><span class="n">trendT</span> <span class="o">*</span> <span class="n">Years</span><span class="p">)</span> <span class="o">+</span> <span class="n">interceptT</span>
+    <span class="n">ThicknessDT</span> <span class="o">=</span> <span class="n">Thickness</span> <span class="o">-</span> <span class="n">lineT</span>
+    <span class="k">return</span> <span class="n">ThicknessDT</span><span class="p">,</span> <span class="n">lineT</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_mon</span><span class="p">(</span><span class="n">xarray_val</span><span class="p">,</span> <span class="n">desired_mon</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Check if current month is desired month &quot;&quot;&quot;</span>
+    <span class="n">xarray_mon</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">xarray_val</span><span class="p">)</span><span class="o">.</span><span class="n">month</span>
+    <span class="k">if</span> <span class="n">xarray_mon</span> <span class="o">==</span> <span class="n">desired_mon</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">xarray_val</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="call-functions-to-perform-uncertainty-calculation">
+<h4>Call functions to perform uncertainty calculation<a class="headerlink" href="#call-functions-to-perform-uncertainty-calculation" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#loop through months in a year and calculate uncertainty for each month </span>
+<span class="n">standDevDT</span><span class="p">,</span> <span class="n">standDev</span><span class="p">,</span> <span class="n">monDates</span><span class="p">,</span> <span class="n">thicknessDT</span><span class="p">,</span> <span class="n">slopes</span> <span class="o">=</span> <span class="p">[],[],[],[],[]</span>
+<span class="n">months</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1">#integers corresponding to months of the year</span>
+
+<span class="k">for</span> <span class="n">mon</span> <span class="ow">in</span> <span class="n">months</span><span class="p">:</span>
+    <span class="c1">#get dates for each month (i.e. for January get 1978-01, 1979-01, 1980-01, etc)</span>
+    <span class="n">times_by_mon</span> <span class="o">=</span> <span class="p">[</span><span class="n">is_mon</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">mon</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">PIOmeans</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="p">(</span><span class="n">is_mon</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">mon</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">)]</span>
+    <span class="n">monDates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">times_by_mon</span><span class="p">)</span>
+    
+    <span class="c1">#get array with year-mon converted to integer value</span>
+    <span class="n">time_integers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">times_by_mon</span><span class="p">))</span>
+    
+    <span class="c1">#get detrended uncertainty and append to list</span>
+    <span class="n">thickness_detrended</span><span class="p">,</span> <span class="n">regLine</span> <span class="o">=</span> <span class="n">get_varDT</span><span class="p">(</span><span class="n">time_integers</span><span class="p">,</span> <span class="n">PIOmeans</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">times_by_mon</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">thicknessDT</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thickness_detrended</span><span class="p">)</span>
+    <span class="n">standDevDT</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">thickness_detrended</span><span class="p">))</span>
+    <span class="n">slopes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">regLine</span><span class="p">)</span>
+    
+    <span class="c1">#get trended uncertainty and append to list </span>
+    <span class="n">standDev</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">PIOmeans</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">times_by_mon</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+    
+<span class="c1">#get a list as long as PIOmeans of all the monthly natural variabilities</span>
+<span class="n">standDevCyclic</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">PIOmeans</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+    <span class="n">standDevCyclic</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">standDevDT</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">date</span><span class="p">)</span><span class="o">.</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+    
+<span class="c1">#create DataArray with corresponding uncertainties</span>
+<span class="n">PIOuncs</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">standDevCyclic</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">PIOmeans</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">},</span> <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span><span class="s1">&#39;PIOMAS mean detrended uncertainty&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h4>Compile into one dataset<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PIO</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">data_vars</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">:</span> <span class="n">PIOmeans</span><span class="p">,</span> <span class="s1">&#39;mean_ice_thickness_unc&#39;</span><span class="p">:</span> <span class="n">PIOuncs</span><span class="p">})</span>
+<span class="n">PIO</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">PIOdataset</span><span class="o">.</span><span class="n">attrs</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="winter-comparison-piomas-vs-icesat-2">
+<h2>Winter comparison: PIOMAS vs. ICESat-2<a class="headerlink" href="#winter-comparison-piomas-vs-icesat-2" title="Permalink to this headline">¶</a></h2>
+<p>Here we will plot PIOMAS and ICESat-2 mean monthly ice thickness and uncertainty on the same axes to visualize differences in the two datasets over winter 2018-2019 and winter 2019-2020.</p>
+<div class="section" id="define-plotting-function">
+<h3>Define plotting function<a class="headerlink" href="#define-plotting-function" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotMeansWithUnc</span><span class="p">(</span><span class="n">PIO</span><span class="p">,</span> <span class="n">IS2</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>  
+    
+    <span class="c1">#initialize figure and axes</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> 
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+    <span class="n">gridlines</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span> <span class="c1">#add gridlines </span>
+
+    <span class="c1">#plot PIOMAS data </span>
+    <span class="n">PIO</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">PIO</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">PIO</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">PIO</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">PIO</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness_unc&#39;</span><span class="p">],</span> <span class="n">PIO</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">PIO</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness_unc&#39;</span><span class="p">],</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">PIO</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness_unc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">])</span>
+
+    <span class="c1">#plot ICESat-2 data</span>
+    <span class="n">IS2</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;dodgerblue&#39;</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">IS2</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">IS2</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">IS2</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">IS2</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness_unc&#39;</span><span class="p">],</span> <span class="n">IS2</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">IS2</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness_unc&#39;</span><span class="p">],</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="s1">&#39;dodgerblue&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">IS2</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness_unc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">])</span>
+
+    <span class="c1">#display plot with descriptive legend, ylabel, and title</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Mean sea ice thickness (m)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">PIO</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; mean monthly sea ice thickness&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="plot-comparison-for-winter-18-19">
+<h3>Plot comparison for winter 18-19<a class="headerlink" href="#plot-comparison-for-winter-18-19" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">winter_18_19</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getWinterDateRange</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span><span class="mi">2019</span><span class="p">)</span>
+<span class="n">plotMeansWithUnc</span><span class="p">(</span><span class="n">PIO</span> <span class="o">=</span> <span class="n">PIO</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winter_18_19</span><span class="p">),</span> <span class="n">IS2</span> <span class="o">=</span> <span class="n">IS2</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winter_18_19</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PIOMAS_31_0.png" src="_images/PIOMAS_31_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">winter_19_20</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getWinterDateRange</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span><span class="mi">2020</span><span class="p">)</span>
+<span class="n">plotMeansWithUnc</span><span class="p">(</span><span class="n">PIO</span> <span class="o">=</span> <span class="n">PIO</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winter_19_20</span><span class="p">),</span> <span class="n">IS2</span> <span class="o">=</span> <span class="n">IS2</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winter_19_20</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PIOMAS_32_0.png" src="_images/PIOMAS_32_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="plot-piomas-with-overlayed-icesat-2-data">
+<h2>Plot PIOMAS with overlayed ICESat-2 data<a class="headerlink" href="#plot-piomas-with-overlayed-icesat-2-data" title="Permalink to this headline">¶</a></h2>
+<p>From the PIOMAS reanalysis data, this plot shows the yearly melting and growing of sea ice as well as the long term decreasing trend in mean ice thickness. ICESat-2 data is overlayed on the PIOMAS plot, along with a rolling 12 month mean.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize figure and axes </span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> 
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+<span class="n">gridlines</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span> <span class="c1">#add gridlines </span>
+
+<span class="c1">#plot data </span>
+<span class="n">PIO</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">PIO</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">])</span>
+<span class="n">IS2</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;magenta&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">IS2</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">])</span>
+
+<span class="c1">#using pandas rolling mean function, add a rolling mean </span>
+<span class="n">rollingMeanInterval</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1">#number of months over which to take mean</span>
+<span class="n">tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;means&#39;</span><span class="p">:</span> <span class="n">PIO</span><span class="p">[</span><span class="s1">&#39;mean_ice_thickness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">})</span>
+<span class="n">rollingMean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">tbl</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">rollingMeanInterval</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()[</span><span class="s1">&#39;means&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">PIO</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">rollingMean</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;darkblue&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;PIOMAS &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rollingMeanInterval</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; month mean&#39;</span><span class="p">)</span>
+
+<span class="c1">#display plot with descriptive legend, ylabel, and title</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Mean sea ice thickness (m)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">PIO</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; mean monthly sea ice thickness&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PIOMAS_34_0.png" src="_images/PIOMAS_34_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="understanding-detrended-uncertainty">
+<h2>Understanding detrended uncertainty<a class="headerlink" href="#understanding-detrended-uncertainty" title="Permalink to this headline">¶</a></h2>
+<p>Detrended uncertainty captures natural variability in mean ice thickness, while ignoring the downward trend of ice thickness due to climate change. The regression line is subtracted from the mean ice thickness resulting in detrended ice thickness, which can be used to solve for natural variability (detrended uncertainty) in ice thickness.<br><br>The figure below shows these values for a single month over the period of 1978-2020 to illustrate this concept.</p>
+<p>Choose month of interest</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">month</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1">#december</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plot data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize figure &amp; axes</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> 
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+<span class="n">gridlines</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span> <span class="c1">#add gridlines </span>
+<span class="n">years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1978</span><span class="p">,</span> <span class="mi">1978</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">thicknessDT</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">PIO</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">monDates</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%B&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; ice thickness &amp; uncertainty&#39;</span><span class="p">)</span>
+
+<span class="c1">#plot thickness </span>
+<span class="n">monthlyThickness</span> <span class="o">=</span> <span class="n">PIO</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">monDates</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">mean_ice_thickness</span><span class="o">.</span><span class="n">values</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">monthlyThickness</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;mean ice thickness&#39;</span><span class="p">)</span>
+
+<span class="c1">#plot +1 and -1 standard deviations for thickness</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="p">(</span><span class="n">thicknessDT</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">standDev</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">slopes</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">thicknessDT</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">standDev</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">slopes</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="s1">&#39;dodgerblue&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;mean uncertainty&#39;</span><span class="p">)</span>
+
+<span class="c1">#plot regression line</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">slopes</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;magenta&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;regression line&#39;</span><span class="p">)</span>
+
+<span class="c1">#plot detrended thickness </span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">thicknessDT</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;maroon&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;mean detrended ice thickness&#39;</span><span class="p">)</span>
+
+<span class="c1">#plot +1 and -1 standard deviations for detrended thickness</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">thicknessDT</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">standDevDT</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">thicknessDT</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">standDevDT</span><span class="p">[</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="s1">&#39;salmon&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;mean detrended uncertainty&#39;</span><span class="p">)</span>
+
+<span class="c1">#add legends &amp; show plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PIOMAS_39_0.png" src="_images/PIOMAS_39_0.png" />
 </div>
 </div>
 </div>
@@ -331,8 +717,8 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Thickness_And_Type.html" title="previous page">Sea ice type</a>
-    <a class='right-next' id="next-link" href="Data_Wrangling.html" title="next page">Data wrangling</a>
+    <a class='left-prev' id="prev-link" href="winter-ice-growth.html" title="previous page">Winter sea ice growth</a>
+    <a class='right-next' id="next-link" href="data-wrangling.html" title="next page">Data wrangling</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

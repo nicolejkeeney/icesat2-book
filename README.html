@@ -77,23 +77,23 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Restrict_Regionally.html">
-   Regional analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Maps.html">
+  <a class="reference internal" href="mapping.html">
    Mapping
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Compare_Means.html">
+  <a class="reference internal" href="regional-analysis.html">
+   Regional analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="winter-comparison.html">
    Winter comparison
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Thickness_And_Type.html">
-   Sea ice type
+  <a class="reference internal" href="winter-ice-growth.html">
+   Winter sea ice growth
   </a>
  </li>
  <li class="toctree-l1">
@@ -109,12 +109,12 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Data_Wrangling.html">
+  <a class="reference internal" href="data-wrangling.html">
    Data wrangling
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="utils_notebook.html">
+  <a class="reference internal" href="utils.html">
    Utils
   </a>
  </li>
@@ -196,7 +196,19 @@
             <i class="fas fa-list"></i> Contents
         </div>
         <nav id="bd-toc-nav">
-            
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#project-description">
+   Project description
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#steps-to-build-book">
+   Steps to build book
+  </a>
+ </li>
+</ul>
+
         </nav>
     </div>
 </div>
@@ -207,7 +219,21 @@
                 
   <div class="section" id="icesat2-book">
 <h1>icesat2-book<a class="headerlink" href="#icesat2-book" title="Permalink to this headline">¶</a></h1>
-<p>Code for ICESat-2 Jupyter Book, created during summer 2020 internship at NASA GSFC</p>
+<div class="section" id="project-description">
+<h2>Project description<a class="headerlink" href="#project-description" title="Permalink to this headline">¶</a></h2>
+<p>Code for ICESat-2 Jupyter Book, created during Nicole’s summer 2020 internship at NASA GSFC supervised by Alek Petty.<br><br> Link to jupyter book: (https://nicolejkeeney.github.io/icesat2-book/home.html)[https://nicolejkeeney.github.io/icesat2-book/home.html]</p>
+</div>
+<div class="section" id="steps-to-build-book">
+<h2>Steps to build book<a class="headerlink" href="#steps-to-build-book" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Delete <strong>build</strong> and <strong>pycache</strong> folders</p></li>
+<li><p>Update github repo with any changes</p></li>
+<li><p><strong>cd</strong> out of local book directory</p></li>
+<li><p>In terminal, run: <strong>jb build icesat2-book</strong></p></li>
+<li><p><strong>cd</strong> into local book directory</p></li>
+<li><p>In terminal, run: <strong>ghp-import -n -p -f _build/html</strong></p></li>
+</ol>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

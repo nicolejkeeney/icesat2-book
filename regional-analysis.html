@@ -38,8 +38,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Mapping" href="Maps.html" />
-    <link rel="prev" title="ICESat-2 Sea Ice Thickness Data Analysis and Visualization" href="home.html" />
+    <link rel="next" title="Winter comparison" href="winter-comparison.html" />
+    <link rel="prev" title="Mapping" href="mapping.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -78,24 +78,24 @@
  </span>
 </p>
 <ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="mapping.html">
+   Mapping
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Regional analysis
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Maps.html">
-   Mapping
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Compare_Means.html">
+  <a class="reference internal" href="winter-comparison.html">
    Winter comparison
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Thickness_And_Type.html">
-   Sea ice type
+  <a class="reference internal" href="winter-ice-growth.html">
+   Winter sea ice growth
   </a>
  </li>
  <li class="toctree-l1">
@@ -111,12 +111,12 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Data_Wrangling.html">
+  <a class="reference internal" href="data-wrangling.html">
    Data wrangling
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="utils_notebook.html">
+  <a class="reference internal" href="utils.html">
    Utils
   </a>
  </li>
@@ -158,7 +158,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Restrict_Regionally.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="_sources/regional-analysis.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -197,7 +197,7 @@
         
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/nicolejkeeney/icesat2-book/blob/master/Restrict_Regionally.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+        <a class="colab-button" href="https://colab.research.google.com/github/nicolejkeeney/icesat2-book/blob/master/regional-analysis.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
                 title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
                     src="_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
@@ -332,28 +332,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][792.0 KiB/144.7 MiB]   0% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][  3.6 MiB/144.7 MiB]   2% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][  8.8 MiB/144.7 MiB]   6% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 20.1 MiB/144.7 MiB]  13% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 19.3 MiB/144.7 MiB]  13% Done                                    
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
@@ -362,35 +341,34 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 43.8 MiB/144.7 MiB]  30% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 45.9 MiB/144.7 MiB]  31% Done                                    
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 77.3 MiB/144.7 MiB]  53% Done                                    
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 71.2 MiB/144.7 MiB]  49% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][ 92.6 MiB/144.7 MiB]  63% Done                                    
-|
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][109.8 MiB/144.7 MiB]  75% Done                                    
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
 </pre></div>
 </div>
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][123.5 MiB/144.7 MiB]  85% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][137.7 MiB/144.7 MiB]  95% Done                                    
 </pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [1/1 files][144.7 MiB/144.7 MiB] 100% Done                                    
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [1/1 files][144.7 MiB/144.7 MiB] 100% Done                                    
 
 Operation completed over 1 objects/144.7 MiB.                                    
 </pre></div>
@@ -422,74 +400,74 @@ Operation completed over 1 objects/144.7 MiB.
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_1f3bb360_ea38_11ea_934e_784f43711573" ><thead>    <tr>        <th class="col_heading level0 col0" >key</th>        <th class="col_heading level0 col1" >label</th>    </tr></thead><tbody>
+</style><table id="T_99703b3c_eb15_11ea_af2a_784f43711573" ><thead>    <tr>        <th class="col_heading level0 col0" >key</th>        <th class="col_heading level0 col1" >label</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row0_col0" class="data row0 col0" >1</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row0_col1" class="data row0 col1" >non-region oceans</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row0_col0" class="data row0 col0" >1</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row0_col1" class="data row0 col1" >non-region oceans</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row1_col0" class="data row1 col0" >2</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row1_col1" class="data row1 col1" >Sea of Okhotsk and Japan</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row1_col0" class="data row1 col0" >2</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row1_col1" class="data row1 col1" >Sea of Okhotsk and Japan</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row2_col0" class="data row2 col0" >3</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row2_col1" class="data row2 col1" >Bering Sea</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row2_col0" class="data row2 col0" >3</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row2_col1" class="data row2 col1" >Bering Sea</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row3_col0" class="data row3 col0" >4</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row3_col1" class="data row3 col1" >Hudson Bay</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row3_col0" class="data row3 col0" >4</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row3_col1" class="data row3 col1" >Hudson Bay</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row4_col0" class="data row4 col0" >5</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row4_col1" class="data row4 col1" >Gulf of St. Lawrence</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row4_col0" class="data row4 col0" >5</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row4_col1" class="data row4 col1" >Gulf of St. Lawrence</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row5_col0" class="data row5 col0" >6</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row5_col1" class="data row5 col1" >Baffin Bay, Davis Strait & Labrador Sea</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row5_col0" class="data row5 col0" >6</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row5_col1" class="data row5 col1" >Baffin Bay, Davis Strait & Labrador Sea</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row6_col0" class="data row6 col0" >7</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row6_col1" class="data row6 col1" >Greenland Sea</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row6_col0" class="data row6 col0" >7</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row6_col1" class="data row6 col1" >Greenland Sea</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row7_col0" class="data row7 col0" >8</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row7_col1" class="data row7 col1" >Barents Seas</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row7_col0" class="data row7 col0" >8</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row7_col1" class="data row7 col1" >Barents Seas</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row8_col0" class="data row8 col0" >9</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row8_col1" class="data row8 col1" >Kara Sea</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row8_col0" class="data row8 col0" >9</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row8_col1" class="data row8 col1" >Kara Sea</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row9_col0" class="data row9 col0" >10</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row9_col1" class="data row9 col1" >Laptev Sea</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row9_col0" class="data row9 col0" >10</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row9_col1" class="data row9 col1" >Laptev Sea</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row10_col0" class="data row10 col0" >11</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row10_col1" class="data row10 col1" >East Siberian Sea</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row10_col0" class="data row10 col0" >11</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row10_col1" class="data row10 col1" >East Siberian Sea</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row11_col0" class="data row11 col0" >12</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row11_col1" class="data row11 col1" >Chukchi Sea</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row11_col0" class="data row11 col0" >12</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row11_col1" class="data row11 col1" >Chukchi Sea</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row12_col0" class="data row12 col0" >13</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row12_col1" class="data row12 col1" >Beaufort Sea</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row12_col0" class="data row12 col0" >13</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row12_col1" class="data row12 col1" >Beaufort Sea</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row13_col0" class="data row13 col0" >14</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row13_col1" class="data row13 col1" >Canadian Archipelago</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row13_col0" class="data row13 col0" >14</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row13_col1" class="data row13 col1" >Canadian Archipelago</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row14_col0" class="data row14 col0" >15</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row14_col1" class="data row14 col1" >Arctic Ocean</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row14_col0" class="data row14 col0" >15</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row14_col1" class="data row14 col1" >Arctic Ocean</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row15_col0" class="data row15 col0" >20</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row15_col1" class="data row15 col1" >Land</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row15_col0" class="data row15 col0" >20</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row15_col1" class="data row15 col1" >Land</td>
             </tr>
             <tr>
-                                <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row16_col0" class="data row16 col0" >21</td>
-                        <td id="T_1f3bb360_ea38_11ea_934e_784f43711573row16_col1" class="data row16 col1" >Coast</td>
+                                <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row16_col0" class="data row16 col0" >21</td>
+                        <td id="T_99703b3c_eb15_11ea_af2a_784f43711573row16_col1" class="data row16 col1" >Coast</td>
             </tr>
     </tbody></table></div></div>
 </div>
@@ -629,7 +607,7 @@ Operation completed over 1 objects/144.7 MiB.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Restrict_Regionally_16_0.png" src="_images/Restrict_Regionally_16_0.png" />
+<img alt="_images/regional-analysis_16_0.png" src="_images/regional-analysis_16_0.png" />
 </div>
 </div>
 </div>
@@ -663,8 +641,8 @@ Operation completed over 1 objects/144.7 MiB.
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="home.html" title="previous page">ICESat-2 Sea Ice Thickness Data Analysis and Visualization</a>
-    <a class='right-next' id="next-link" href="Maps.html" title="next page">Mapping</a>
+    <a class='left-prev' id="prev-link" href="mapping.html" title="previous page">Mapping</a>
+    <a class='right-next' id="next-link" href="winter-comparison.html" title="next page">Winter comparison</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

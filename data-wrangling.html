@@ -38,7 +38,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Utils" href="utils_notebook.html" />
+    <link rel="next" title="Utils" href="utils.html" />
     <link rel="prev" title="Historical ice thickness" href="PIOMAS.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -79,23 +79,23 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="Restrict_Regionally.html">
-   Regional analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Maps.html">
+  <a class="reference internal" href="mapping.html">
    Mapping
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Compare_Means.html">
+  <a class="reference internal" href="regional-analysis.html">
+   Regional analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="winter-comparison.html">
    Winter comparison
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Thickness_And_Type.html">
-   Sea ice type
+  <a class="reference internal" href="winter-ice-growth.html">
+   Winter sea ice growth
   </a>
  </li>
  <li class="toctree-l1">
@@ -116,7 +116,7 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="utils_notebook.html">
+  <a class="reference internal" href="utils.html">
    Utils
   </a>
  </li>
@@ -158,7 +158,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Data_Wrangling.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="_sources/data-wrangling.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -197,7 +197,7 @@
         
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/nicolejkeeney/icesat2-book/blob/master/Data_Wrangling.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+        <a class="colab-button" href="https://colab.research.google.com/github/nicolejkeeney/icesat2-book/blob/master/data-wrangling.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
                 title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
                     src="_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
@@ -322,6 +322,16 @@
      Regrid PIOMAS data
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#save-regridded-piomas-file-to-local-directory">
+     Save regridded PIOMAS file to local directory
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#add-winter-regridded-piomas-data-to-icesat-2-dataset">
+     Add winter regridded PIOMAS data to ICESat-2 dataset
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -353,6 +363,7 @@
 <li><p><a class="reference external" href="https://nsidc.org/data/g02202">Monthly NSIDC sea ice concentration data</a></p></li>
 <li><p><a class="reference external" href="https://nsidc.org/data/polar-stereo/tools_masks.html#region_masks">NSIDC region mask</a> and <a class="reference external" href="https://nsidc.org/data/polar-stereo/tools_geo_pixel.html">coordinate</a> tools (psn25 v3)</p></li>
 <li><p><a class="reference external" href="https://cds.climate.copernicus.eu/cdsapp#%21/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview">ERA 5 climate renanalysis data</a></p></li>
+<li><p><a class="reference external" href="http://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/">PIOMAS mean monthly ice thickness</a></p></li>
 </ul>
 <p><strong>Output</strong>:</p>
 <ul class="simple">
@@ -569,15 +580,7 @@ import utils
 <h3>PIOMAS sea ice thickness data<a class="headerlink" href="#piomas-sea-ice-thickness-data" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">piomasData</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getPIOMASData</span><span class="p">(</span><span class="n">PIOMAS_path</span><span class="p">,</span> <span class="n">startYear</span> <span class="o">=</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">endYear</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Restrict to winter months</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">piomasData</span> <span class="o">=</span> <span class="n">piomasData</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winters</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">piomasData</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getPIOMASData</span><span class="p">(</span><span class="n">PIOMAS_path</span><span class="p">,</span> <span class="n">startYear</span> <span class="o">=</span> <span class="mi">1978</span><span class="p">,</span> <span class="n">endYear</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -666,7 +669,7 @@ import utils
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">)):</span> 
         <span class="n">monthlyGridded</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">griddata</span><span class="p">((</span><span class="n">xptsNEW</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span><span class="n">yptsNEW</span><span class="o">.</span><span class="n">flatten</span><span class="p">()),</span> <span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="p">(</span><span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
         <span class="n">gridded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">monthlyGridded</span><span class="p">)</span>
-        <span class="c1">#utils.progressBar(i, len(dataArrayNEW.values))</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">progressBar</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gridded</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -694,7 +697,7 @@ import utils
 </div>
 <div class="section" id="regrid-era5-data-add-to-icesat-2-dataset">
 <h4>Regrid ERA5 data &amp; add to ICESat-2 dataset<a class="headerlink" href="#regrid-era5-data-add-to-icesat-2-dataset" title="Permalink to this headline">¶</a></h4>
-<div class="cell docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#map projection from ICESat-2 data (can be viewed in is2.projection.attrs[&#39;srid&#39;])</span>
 <span class="n">IS2_proj</span> <span class="o">=</span> <span class="s1">&#39;EPSG:3411&#39;</span>
@@ -724,7 +727,7 @@ import utils
 </div>
 <div class="section" id="regrid-piomas-data">
 <h3>Regrid PIOMAS data<a class="headerlink" href="#regrid-piomas-data" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#project data to ICESat-2 map projection</span>
 <span class="n">xptsPIO</span><span class="p">,</span> <span class="n">yptsPIO</span> <span class="o">=</span> <span class="n">mapProj</span><span class="p">(</span><span class="n">piomasData</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">piomasData</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
@@ -734,7 +737,47 @@ import utils
 
 <span class="c1">#create xarray DataArray object with descriptive coordinates </span>
 <span class="n">PIOArray</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">PIOgridded</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">is2Lats</span><span class="p">),</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">is2Lons</span><span class="p">)})</span>
+<span class="n">PIOArray</span> <span class="o">=</span> <span class="n">PIOArray</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">piomasData</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">PIOArray</span> <span class="o">=</span> <span class="n">PIOArray</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">piomasData</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="save-regridded-piomas-file-to-local-directory">
+<h3>Save regridded PIOMAS file to local directory<a class="headerlink" href="#save-regridded-piomas-file-to-local-directory" title="Permalink to this headline">¶</a></h3>
+<p>Add region mask as descriptive coordinates to the PIOMAS regridded DataArray and save file to local directory</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#add region mask as coordinate to dataset</span>
+<span class="n">piomas_to_save</span> <span class="o">=</span> <span class="n">PIOArray</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">coords</span> <span class="o">=</span> <span class="n">regionMaskCoords</span><span class="p">)</span>
+
+<span class="c1">#add descriptive attributes </span>
+<span class="n">piomas_to_save</span><span class="o">.</span><span class="n">region_mask</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">regionMaskAttrs</span>
+
+<span class="c1">#create a dataset</span>
+<span class="n">piomas_to_save</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">data_vars</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;PIOMAS_ice_thickness&#39;</span><span class="p">:</span> <span class="n">piomas_to_save</span><span class="p">})</span>
+
+<span class="c1">#save to local directory as NETCDF4 file </span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;piomas-regridded-data.nc&#39;</span>
+<span class="n">piomas_to_save</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">localDirectory</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s1">&#39;NETCDF4&#39;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39; saved to directory &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">localDirectory</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>File &quot;piomas-regridded-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/Desktop/notebook_data/&quot;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="add-winter-regridded-piomas-data-to-icesat-2-dataset">
+<h3>Add winter regridded PIOMAS data to ICESat-2 dataset<a class="headerlink" href="#add-winter-regridded-piomas-data-to-icesat-2-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#restrict data to same time period as ICESat-2</span>
+<span class="n">PIOArray</span> <span class="o">=</span> <span class="n">PIOArray</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winters</span><span class="p">)</span>
 
 <span class="c1">#add to ICESat-2 dataset</span>
 <span class="n">is2</span><span class="p">[</span><span class="s1">&#39;PIOMAS_ice_thickness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PIOArray</span>
@@ -797,7 +840,7 @@ Data variables:
 Attributes:
     description:    data used in nicolejkeeney ICESat-2 jupyter book
     note:           see individual data variables for references
-    creation date:  2020-08-29
+    creation date:  2020-08-30
 </pre></div>
 </div>
 </div>
@@ -853,7 +896,7 @@ Attributes:
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="PIOMAS.html" title="previous page">Historical ice thickness</a>
-    <a class='right-next' id="next-link" href="utils_notebook.html" title="next page">Utils</a>
+    <a class='right-next' id="next-link" href="utils.html" title="next page">Utils</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
