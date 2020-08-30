@@ -8,3 +8,11 @@ icesat2-book-winter-data*.nc
 
 #utils extra files 
 utils*.py
+
+
+#notebook checkpoints
+.ipynb_checkpoints
+
+
+#PIOMAS dataset 
+piomas-regridded-data*.nc

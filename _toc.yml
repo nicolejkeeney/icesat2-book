@@ -1,16 +1,16 @@
 - file: home
 - part: NOTEBOOKS
   chapters: 
-     - file: Restrict_Regionally
-     - file: Maps
-     - file: Compare_Means
-     - file: Thickness_And_Type
+     - file: mapping
+     - file: regional-analysis
+     - file: winter-comparison
+     - file: winter-ice-growth
      - file: PIOMAS
-     - file: Drift
+     - file: ice-drift
 - part: MISC
   chapters: 
-     - file: Data_Wrangling
-     - file: utils_notebook
+     - file: data-wrangling
+     - file: utils
 
 
 
