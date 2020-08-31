@@ -102,6 +102,11 @@
    Historical ice thickness
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ice-drift.html">
+   Sea ice drift
+  </a>
+ </li>
 </ul>
 <p class="caption">
  <span class="caption-text">
@@ -250,6 +255,11 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#getdriftdata">
+     getDriftData
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#plotonemonth">
      plotOneMonth
     </a>
@@ -288,7 +298,8 @@
 <h2>Import notebook dependencies<a class="headerlink" href="#import-notebook-dependencies" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
@@ -470,6 +481,61 @@
     <span class="n">PIOMAS_data</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">dataList</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">time</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">lonsP</span><span class="p">),</span> <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">latsP</span><span class="p">)},</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">PIOMAS_attrs</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">PIOMAS_data</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="getdriftdata">
+<h3>getDriftData<a class="headerlink" href="#getdriftdata" title="Permalink to this headline">¶</a></h3>
+<p>Gets weekly NSIDC sea ice drift data for the Arctic, resamples monthly, and returns a dataset</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getDriftData</span><span class="p">(</span><span class="n">dataPath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets weekly NSIDC sea ice drift data for the Arctic, resamples monthly, and returns a dataset</span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        dataPath (str): path to local directory of weekly drift data </span>
+
+<span class="sd">    Returns: </span>
+<span class="sd">        monthlyDrifts (xarray DataArray): sea ice drift data, resampled to monthly means, with descriptive coordinates and attributes</span>
+<span class="sd">        </span>
+<span class="sd">    Note: This function uses two different datasets from the NSIDC for drift in order to get the most recent data. Drift dataset from 1978-2018 was combined with quicklook drift dataset from 2019-present, maintaining attitributes of the 1978-2018 dataset</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">get_uv_from_xy</span><span class="p">(</span><span class="n">xdrift</span><span class="p">,</span> <span class="n">ydrift</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;convert the drift vectors to zonal/meridional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">lon</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.</span> <span class="c1">#convert longitudes to radians </span>
+        <span class="n">uvelT</span> <span class="o">=</span> <span class="n">ydrift</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="n">xdrift</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">vvelT</span> <span class="o">=</span> <span class="n">ydrift</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">-</span> <span class="n">xdrift</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="n">uvelT</span><span class="p">,</span> <span class="n">vvelT</span>
+    
+    <span class="c1">#combine nc weekly files into a single xarray dataset</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">dataPath</span> <span class="o">+</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dataPath</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dataPath</span> <span class="o">+</span> <span class="n">f</span><span class="p">)</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.nc&#39;</span><span class="p">)]</span>
+    <span class="n">weeklyDrifts</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="s1">&#39;time&#39;</span><span class="p">)</span>
+
+    <span class="c1">#get transformed u,v variables and add to dataset</span>
+    <span class="n">uvelT</span><span class="p">,</span> <span class="n">vvelT</span> <span class="o">=</span> <span class="n">get_uv_from_xy</span><span class="p">(</span><span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
+    <span class="n">weeklyDrifts</span> <span class="o">=</span> <span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">drifts_uT</span> <span class="o">=</span> <span class="n">uvelT</span><span class="p">,</span> <span class="n">drifts_vT</span> <span class="o">=</span> <span class="n">vvelT</span><span class="p">)</span>
+    <span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">drifts_uT</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s1">&#39;along-x component of the ice motion (u variable) converted to zonal/meridional&#39;</span><span class="p">}</span>
+    <span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">drifts_vT</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s1">&#39;along-y component of the ice motion (v variable) converted to zonal/meridional&#39;</span><span class="p">}</span>
+
+    <span class="c1">#resample to get monthly data </span>
+    <span class="n">monthlyDrifts</span> <span class="o">=</span> <span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;MS&#39;</span><span class="p">,</span> <span class="n">keep_attrs</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1">#convert to same time format as ICESat-2 </span>
+    <span class="n">monthlyDrifts</span> <span class="o">=</span> <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%m-</span><span class="si">%d</span><span class="s1">-%Y&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
+    
+    <span class="c1">#add attributes </span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">data_vars</span><span class="p">:</span> 
+        <span class="n">monthlyDrifts</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">weeklyDrifts</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="o">==</span> <span class="s1">&#39;drifts_uT&#39;</span> <span class="ow">or</span> <span class="n">var</span> <span class="o">==</span> <span class="s1">&#39;drifts_vT&#39;</span><span class="p">:</span> 
+            <span class="n">monthlyDrifts</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;NSIDC sea ice motion vectors&#39;</span>
+            <span class="n">monthlyDrifts</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cm/s&#39;</span>
+    <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;njkeeney comment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;drift dataset from 1978-2018 was combined with quicklook drift dataset from 2019-present, maintaining attitributes of the 1978-2018 dataset&#39;</span>
+    <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;citation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Tschudi, M., W. N. Meier, J. S. Stewart, C. Fowler, and J. Maslanik. 2019. Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors, Version 4. Weekly sea ice motion. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: https://doi.org/10.5067/INAWUWO7QH7B. July 2020.&#39;</span>
+    
+    <span class="k">return</span> <span class="n">monthlyDrifts</span>
 </pre></div>
 </div>
 </div>

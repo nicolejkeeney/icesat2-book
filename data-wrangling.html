@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Utils" href="utils.html" />
-    <link rel="prev" title="Historical ice thickness" href="PIOMAS.html" />
+    <link rel="prev" title="Sea ice drift" href="ice-drift.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -101,6 +101,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="PIOMAS.html">
    Historical ice thickness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ice-drift.html">
+   Sea ice drift
   </a>
  </li>
 </ul>
@@ -276,6 +281,11 @@
      PIOMAS sea ice thickness data
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nsidc-sea-ice-drift-data">
+     NSIDC sea ice drift data
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -323,6 +333,11 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regrid-nsidc-sea-ice-drift-data">
+     Regrid NSIDC sea ice drift data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#save-regridded-piomas-file-to-local-directory">
      Save regridded PIOMAS file to local directory
     </a>
@@ -364,6 +379,7 @@
 <li><p><a class="reference external" href="https://nsidc.org/data/polar-stereo/tools_masks.html#region_masks">NSIDC region mask</a> and <a class="reference external" href="https://nsidc.org/data/polar-stereo/tools_geo_pixel.html">coordinate</a> tools (psn25 v3)</p></li>
 <li><p><a class="reference external" href="https://cds.climate.copernicus.eu/cdsapp#%21/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview">ERA 5 climate renanalysis data</a></p></li>
 <li><p><a class="reference external" href="http://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/">PIOMAS mean monthly ice thickness</a></p></li>
+<li><p><a class="reference external" href="https://nsidc.org/data/nsidc-0116">NSIDC sea ice motion vectors</a></p></li>
 </ul>
 <p><strong>Output</strong>:</p>
 <ul class="simple">
@@ -586,6 +602,24 @@ import utils
 </div>
 </div>
 </div>
+<div class="section" id="nsidc-sea-ice-drift-data">
+<h3>NSIDC sea ice drift data<a class="headerlink" href="#nsidc-sea-ice-drift-data" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drifts</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getDriftData</span><span class="p">(</span><span class="n">drift_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Restrict data to winter months</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drifts</span> <span class="o">=</span> <span class="n">drifts</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="interpolate-missing-icesat-2-data">
 <h2>Interpolate missing ICESat-2 data<a class="headerlink" href="#interpolate-missing-icesat-2-data" title="Permalink to this headline">¶</a></h2>
@@ -744,6 +778,29 @@ import utils
 </div>
 </div>
 </div>
+<div class="section" id="regrid-nsidc-sea-ice-drift-data">
+<h3>Regrid NSIDC sea ice drift data<a class="headerlink" href="#regrid-nsidc-sea-ice-drift-data" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#project data to ICESat-2 map projection</span>
+<span class="n">xptsDRIFTS</span><span class="p">,</span> <span class="n">yptsDRIFTS</span> <span class="o">=</span> <span class="n">mapProj</span><span class="p">(</span><span class="n">drifts</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">drifts</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;drifts_uT&#39;</span><span class="p">,</span> <span class="s1">&#39;drifts_vT&#39;</span><span class="p">]:</span> 
+    <span class="c1">#regrid data by calling function</span>
+    <span class="n">driftsGridded</span> <span class="o">=</span> <span class="n">regridToICESat2</span><span class="p">(</span><span class="n">drifts</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="n">xptsDRIFTS</span><span class="p">,</span> <span class="n">yptsDRIFTS</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">)</span>
+    
+    <span class="c1">#create xarray DataArray object with descriptive coordinates </span>
+    <span class="n">driftsArray</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">driftsGridded</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">is2Lats</span><span class="p">),</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">is2Lons</span><span class="p">)})</span>
+    <span class="n">driftsArray</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">drifts</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span>
+    <span class="n">driftsArray</span> <span class="o">=</span> <span class="n">driftsArray</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">drifts</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+
+    <span class="c1">#add to ICESat-2 dataset</span>
+    <span class="n">is2</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">driftsArray</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="save-regridded-piomas-file-to-local-directory">
 <h3>Save regridded PIOMAS file to local directory<a class="headerlink" href="#save-regridded-piomas-file-to-local-directory" title="Permalink to this headline">¶</a></h3>
 <p>Add region mask as descriptive coordinates to the PIOMAS regridded DataArray and save file to local directory</p>
@@ -836,6 +893,8 @@ Data variables:
     ice_density_filled        (time, x, y) float32 nan nan nan ... nan nan nan
     t2m                       (time, x, y) float32 nan nan nan ... nan nan nan
     msdwlwrf                  (time, x, y) float32 nan nan nan ... nan nan nan
+    drifts_uT                 (time, x, y) float32 nan nan nan ... nan nan nan
+    drifts_vT                 (time, x, y) float32 nan nan nan ... nan nan nan
     PIOMAS_ice_thickness      (time, x, y) float32 0.0 0.0 0.0 ... 0.0 0.0 0.0
 Attributes:
     description:    data used in nicolejkeeney ICESat-2 jupyter book
@@ -895,7 +954,7 @@ Attributes:
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="PIOMAS.html" title="previous page">Historical ice thickness</a>
+    <a class='left-prev' id="prev-link" href="ice-drift.html" title="previous page">Sea ice drift</a>
     <a class='right-next' id="next-link" href="utils.html" title="next page">Utils</a>
 
     </div>

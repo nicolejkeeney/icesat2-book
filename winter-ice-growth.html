@@ -103,6 +103,11 @@
    Historical ice thickness
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ice-drift.html">
+   Sea ice drift
+  </a>
+ </li>
 </ul>
 <p class="caption">
  <span class="caption-text">
@@ -307,18 +312,7 @@
 import numpy as np
 import xarray as xr
 import pandas as pd
-import scipy.interpolate
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
-import pyproj
-from datetime import date
 import matplotlib.pyplot as plt
-import numpy.ma as ma
-
-#axes needed for plotting
-from matplotlib.axes import Axes
-from cartopy.mpl.geoaxes import GeoAxes
-GeoAxes._pcolormesh_patched = Axes.pcolormesh
 
 # Ignore warnings in the notebook to improve display
 # You might want to remove this when debugging/writing new code

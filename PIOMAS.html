@@ -38,7 +38,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Data wrangling" href="data-wrangling.html" />
+    <link rel="next" title="Sea ice drift" href="ice-drift.html" />
     <link rel="prev" title="Winter sea ice growth" href="winter-ice-growth.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -101,6 +101,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Historical ice thickness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ice-drift.html">
+   Sea ice drift
   </a>
  </li>
 </ul>
@@ -348,19 +353,8 @@
 import numpy as np
 import xarray as xr
 import pandas as pd
-import scipy.interpolate
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
-import pyproj
-from datetime import date
-import matplotlib.pyplot as plt
-import numpy.ma as ma
 import scipy.stats
-
-#axes needed for plotting
-from matplotlib.axes import Axes
-from cartopy.mpl.geoaxes import GeoAxes
-GeoAxes._pcolormesh_patched = Axes.pcolormesh
+import matplotlib.pyplot as plt
 
 # Ignore warnings in the notebook to improve display
 # You might want to remove this when debugging/writing new code
@@ -718,7 +712,7 @@ PIOdataset = xr.open_dataset(&#39;piomas-regridded-data.nc&#39;)
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="winter-ice-growth.html" title="previous page">Winter sea ice growth</a>
-    <a class='right-next' id="next-link" href="data-wrangling.html" title="next page">Data wrangling</a>
+    <a class='right-next' id="next-link" href="ice-drift.html" title="next page">Sea ice drift</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
