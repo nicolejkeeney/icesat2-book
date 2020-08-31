@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd 
 import xarray as xr
@@ -142,6 +143,55 @@ def getPIOMASData(dataPath, startYear = 1978, endYear = 2020):
     PIOMAS_data = xr.DataArray(dataList, dims = ['time','x','y'], coords = {'time': time, 'longitude': (('x','y'), lonsP), 'latitude': (('x','y'), latsP)}, attrs = PIOMAS_attrs)
     
     return PIOMAS_data
+
+
+
+def getDriftData(dataPath):
+    """Gets weekly NSIDC sea ice drift data for the Arctic, resamples monthly, and returns a dataset
+    
+    Args: 
+        dataPath (str): path to local directory of weekly drift data 
+
+    Returns: 
+        monthlyDrifts (xarray DataArray): sea ice drift data, resampled to monthly means, with descriptive coordinates and attributes
+        
+    Note: This function uses two different datasets from the NSIDC for drift in order to get the most recent data. Drift dataset from 1978-2018 was combined with quicklook drift dataset from 2019-present, maintaining attitributes of the 1978-2018 dataset
+    """
+    def get_uv_from_xy(xdrift, ydrift, lon):
+        """convert the drift vectors to zonal/meridional
+        """
+        alpha = lon*np.pi/180. #convert longitudes to radians 
+        uvelT = ydrift*np.sin(alpha) + xdrift*np.cos(alpha)
+        vvelT = ydrift*np.cos(alpha) - xdrift*np.sin(alpha) 
+        return uvelT, vvelT
+    
+    #combine nc weekly files into a single xarray dataset
+    files = [xr.open_dataset(dataPath + f) for f in os.listdir(dataPath) if os.path.isfile(dataPath + f) and f.endswith('.nc')]
+    weeklyDrifts = xr.concat(files, dim = 'time')
+
+    #get transformed u,v variables and add to dataset
+    uvelT, vvelT = get_uv_from_xy(weeklyDrifts.u, weeklyDrifts.v, weeklyDrifts.longitude)
+    weeklyDrifts = weeklyDrifts.assign(drifts_uT = uvelT, drifts_vT = vvelT)
+    weeklyDrifts.drifts_uT.attrs = {'description':'along-x component of the ice motion (u variable) converted to zonal/meridional'}
+    weeklyDrifts.drifts_vT.attrs = {'description':'along-y component of the ice motion (v variable) converted to zonal/meridional'}
+
+    #resample to get monthly data 
+    monthlyDrifts = weeklyDrifts.resample(time='MS', keep_attrs = True).mean()
+
+    #convert to same time format as ICESat-2 
+    monthlyDrifts = monthlyDrifts.assign_coords(time = [pd.to_datetime(date.strftime('%m-%d-%Y')) for date in monthlyDrifts.time.values])
+    
+    #add attributes 
+    for var in monthlyDrifts.data_vars: 
+        monthlyDrifts[var].attrs = weeklyDrifts[var].attrs
+        if var == 'drifts_uT' or var == 'drifts_vT': 
+            monthlyDrifts[var].attrs['long_name'] = 'NSIDC sea ice motion vectors'
+            monthlyDrifts[var].attrs['units'] = 'cm/s'
+    monthlyDrifts.attrs['njkeeney comment'] = 'drift dataset from 1978-2018 was combined with quicklook drift dataset from 2019-present, maintaining attitributes of the 1978-2018 dataset'
+    monthlyDrifts.attrs['citation'] = 'Tschudi, M., W. N. Meier, J. S. Stewart, C. Fowler, and J. Maslanik. 2019. Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors, Version 4. Weekly sea ice motion. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: https://doi.org/10.5067/INAWUWO7QH7B. July 2020.'
+    
+    return monthlyDrifts
+
 
 
 
