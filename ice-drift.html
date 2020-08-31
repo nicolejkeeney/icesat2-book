@@ -274,7 +274,7 @@
 </div>
 <div class="section" id="import-notebook-dependencies">
 <h2>Import notebook dependencies<a class="headerlink" href="#import-notebook-dependencies" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import os
 import numpy as np
@@ -312,67 +312,10 @@ import utils
 <div class="section" id="load-data-into-notebook">
 <h2>Load data into notebook<a class="headerlink" href="#load-data-into-notebook" title="Permalink to this headline">¶</a></h2>
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
-<div class="cell docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
 dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Copying gs://icesat2-book-data/icesat2-book-winter-data.nc...
-/ [0/1 files][    0.0 B/157.1 MiB]   0% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][ 14.2 MiB/157.1 MiB]   9% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>| [0/1 files][ 40.7 MiB/157.1 MiB]  25% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][ 71.4 MiB/157.1 MiB]  45% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [0/1 files][102.3 MiB/157.1 MiB]  65% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>|
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>/ [0/1 files][119.3 MiB/157.1 MiB]  75% Done                                    
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>-
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>- [0/1 files][149.0 MiB/157.1 MiB]  94% Done                                    
-\
-</pre></div>
-</div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>\ [1/1 files][157.1 MiB/157.1 MiB] 100% Done                                    
-
-Operation completed over 1 objects/157.1 MiB.                                    
 </pre></div>
 </div>
 </div>
@@ -408,7 +351,7 @@ Operation completed over 1 objects/157.1 MiB.
     <span class="n">transform</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
     
     <span class="c1">#initialize the figure and axes </span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span> <span class="o">=</span> <span class="n">proj</span><span class="p">)</span>
     
     <span class="c1">#define arguments if not inputted </span>
