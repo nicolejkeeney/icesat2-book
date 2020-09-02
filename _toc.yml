@@ -2,15 +2,14 @@
 - part: NOTEBOOKS
   chapters: 
      - file: mapping
-     - file: regional-analysis
-     - file: winter-comparison
-     - file: winter-ice-growth
+     - file: regional_analysis
+     - file: winter_comparison
+     - file: winter_ice_growth
      - file: PIOMAS
-     - file: ice-drift
+     - file: ice_drift
 - part: MISC
   chapters: 
-     - file: data-wrangling
-     - file: utils
+     - file: data_wrangling
 
 
 

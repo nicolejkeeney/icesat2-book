@@ -10,8 +10,16 @@ latex:
 repository:
   url                       : https://github.com/nicolejkeeney/icesat2-book
   branch                    : master  
+
 html:
-  use_repository_button: true
+  use_repository_button     : true
+  use_issues_button         : true
+  use_edit_page_button      : true
+  favicon: logo.png
+
+execute:
+  allow_errors              : false
+
 launch_buttons:
   colab_url: "https://colab.research.google.com"
 
