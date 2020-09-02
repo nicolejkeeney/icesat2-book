@@ -1,7 +1,7 @@
 # icesat2-book
 
 ### Project description
-Code for ICESat-2 Jupyter Book, created during Nicole's summer 2020 internship at NASA GSFC supervised by Alek Petty.<br><br> Link to jupyter book: (https://nicolejkeeney.github.io/icesat2-book/home.html)[https://nicolejkeeney.github.io/icesat2-book/home.html]
+Code for building the ICESat-2 Jupyter Book.<br><br> Link to jupyter book: (https://nicolejkeeney.github.io/icesat2-book/home.html)[https://nicolejkeeney.github.io/icesat2-book/home.html]
 
 ### Steps to build book 
  1) Delete **build** and **pycache** folders
