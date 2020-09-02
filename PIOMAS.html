@@ -400,18 +400,31 @@
 <div class="section" id="import-functions-from-other-notebooks-in-the-jupyter-book">
 <h3>Import functions from other notebooks in the jupyter book<a class="headerlink" href="#import-functions-from-other-notebooks-in-the-jupyter-book" title="Permalink to this headline">¶</a></h3>
 <p>This is done using the nbimporter packed installed in the cell above.</p>
-<div class="cell docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">regional_analysis</span> <span class="kn">import</span> <span class="n">restrictRegionally</span>
-<span class="kn">from</span> <span class="nn">mapping</span> <span class="kn">import</span> <span class="n">getWinterDateRange</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil cp gs://icesat2-book-data/regional_analysis.ipynb ./
+from regional_analysis import restrictRegionally
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Importing Jupyter notebook from regional_analysis.ipynb
-</pre></div>
 </div>
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Importing Jupyter notebook from mapping.ipynb
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#helper function used in notebook</span>
+<span class="k">def</span> <span class="nf">getWinterDateRange</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot; Gets date range for winter season/s</span>
+<span class="sd">    Args: </span>
+<span class="sd">        start_year (int): start year </span>
+<span class="sd">        end_year (int): end year </span>
+<span class="sd">        </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        winters (list): list of dates for all winter seasons in the input range (i.e: [&#39;1980-11&#39;,&#39;1980-12&#39;,&#39;1981-01&#39;,</span>
+<span class="sd">         &#39;1981-02&#39;,&#39;1981-03&#39;,&#39;1981-04&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">winters</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">winters</span> <span class="o">+=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-11&#39;</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-04&#39;</span><span class="p">,</span> <span class="n">freq</span> <span class="o">=</span> <span class="s1">&#39;MS&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">winters</span>
 </pre></div>
 </div>
 </div>
@@ -627,7 +640,7 @@ PIOdataset = xr.open_dataset(&#39;piomas-regridded-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/PIOMAS_33_0.png" src="_images/PIOMAS_33_0.png" />
+<img alt="_images/PIOMAS_34_0.png" src="_images/PIOMAS_34_0.png" />
 </div>
 </div>
 </div>
@@ -641,7 +654,7 @@ PIOdataset = xr.open_dataset(&#39;piomas-regridded-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/PIOMAS_35_0.png" src="_images/PIOMAS_35_0.png" />
+<img alt="_images/PIOMAS_36_0.png" src="_images/PIOMAS_36_0.png" />
 </div>
 </div>
 </div>
@@ -675,7 +688,7 @@ PIOdataset = xr.open_dataset(&#39;piomas-regridded-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/PIOMAS_37_0.png" src="_images/PIOMAS_37_0.png" />
+<img alt="_images/PIOMAS_38_0.png" src="_images/PIOMAS_38_0.png" />
 </div>
 </div>
 </div>
@@ -724,7 +737,7 @@ PIOdataset = xr.open_dataset(&#39;piomas-regridded-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/PIOMAS_42_0.png" src="_images/PIOMAS_42_0.png" />
+<img alt="_images/PIOMAS_43_0.png" src="_images/PIOMAS_43_0.png" />
 </div>
 </div>
 </div>
