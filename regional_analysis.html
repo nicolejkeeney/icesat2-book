@@ -225,13 +225,6 @@
   <a class="reference internal nav-link" href="#import-notebook-dependencies">
    Import notebook dependencies
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#import-functions-from-other-notebooks-in-the-jupyter-book">
-     Import functions from other notebooks in the jupyter book
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#load-data-into-notebook">
@@ -256,11 +249,6 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#call-function-to-restrict-the-data-regionally">
    Call function to restrict the data regionally
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#check-that-data-was-restricted-to-the-correct-regions">
-   Check that data was restricted to the correct regions
   </a>
  </li>
 </ul>
@@ -296,16 +284,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
-<span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
-<span class="kn">import</span> <span class="nn">pyproj</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="k">as</span> <span class="nn">ma</span>
-
-<span class="c1">#axes needed for plotting</span>
-<span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
-<span class="kn">from</span> <span class="nn">cartopy.mpl.geoaxes</span> <span class="kn">import</span> <span class="n">GeoAxes</span>
-<span class="n">GeoAxes</span><span class="o">.</span><span class="n">_pcolormesh_patched</span> <span class="o">=</span> <span class="n">Axes</span><span class="o">.</span><span class="n">pcolormesh</span>
 
 <span class="c1"># Ignore warnings in the notebook to improve display</span>
 <span class="c1"># You might want to remove this when debugging/writing new code</span>
@@ -315,26 +294,7 @@
 <span class="c1">#increase resolution for notebook outputs</span>
 <span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span> 
 <span class="o">%</span><span class="n">config</span> <span class="n">InlineBackend</span><span class="o">.</span><span class="n">figure_format</span> <span class="o">=</span> <span class="s1">&#39;retina&#39;</span> 
-
-<span class="c1">#import package that allows you to use functions from other jupyter notebooks</span>
-<span class="kn">import</span> <span class="nn">nbimporter</span>
 </pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="import-functions-from-other-notebooks-in-the-jupyter-book">
-<h3>Import functions from other notebooks in the jupyter book<a class="headerlink" href="#import-functions-from-other-notebooks-in-the-jupyter-book" title="Permalink to this headline">¶</a></h3>
-<p>This is done using the nbimporter packed installed in the cell above.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mapping</span> <span class="kn">import</span> <span class="n">plotOneMonth</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Importing Jupyter notebook from mapping.ipynb
-</pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -375,74 +335,74 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_0a06fd4a_ece2_11ea_95a2_784f43711573" ><thead>    <tr>        <th class="col_heading level0 col0" >key</th>        <th class="col_heading level0 col1" >label</th>    </tr></thead><tbody>
+</style><table id="T_08306822_ece6_11ea_8f6b_784f43711573" ><thead>    <tr>        <th class="col_heading level0 col0" >key</th>        <th class="col_heading level0 col1" >label</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row0_col0" class="data row0 col0" >1</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row0_col1" class="data row0 col1" >non-region oceans</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row0_col0" class="data row0 col0" >1</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row0_col1" class="data row0 col1" >non-region oceans</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row1_col0" class="data row1 col0" >2</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row1_col1" class="data row1 col1" >Sea of Okhotsk and Japan</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row1_col0" class="data row1 col0" >2</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row1_col1" class="data row1 col1" >Sea of Okhotsk and Japan</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row2_col0" class="data row2 col0" >3</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row2_col1" class="data row2 col1" >Bering Sea</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row2_col0" class="data row2 col0" >3</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row2_col1" class="data row2 col1" >Bering Sea</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row3_col0" class="data row3 col0" >4</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row3_col1" class="data row3 col1" >Hudson Bay</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row3_col0" class="data row3 col0" >4</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row3_col1" class="data row3 col1" >Hudson Bay</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row4_col0" class="data row4 col0" >5</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row4_col1" class="data row4 col1" >Gulf of St. Lawrence</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row4_col0" class="data row4 col0" >5</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row4_col1" class="data row4 col1" >Gulf of St. Lawrence</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row5_col0" class="data row5 col0" >6</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row5_col1" class="data row5 col1" >Baffin Bay, Davis Strait & Labrador Sea</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row5_col0" class="data row5 col0" >6</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row5_col1" class="data row5 col1" >Baffin Bay, Davis Strait & Labrador Sea</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row6_col0" class="data row6 col0" >7</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row6_col1" class="data row6 col1" >Greenland Sea</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row6_col0" class="data row6 col0" >7</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row6_col1" class="data row6 col1" >Greenland Sea</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row7_col0" class="data row7 col0" >8</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row7_col1" class="data row7 col1" >Barents Seas</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row7_col0" class="data row7 col0" >8</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row7_col1" class="data row7 col1" >Barents Seas</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row8_col0" class="data row8 col0" >9</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row8_col1" class="data row8 col1" >Kara Sea</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row8_col0" class="data row8 col0" >9</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row8_col1" class="data row8 col1" >Kara Sea</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row9_col0" class="data row9 col0" >10</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row9_col1" class="data row9 col1" >Laptev Sea</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row9_col0" class="data row9 col0" >10</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row9_col1" class="data row9 col1" >Laptev Sea</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row10_col0" class="data row10 col0" >11</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row10_col1" class="data row10 col1" >East Siberian Sea</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row10_col0" class="data row10 col0" >11</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row10_col1" class="data row10 col1" >East Siberian Sea</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row11_col0" class="data row11 col0" >12</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row11_col1" class="data row11 col1" >Chukchi Sea</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row11_col0" class="data row11 col0" >12</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row11_col1" class="data row11 col1" >Chukchi Sea</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row12_col0" class="data row12 col0" >13</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row12_col1" class="data row12 col1" >Beaufort Sea</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row12_col0" class="data row12 col0" >13</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row12_col1" class="data row12 col1" >Beaufort Sea</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row13_col0" class="data row13 col0" >14</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row13_col1" class="data row13 col1" >Canadian Archipelago</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row13_col0" class="data row13 col0" >14</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row13_col1" class="data row13 col1" >Canadian Archipelago</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row14_col0" class="data row14 col0" >15</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row14_col1" class="data row14 col1" >Arctic Ocean</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row14_col0" class="data row14 col0" >15</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row14_col1" class="data row14 col1" >Arctic Ocean</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row15_col0" class="data row15 col0" >20</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row15_col1" class="data row15 col1" >Land</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row15_col0" class="data row15 col0" >20</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row15_col1" class="data row15 col1" >Land</td>
             </tr>
             <tr>
-                                <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row16_col0" class="data row16 col0" >21</td>
-                        <td id="T_0a06fd4a_ece2_11ea_95a2_784f43711573row16_col1" class="data row16 col1" >Coast</td>
+                                <td id="T_08306822_ece6_11ea_8f6b_784f43711573row16_col0" class="data row16 col0" >21</td>
+                        <td id="T_08306822_ece6_11ea_8f6b_784f43711573row16_col1" class="data row16 col1" >Coast</td>
             </tr>
     </tbody></table></div></div>
 </div>
@@ -569,20 +529,6 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Regions selected: Inner Arctic
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="check-that-data-was-restricted-to-the-correct-regions">
-<h2>Check that data was restricted to the correct regions<a class="headerlink" href="#check-that-data-was-restricted-to-the-correct-regions" title="Permalink to this headline">¶</a></h2>
-<p>Display a map of the region the data has been restricted to using the plotting function <span style="color:darkmagenta; font-family: Courier">plotOneMonth</span>, defined in the previous mapping notebook.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">,</span> <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Jan 2019&#39;</span><span class="p">,</span> <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/regional_analysis_18_0.png" src="_images/regional_analysis_18_0.png" />
 </div>
 </div>
 </div>

@@ -232,11 +232,6 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#restrict-dataset-to-region-of-interest">
-   Restrict dataset to region of interest
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#plot-one-month-of-data">
    Plot one month of data
   </a>
@@ -352,7 +347,10 @@
 
 <span class="c1">#increase resolution for notebook outputs</span>
 <span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span> 
-<span class="o">%</span><span class="n">config</span> <span class="n">InlineBackend</span><span class="o">.</span><span class="n">figure_format</span> <span class="o">=</span> <span class="s1">&#39;retina&#39;</span> 
+<span class="o">%</span><span class="n">config</span> <span class="n">InlineBackend</span><span class="o">.</span><span class="n">figure_format</span> <span class="o">=</span> <span class="s1">&#39;retina&#39;</span>
+
+<span class="c1">#import package that allows you to use functions from other jupyter notebooks</span>
+<span class="kn">import</span> <span class="nn">nbimporter</span>
 </pre></div>
 </div>
 </div>
@@ -365,17 +363,6 @@
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
 dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="restrict-dataset-to-region-of-interest">
-<h2>Restrict dataset to region of interest<a class="headerlink" href="#restrict-dataset-to-region-of-interest" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#myKeys = [10,11,12,13,15] #Inner Arctic</span>
-<span class="c1">#dataset = restrictRegionally(dataset, regionKeyList = myKeys)</span>
 </pre></div>
 </div>
 </div>
@@ -461,6 +448,36 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/mapping_14_0.png" src="_images/mapping_14_0.png" />
+</div>
+</div>
+<p>You can also restrict the data by using the <span style="color:darkmagenta; font-family: Courier">restrictRegionally</span> function from the <a class="reference external" href="https://nicolejkeeney.github.io/icesat2-book/regional_analysis.html">regional analysis</a> notebook.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#import notebook from jupyter bucket 
+!gsutil cp gs://icesat2-book-data/regional_analysis.ipynb ./
+from regional_analysis import restrictRegionally
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define a list of keys corresponding to the region of interest</span>
+<span class="n">regionKeyList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span> <span class="c1">#Inner Arctic</span>
+
+<span class="c1">#restrict data to that region</span>
+<span class="n">regionalDataset</span> <span class="o">=</span> <span class="n">restrictRegionally</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">regionKeyList</span><span class="p">)</span>
+
+<span class="c1">#plot regional data</span>
+<span class="n">plotOneMonth</span><span class="p">(</span><span class="n">regionalDataset</span><span class="p">,</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">,</span> <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Feb 2019&#39;</span><span class="p">,</span> <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span>  <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Regions selected: Inner Arctic
+</pre></div>
+</div>
+<img alt="_images/mapping_17_1.png" src="_images/mapping_17_1.png" />
 </div>
 </div>
 </div>
@@ -593,7 +610,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_23_0.png" src="_images/mapping_23_0.png" />
+<img alt="_images/mapping_26_0.png" src="_images/mapping_26_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -605,7 +622,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_24_0.png" src="_images/mapping_24_0.png" />
+<img alt="_images/mapping_27_0.png" src="_images/mapping_27_0.png" />
 </div>
 </div>
 </div>
@@ -620,7 +637,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_26_0.png" src="_images/mapping_26_0.png" />
+<img alt="_images/mapping_29_0.png" src="_images/mapping_29_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -632,7 +649,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_27_0.png" src="_images/mapping_27_0.png" />
+<img alt="_images/mapping_30_0.png" src="_images/mapping_30_0.png" />
 </div>
 </div>
 </div>
@@ -648,7 +665,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_29_0.png" src="_images/mapping_29_0.png" />
+<img alt="_images/mapping_32_0.png" src="_images/mapping_32_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -660,7 +677,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_30_0.png" src="_images/mapping_30_0.png" />
+<img alt="_images/mapping_33_0.png" src="_images/mapping_33_0.png" />
 </div>
 </div>
 </div>
@@ -675,7 +692,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_32_0.png" src="_images/mapping_32_0.png" />
+<img alt="_images/mapping_35_0.png" src="_images/mapping_35_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -687,7 +704,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_33_0.png" src="_images/mapping_33_0.png" />
+<img alt="_images/mapping_36_0.png" src="_images/mapping_36_0.png" />
 </div>
 </div>
 </div>
@@ -702,7 +719,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_35_0.png" src="_images/mapping_35_0.png" />
+<img alt="_images/mapping_38_0.png" src="_images/mapping_38_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -714,7 +731,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_36_0.png" src="_images/mapping_36_0.png" />
+<img alt="_images/mapping_39_0.png" src="_images/mapping_39_0.png" />
 </div>
 </div>
 </div>
@@ -729,7 +746,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_38_0.png" src="_images/mapping_38_0.png" />
+<img alt="_images/mapping_41_0.png" src="_images/mapping_41_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -741,12 +758,13 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_39_0.png" src="_images/mapping_39_0.png" />
+<img alt="_images/mapping_42_0.png" src="_images/mapping_42_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="nsidc-sea-ice-motion-vectors">
 <h4>NSIDC sea ice motion vectors<a class="headerlink" href="#nsidc-sea-ice-motion-vectors" title="Permalink to this headline">¶</a></h4>
+<p>See the <a class="reference external" href="https://nicolejkeeney.github.io/icesat2-book/ice_drift.html">sea ice drift</a> notebook for more information on how to plot this variable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#winter 2018-2019</span>
@@ -756,7 +774,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_41_0.png" src="_images/mapping_41_0.png" />
+<img alt="_images/mapping_44_0.png" src="_images/mapping_44_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -768,7 +786,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_42_0.png" src="_images/mapping_42_0.png" />
+<img alt="_images/mapping_45_0.png" src="_images/mapping_45_0.png" />
 </div>
 </div>
 </div>
