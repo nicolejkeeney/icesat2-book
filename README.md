@@ -1,7 +1,7 @@
 # icesat2-book
 
 ### Project description
-Code for building the ICESat-2 Jupyter Book.<br><br> Link to jupyter book: (https://nicolejkeeney.github.io/icesat2-book/home.html)[https://nicolejkeeney.github.io/icesat2-book/home.html]
+Code for building the ICESat-2 Jupyter Book.<br><br> Link to jupyter book: [https://nicolejkeeney.github.io/icesat2-book/home.html](https://nicolejkeeney.github.io/icesat2-book/home.html)
 
 ### Steps to build book 
  1) Delete **build** and **pycache** folders
