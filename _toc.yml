@@ -1,13 +1,17 @@
-- file: home
-- file: notebooks_intro
-  sections: 
+- part: HOME
+  chapters: 
+     - file: home
+- part: NOTEBOOKS
+  chapters: 
      - file: mapping
      - file: regional_analysis
      - file: winter_comparison
      - file: winter_ice_growth
      - file: PIOMAS
      - file: ice_drift
-- file: data_wrangling
+- part: MISC
+  chapters: 
+     - file: data_wrangling
 
 
 
