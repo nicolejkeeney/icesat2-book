@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Regional analysis &#8212; ICESat-2 Sea Ice Thickness Data Analysis and Visualization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
@@ -24,11 +25,8 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -73,7 +71,63 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <p class="caption">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="home.html">
+   ICESat-2 Sea Ice Thickness Data Analysis and Visualization
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  HOME
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="home.html">
+   ICESat-2 Sea Ice Thickness Data Analysis and Visualization
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="mapping.html">
+     Mapping
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Regional analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="winter_comparison.html">
+     Winter comparison
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="winter_ice_growth.html">
+     Winter sea ice growth
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="PIOMAS.html">
+     Historical ice thickness
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ice_drift.html">
+     Sea ice drift
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="data_wrangling.html">
+     Data wrangling
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
  <span class="caption-text">
   NOTEBOOKS
  </span>
@@ -126,6 +180,10 @@
 </nav>
 
  <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
 
 </div>
 
@@ -201,6 +259,12 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
+        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/regional_analysis.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
         
         
         <a class="colab-button" href="https://colab.research.google.com/github/nicolejkeeney/icesat2-book/blob/master/regional_analysis.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
@@ -263,10 +327,10 @@
                 
   <div class="section" id="regional-analysis">
 <h1>Regional analysis<a class="headerlink" href="#regional-analysis" title="Permalink to this headline">¶</a></h1>
-<p>Maybe you’re just interested in a particular region of the Arctic. Here, we want to filter our dataset to only include data from that region. We can do this using the NSIDC region mask for the Arctic, which is included in the NETCDF file available in the jupyter bucket. The function used in this notebook relies on the NSIDC region mask for the arctic included in the NETCDF from the jupyter book’s google bucket, where the function is also available as part of the utils.py script.</p>
+<p>Maybe you’re just interested in a particular region of the Arctic. Here, we want to filter our dataset to only include data from that region. We can do this using the NSIDC region mask for the Arctic, which is included in the xarray dataset available in the jupyter bucket. The function used in this notebook relies on the <a class="reference external" href="https://nsidc.org/data/polar-stereo/tools_masks.html#region_masks">NSIDC region mask for the Arctic</a> included in the xarray dataset from the jupyter book’s google bucket, where the function is also available as part of the utils.py script.</p>
 <p><strong>Input</strong>:</p>
 <ul class="simple">
-<li><p>NETCDF4 file from the jupyter book’s google bucket</p></li>
+<li><p>xarray dataset from the jupyter book’s google bucket</p></li>
 </ul>
 <p><strong>Output</strong>:</p>
 <ul class="simple">
@@ -280,7 +344,7 @@
 <h2>Import notebook dependencies<a class="headerlink" href="#import-notebook-dependencies" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -292,8 +356,8 @@
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
  
 <span class="c1">#increase resolution for notebook outputs</span>
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span> 
-<span class="o">%</span><span class="n">config</span> <span class="n">InlineBackend</span><span class="o">.</span><span class="n">figure_format</span> <span class="o">=</span> <span class="s1">&#39;retina&#39;</span> 
+<span class="o">%</span><span class="k">matplotlib</span> inline 
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39; 
 </pre></div>
 </div>
 </div>
@@ -304,8 +368,8 @@
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
-dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-winter-data.nc&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -320,7 +384,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#get region mask attributes as a dictionary object </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#get region mask attributes as a dictionary object </span>
 <span class="n">regionMask</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">region_mask</span><span class="o">.</span><span class="n">attrs</span>
 
 <span class="c1">#get region keys and labels</span>
@@ -335,74 +399,74 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style  type="text/css" >
-</style><table id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573" ><thead>    <tr>        <th class="col_heading level0 col0" >key</th>        <th class="col_heading level0 col1" >label</th>    </tr></thead><tbody>
+</style><table id="T_100d99a0_efd1_11ea_80a2_acde48001122" ><thead>    <tr>        <th class="col_heading level0 col0" >key</th>        <th class="col_heading level0 col1" >label</th>    </tr></thead><tbody>
                 <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row0_col0" class="data row0 col0" >1</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row0_col1" class="data row0 col1" >non-region oceans</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row0_col0" class="data row0 col0" >1</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row0_col1" class="data row0 col1" >non-region oceans</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row1_col0" class="data row1 col0" >2</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row1_col1" class="data row1 col1" >Sea of Okhotsk and Japan</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row1_col0" class="data row1 col0" >2</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row1_col1" class="data row1 col1" >Sea of Okhotsk and Japan</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row2_col0" class="data row2 col0" >3</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row2_col1" class="data row2 col1" >Bering Sea</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row2_col0" class="data row2 col0" >3</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row2_col1" class="data row2 col1" >Bering Sea</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row3_col0" class="data row3 col0" >4</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row3_col1" class="data row3 col1" >Hudson Bay</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row3_col0" class="data row3 col0" >4</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row3_col1" class="data row3 col1" >Hudson Bay</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row4_col0" class="data row4 col0" >5</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row4_col1" class="data row4 col1" >Gulf of St. Lawrence</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row4_col0" class="data row4 col0" >5</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row4_col1" class="data row4 col1" >Gulf of St. Lawrence</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row5_col0" class="data row5 col0" >6</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row5_col1" class="data row5 col1" >Baffin Bay, Davis Strait & Labrador Sea</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row5_col0" class="data row5 col0" >6</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row5_col1" class="data row5 col1" >Baffin Bay, Davis Strait & Labrador Sea</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row6_col0" class="data row6 col0" >7</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row6_col1" class="data row6 col1" >Greenland Sea</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row6_col0" class="data row6 col0" >7</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row6_col1" class="data row6 col1" >Greenland Sea</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row7_col0" class="data row7 col0" >8</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row7_col1" class="data row7 col1" >Barents Seas</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row7_col0" class="data row7 col0" >8</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row7_col1" class="data row7 col1" >Barents Seas</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row8_col0" class="data row8 col0" >9</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row8_col1" class="data row8 col1" >Kara Sea</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row8_col0" class="data row8 col0" >9</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row8_col1" class="data row8 col1" >Kara Sea</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row9_col0" class="data row9 col0" >10</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row9_col1" class="data row9 col1" >Laptev Sea</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row9_col0" class="data row9 col0" >10</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row9_col1" class="data row9 col1" >Laptev Sea</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row10_col0" class="data row10 col0" >11</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row10_col1" class="data row10 col1" >East Siberian Sea</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row10_col0" class="data row10 col0" >11</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row10_col1" class="data row10 col1" >East Siberian Sea</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row11_col0" class="data row11 col0" >12</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row11_col1" class="data row11 col1" >Chukchi Sea</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row11_col0" class="data row11 col0" >12</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row11_col1" class="data row11 col1" >Chukchi Sea</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row12_col0" class="data row12 col0" >13</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row12_col1" class="data row12 col1" >Beaufort Sea</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row12_col0" class="data row12 col0" >13</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row12_col1" class="data row12 col1" >Beaufort Sea</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row13_col0" class="data row13 col0" >14</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row13_col1" class="data row13 col1" >Canadian Archipelago</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row13_col0" class="data row13 col0" >14</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row13_col1" class="data row13 col1" >Canadian Archipelago</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row14_col0" class="data row14 col0" >15</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row14_col1" class="data row14 col1" >Arctic Ocean</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row14_col0" class="data row14 col0" >15</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row14_col1" class="data row14 col1" >Arctic Ocean</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row15_col0" class="data row15 col0" >20</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row15_col1" class="data row15 col1" >Land</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row15_col0" class="data row15 col0" >20</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row15_col1" class="data row15 col1" >Land</td>
             </tr>
             <tr>
-                                <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row16_col0" class="data row16 col0" >21</td>
-                        <td id="T_8f72dc3a_ee16_11ea_aaa4_784f43711573row16_col1" class="data row16 col1" >Coast</td>
+                                <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row16_col0" class="data row16 col0" >21</td>
+                        <td id="T_100d99a0_efd1_11ea_80a2_acde48001122row16_col1" class="data row16 col1" >Coast</td>
             </tr>
     </tbody></table></div></div>
 </div>
@@ -418,7 +482,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">regionKeyList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span> <span class="c1">#Inner Arctic</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regionKeyList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span> <span class="c1">#Inner Arctic</span>
 <span class="c1">#regionKeyList = [13] #Beaufort Sea</span>
 <span class="c1">#regionKeyList = [10] #Laptev Sea</span>
 <span class="c1">#regionKeyList = list(tbl[&#39;key&#39;]) #if you want to keep all regions</span>
@@ -446,7 +510,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">restrictRegionally</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">regionKeyList</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">restrictRegionally</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">regionKeyList</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot;Restrict dataset to input regions.</span>
 <span class="sd">    </span>
 <span class="sd">    Args: </span>
@@ -517,7 +581,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 <h2>Call function to restrict the data regionally<a class="headerlink" href="#call-function-to-restrict-the-data-regionally" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define a list of keys corresponding to the region of interest</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#define a list of keys corresponding to the region of interest</span>
 <span class="n">regionKeyList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span> <span class="c1">#Inner Arctic</span>
 
 <span class="c1">#restrict data to that region</span>
@@ -526,7 +590,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Regions selected: Inner Arctic
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Regions selected: Inner Arctic
 </pre></div>
 </div>
 </div>
@@ -543,16 +607,16 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "is2intenv"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "is2intenv",
+            kernelName: "python3",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'is2intenv'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
