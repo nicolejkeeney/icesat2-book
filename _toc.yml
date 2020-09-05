@@ -1,6 +1,4 @@
-- part: HOME
-  chapters: 
-     - file: home
+- file: home
 - part: NOTEBOOKS
   chapters: 
      - file: mapping
