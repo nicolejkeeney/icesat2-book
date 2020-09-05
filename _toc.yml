@@ -1,4 +1,5 @@
 - file: home
+- section: home
 - part: NOTEBOOKS
   chapters: 
      - file: mapping

@@ -1,14 +1,13 @@
 # Mapping
 
-This notebook uses the cartopy package to generate maps of data variables of interest in the Arctic.
+This notebook uses the cartopy package to generate maps of the data variables of interest across the Arctic Ocean. It uses data contained in the xarray file generated in the Data Wrangling notebook with all data provided on the same Polar Stereographic grid to simplify the analysis/mapping.
 
- 
 **Input**:
- - NETCDF4 file from the jupyter book's google bucket
+ - NETCDF4 xarray file hosted in a google bucket
  
  
  **Output**: 
-  - Maps of sea ice thickness and sea ice type in the Arctic
+  - Maps (e.g. sea ice thickness and ice type) across the Arctic
 
 ```{tip}
 Try running this notebook in Google Colab! Toggle over the rocketship icon at the top of the page and click Colab to open a new window and run the notebook. <br><br>To run a single cell, type **Shift+Enter**. To run the whole notebook, under **Runtime** click **Run all**. Note that you will have to run the notebook from the very beginning and load all the Google Colab dependencies for the code to work.

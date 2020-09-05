@@ -1,0 +1,14 @@
+name: intenv_lasttry
+dependencies:
+  - python=3.7
+  - numpy
+  - scipy
+  - pandas
+  - xarray
+  - netCDF4
+  - basemap
+  - dask
+  - matplotlib
+  - h5py
+  - more-itertools
+  - cartopy

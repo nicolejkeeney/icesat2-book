@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Mapping &#8212; ICESat-2 Sea Ice Data Analysis and Visualization</title>
+    <title>Mapping &#8212; ICESat-2 Sea Ice Thickness Data Analysis and Visualization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
@@ -62,7 +62,7 @@
   <img src="_static/logo.png" class="logo" alt="logo">
   
   
-  <h1 class="site-logo" id="site-title">ICESat-2 Sea Ice Data Analysis and Visualization</h1>
+  <h1 class="site-logo" id="site-title">ICESat-2 Sea Ice Thickness Data Analysis and Visualization</h1>
   
 </a>
 </div>
@@ -307,14 +307,14 @@
                 
   <div class="section" id="mapping">
 <h1>Mapping<a class="headerlink" href="#mapping" title="Permalink to this headline">¶</a></h1>
-<p>This notebook uses the cartopy package to generate maps of data variables of interest in the Arctic.</p>
+<p>This notebook uses the cartopy package to generate maps of the data variables of interest across the Arctic Ocean. It uses data contained in the xarray file generated in the Data Wrangling notebook with all data provided on the same Polar Stereographic grid to simplify the analysis/mapping.</p>
 <p><strong>Input</strong>:</p>
 <ul class="simple">
-<li><p>NETCDF4 file from the jupyter book’s google bucket</p></li>
+<li><p>NETCDF4 xarray file hosted in a google bucket</p></li>
 </ul>
 <p><strong>Output</strong>:</p>
 <ul class="simple">
-<li><p>Maps of sea ice thickness and sea ice type in the Arctic</p></li>
+<li><p>Maps (e.g. sea ice thickness and ice type) across the Arctic</p></li>
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -804,16 +804,16 @@ from regional_analysis import restrictRegionally
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "is2intenv"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "is2intenv",
+            kernelName: "python3",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'is2intenv'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
