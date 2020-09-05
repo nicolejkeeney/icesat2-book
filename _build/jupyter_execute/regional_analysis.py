@@ -1,9 +1,9 @@
 # Regional analysis
 
-Maybe you're just interested in a particular region of the Arctic. Here, we want to filter our dataset to only include data from that region. We can do this using the NSIDC region mask for the Arctic, which is included in the NETCDF file available in the jupyter bucket. The function used in this notebook relies on the NSIDC region mask for the arctic included in the NETCDF from the jupyter book's google bucket, where the function is also available as part of the utils.py script. 
+Maybe you're just interested in a particular region of the Arctic. Here, we want to filter our dataset to only include data from that region. We can do this using the NSIDC region mask for the Arctic, which is included in the xarray dataset available in the jupyter bucket. The function used in this notebook relies on the [NSIDC region mask for the Arctic](https://nsidc.org/data/polar-stereo/tools_masks.html#region_masks) included in the xarray dataset from the jupyter book's google bucket, where the function is also available as part of the utils.py script. 
  
 **Input**:
- - NETCDF4 file from the jupyter book's google bucket
+ - xarray dataset from the jupyter book's google bucket
  
  
  **Output**: 

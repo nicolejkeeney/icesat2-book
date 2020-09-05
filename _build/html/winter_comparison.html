@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Winter comparison &#8212; ICESat-2 Sea Ice Thickness Data Analysis and Visualization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
@@ -24,11 +25,8 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -73,49 +71,51 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <p class="caption">
- <span class="caption-text">
-  NOTEBOOKS
- </span>
-</p>
-<ul class="current nav sidenav_l1">
+  <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="mapping.html">
-   Mapping
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="regional_analysis.html">
-   Regional analysis
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Winter comparison
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="winter_ice_growth.html">
-   Winter sea ice growth
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="PIOMAS.html">
-   Historical ice thickness
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ice_drift.html">
-   Sea ice drift
+  <a class="reference internal" href="home.html">
+   ICESat-2 Sea Ice Thickness Data Analysis and Visualization
   </a>
  </li>
 </ul>
-<p class="caption">
- <span class="caption-text">
-  MISC
- </span>
-</p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="notebooks_intro.html">
+   NOTEBOOKS
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="mapping.html">
+     Mapping
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="regional_analysis.html">
+     Regional analysis
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Winter comparison
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="winter_ice_growth.html">
+     Winter sea ice growth
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="PIOMAS.html">
+     Historical ice thickness
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ice_drift.html">
+     Sea ice drift
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_wrangling.html">
    Data wrangling
@@ -126,6 +126,10 @@
 </nav>
 
  <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
 
 </div>
 
@@ -201,6 +205,12 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
+        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/winter_comparison.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
         
         
         <a class="colab-button" href="https://colab.research.google.com/github/nicolejkeeney/icesat2-book/blob/master/winter_comparison.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
@@ -225,13 +235,6 @@
   <a class="reference internal nav-link" href="#import-notebook-dependencies">
    Import notebook dependencies
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#import-functions-from-other-notebooks-in-the-jupyter-book">
-     Import functions from other notebooks in the jupyter book
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#load-data-into-notebook">
@@ -295,7 +298,7 @@
 <p>This notebook calculates mean monthly values for each data variable, and then compares mean values between winter 2018-19 and winter 2019-20. This allows us to visualize any differences between the two winter seasons.</p>
 <p><strong>Input</strong>:</p>
 <ul class="simple">
-<li><p>NETCDF4 file from the jupyter book’s google bucket</p></li>
+<li><p>xarray dataset from the jupyter book’s google bucket</p></li>
 </ul>
 <p><strong>Output</strong>:</p>
 <ul class="simple">
@@ -309,57 +312,17 @@
 <h2>Import notebook dependencies<a class="headerlink" href="#import-notebook-dependencies" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="c1"># Ignore warnings in the notebook to improve display</span>
-<span class="c1"># You might want to remove this when debugging/writing new code</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="c1">#warnings.filterwarnings(&#39;ignore&#39;)</span>
  
 <span class="c1">#increase resolution for notebook outputs</span>
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span> 
-<span class="o">%</span><span class="n">config</span> <span class="n">InlineBackend</span><span class="o">.</span><span class="n">figure_format</span> <span class="o">=</span> <span class="s1">&#39;retina&#39;</span>
-
-<span class="c1">#import package that allows you to use functions from other jupyter notebooks</span>
-<span class="kn">import</span> <span class="nn">nbimporter</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span>
 </pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="import-functions-from-other-notebooks-in-the-jupyter-book">
-<h3>Import functions from other notebooks in the jupyter book<a class="headerlink" href="#import-functions-from-other-notebooks-in-the-jupyter-book" title="Permalink to this headline">¶</a></h3>
-<p>This is done using the nbimporter packed installed in the cell above.</p>
-<div class="cell tag_remove-output docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil cp gs://icesat2-book-data/regional_analysis.ipynb ./
-from regional_analysis import restrictRegionally
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#helper function used in notebook</span>
-<span class="k">def</span> <span class="nf">getWinterDateRange</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">):</span> 
-    <span class="sd">&quot;&quot;&quot; Gets date range for winter season/s</span>
-<span class="sd">    Args: </span>
-<span class="sd">        start_year (int): start year </span>
-<span class="sd">        end_year (int): end year </span>
-<span class="sd">        </span>
-<span class="sd">    Returns: </span>
-<span class="sd">        winters (list): list of dates for all winter seasons in the input range (i.e: [&#39;1980-11&#39;,&#39;1980-12&#39;,&#39;1981-01&#39;,</span>
-<span class="sd">         &#39;1981-02&#39;,&#39;1981-03&#39;,&#39;1981-04&#39;)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">winters</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">winters</span> <span class="o">+=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-11&#39;</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-04&#39;</span><span class="p">,</span> <span class="n">freq</span> <span class="o">=</span> <span class="s1">&#39;MS&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">winters</span>
-</pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -369,8 +332,8 @@ from regional_analysis import restrictRegionally
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
-dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-winter-data.nc&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -378,9 +341,78 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 <div class="section" id="restrict-dataset-to-region-of-interest">
 <h2>Restrict dataset to region of interest<a class="headerlink" href="#restrict-dataset-to-region-of-interest" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#function from regional_analysis notebook</span>
+<span class="k">def</span> <span class="nf">restrictRegionally</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">regionKeyList</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot;Restrict dataset to input regions.</span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        dataset (xr Dataset): dataset generated by Load_IS2 notebook</span>
+<span class="sd">        regionKeyList (list): list of region keys to restrict data to </span>
+<span class="sd">        </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        regionalDataset (xr Dataset): dataset with restricted data to input regions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">checkKeys</span><span class="p">(</span><span class="n">regionKeyList</span><span class="p">,</span> <span class="n">regionTbl</span><span class="p">):</span> 
+        <span class="sd">&quot;&quot;&quot;Check that regionKeyList was defined correctly</span>
+
+<span class="sd">        Raises: </span>
+<span class="sd">            ValueError if regionKeyList was not defined correctly </span>
+<span class="sd">            warning if all data was removed from the dataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">regionKeyList</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span> <span class="c1">#raise a ValueError if regionKeyList is not a list </span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;regionKeyList needs to be a list. </span><span class="se">\n</span><span class="s1">For example, if you want to restrict data to the Beaufort Sea, define regionKeyList = [13]&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">regionKeyList</span><span class="p">:</span> 
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">regionTbl</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]):</span> 
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Region key &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; does not exist in region mask. </span><span class="se">\n</span><span class="s1"> Redefine regionKeyList with key numbers from table&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">regionKeyList</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;You removed all the data from the dataset. Are you sure you wanted to do this? </span><span class="se">\n</span><span class="s1"> If not, make sure the list regionKeyList is not empty and try again. </span><span class="se">\n</span><span class="s1"> If you intended to keep data from all regions, set regionKeyList = list(tbl[</span><span class="se">\&quot;</span><span class="s1">key</span><span class="se">\&quot;</span><span class="s1">])&#39;</span><span class="p">)</span>
+ 
+    <span class="c1">#create a table of keys and labels</span>
+    <span class="n">regionMask</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">region_mask</span><span class="o">.</span><span class="n">attrs</span>
+    <span class="n">regionTbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">regionMask</span><span class="p">[</span><span class="s1">&#39;keys&#39;</span><span class="p">],</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">regionMask</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]})</span>
+    
+    <span class="c1">#call function to check if regionKeyList was defined correctly</span>
+    <span class="n">checkKeys</span><span class="p">(</span><span class="n">regionKeyList</span><span class="p">,</span> <span class="n">regionTbl</span><span class="p">)</span>
+    
+    <span class="c1">#keys to remove (all keys that are note listed in regionKeyList)</span>
+    <span class="n">keysToRemove</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">regionTbl</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">regionKeyList</span><span class="p">]</span>
+    
+    <span class="c1">#filter elements from the ice thickness DataArray where the region is the desired region</span>
+    <span class="n">regionalDataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data_vars</span><span class="p">:</span> 
+        <span class="k">if</span> <span class="n">var</span> <span class="o">!=</span> <span class="s1">&#39;seaice_conc_monthly_cdr&#39;</span><span class="p">:</span>
+            <span class="n">regionalVar</span> <span class="o">=</span> <span class="n">regionalDataset</span><span class="p">[</span><span class="n">var</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keysToRemove</span><span class="p">:</span> 
+                <span class="n">regionalVar</span> <span class="o">=</span> <span class="n">regionalVar</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">regionalVar</span><span class="p">[</span><span class="s1">&#39;region_mask&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">key</span><span class="p">)</span>
+            <span class="n">regionalDataset</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">regionalVar</span>
+    
+    <span class="c1">#find name of labels </span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">regionTbl</span><span class="p">[</span><span class="n">regionTbl</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">regionKeyList</span><span class="p">]</span>
+    
+    <span class="c1">#add new attributes describing changes made to the dataset</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">regionTbl</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]):</span> 
+        <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">regionKeyList</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]):</span> <span class="c1">#convert to sets so unordered lists are compared</span>
+            <span class="n">regionalDataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Inner Arctic&#39;</span>
+        <span class="k">else</span><span class="p">:</span>    
+            <span class="n">regionalDataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">labels</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Regions selected: &#39;</span> <span class="o">+</span> <span class="n">regionalDataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">regionalDataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;All&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Regions selected: All </span><span class="se">\n</span><span class="s1">No regions will be removed&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">regionalDataset</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define a list of keys corresponding to the region of interest</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#define a list of keys corresponding to the region of interest</span>
 <span class="n">regionKeyList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span> <span class="c1">#Inner Arctic</span>
 
 <span class="c1">#restrict data to that region</span>
@@ -389,7 +421,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Regions selected: Inner Arctic
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Regions selected: Inner Arctic
 </pre></div>
 </div>
 </div>
@@ -400,7 +432,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 <p>Define a function that calculates and plots mean monthly values for each data variable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Plots mean monthly ice thickness for two winter seasons. </span>
 <span class="sd">    </span>
 <span class="sd">    Args: </span>
@@ -427,14 +459,14 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
     <span class="n">gridlines</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span> <span class="c1">#add gridlines </span>
     
     <span class="c1">#get list of months for plotting x axis </span>
-    <span class="n">winterMonths</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">getWinterDateRange</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">2019</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%B&#39;</span><span class="p">))</span>
+    <span class="n">winterMonths</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Nov&#39;</span><span class="p">,</span><span class="s1">&#39;Dec&#39;</span><span class="p">,</span><span class="s1">&#39;Jan&#39;</span><span class="p">,</span><span class="s1">&#39;Feb&#39;</span><span class="p">,</span><span class="s1">&#39;Mar&#39;</span><span class="p">,</span><span class="s1">&#39;Apr&#39;</span><span class="p">]</span>
 
     <span class="c1">#plot data for winter 1</span>
-    <span class="n">meansWinter1</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">getWinterDateRange</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">2019</span><span class="p">))</span>
+    <span class="n">meansWinter1</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2018&#39;</span><span class="p">,</span><span class="s1">&#39;Apr 2019&#39;</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">winterMonths</span><span class="p">,</span> <span class="n">meansWinter1</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;royalblue&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Winter &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">2018</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">2019</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
     
     <span class="c1">#plot data for winter 2</span>
-    <span class="n">meansWinter2</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">getWinterDateRange</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">2020</span><span class="p">))</span>
+    <span class="n">meansWinter2</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2019&#39;</span><span class="p">,</span><span class="s1">&#39;Apr 2020&#39;</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">winterMonths</span><span class="p">,</span> <span class="n">meansWinter2</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;darkgoldenrod&#39;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Winter &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">2019</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">2020</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
 
     <span class="c1">#add legend &amp; labels</span>
@@ -455,7 +487,20 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 <h3>ICESat-2 ice thickness<a class="headerlink" href="#icesat-2-ice-thickness" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/winter_comparison_14_0.png" src="_images/winter_comparison_14_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="piomas-ice-thickness">
+<h3>PIOMAS ice thickness<a class="headerlink" href="#piomas-ice-thickness" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;PIOMAS_ice_thickness&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -464,11 +509,12 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 </div>
-<div class="section" id="piomas-ice-thickness">
-<h3>PIOMAS ice thickness<a class="headerlink" href="#piomas-ice-thickness" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="osi-saf-ice-type">
+<h3>OSI-SAF ice type<a class="headerlink" href="#osi-saf-ice-type" title="Permalink to this headline">¶</a></h3>
+<p>Ice type is either multi-year ice (set to 1) or first-year ice (set to 0).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;PIOMAS_ice_thickness&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;ice_type_filled&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -477,12 +523,11 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 </div>
-<div class="section" id="osi-saf-ice-type">
-<h3>OSI-SAF ice type<a class="headerlink" href="#osi-saf-ice-type" title="Permalink to this headline">¶</a></h3>
-<p>Ice type is either multi-year ice (set to 1) or first-year ice (set to 0).</p>
+<div class="section" id="era5-2-meter-temperature">
+<h3>ERA5 2-meter temperature<a class="headerlink" href="#era5-2-meter-temperature" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;ice_type_filled&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;t2m&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -491,29 +536,16 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 </div>
-<div class="section" id="era5-2-meter-temperature">
-<h3>ERA5 2-meter temperature<a class="headerlink" href="#era5-2-meter-temperature" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="era5-mean-surface-downward-long-wave-radiation-flux">
+<h3>ERA5 mean surface downward long-wave radiation flux<a class="headerlink" href="#era5-mean-surface-downward-long-wave-radiation-flux" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;t2m&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;msdwlwrf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/winter_comparison_22_0.png" src="_images/winter_comparison_22_0.png" />
-</div>
-</div>
-</div>
-<div class="section" id="era5-mean-surface-downward-long-wave-radiation-flux">
-<h3>ERA5 mean surface downward long-wave radiation flux<a class="headerlink" href="#era5-mean-surface-downward-long-wave-radiation-flux" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compareWinters</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;msdwlwrf&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/winter_comparison_24_0.png" src="_images/winter_comparison_24_0.png" />
 </div>
 </div>
 </div>

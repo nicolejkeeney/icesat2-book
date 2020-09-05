@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sea ice drift &#8212; ICESat-2 Sea Ice Thickness Data Analysis and Visualization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
@@ -24,11 +25,8 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -73,49 +71,51 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <p class="caption">
- <span class="caption-text">
-  NOTEBOOKS
- </span>
-</p>
-<ul class="current nav sidenav_l1">
+  <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="mapping.html">
-   Mapping
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="regional_analysis.html">
-   Regional analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="winter_comparison.html">
-   Winter comparison
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="winter_ice_growth.html">
-   Winter sea ice growth
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="PIOMAS.html">
-   Historical ice thickness
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Sea ice drift
+  <a class="reference internal" href="home.html">
+   ICESat-2 Sea Ice Thickness Data Analysis and Visualization
   </a>
  </li>
 </ul>
-<p class="caption">
- <span class="caption-text">
-  MISC
- </span>
-</p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="notebooks_intro.html">
+   NOTEBOOKS
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="mapping.html">
+     Mapping
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="regional_analysis.html">
+     Regional analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="winter_comparison.html">
+     Winter comparison
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="winter_ice_growth.html">
+     Winter sea ice growth
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="PIOMAS.html">
+     Historical ice thickness
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Sea ice drift
+    </a>
+   </li>
+  </ul>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_wrangling.html">
    Data wrangling
@@ -126,6 +126,10 @@
 </nav>
 
  <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
 
 </div>
 
@@ -201,6 +205,12 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
+        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/ice_drift.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
         
         
         <a class="colab-button" href="https://colab.research.google.com/github/nicolejkeeney/icesat2-book/blob/master/ice_drift.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
@@ -242,8 +252,13 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#call-function">
-     Call function
+    <a class="reference internal nav-link" href="#plot-map-for-drift-vector-magnitude">
+     Plot map for drift vector magnitude
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-map-for-icesat-2-sea-ice-thickness">
+     Plot map for ICESat-2 sea ice thickness
     </a>
    </li>
   </ul>
@@ -256,6 +271,23 @@
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id1">
      Define function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-maps-for-different-data-variables">
+     Plot maps for different data variables
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sea-ice-drift-magnitude">
+       Sea ice drift magnitude
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#icesat-2-sea-ice-thickness">
+     ICESat-2 sea ice thickness
     </a>
    </li>
   </ul>
@@ -272,10 +304,10 @@
                 
   <div class="section" id="sea-ice-drift">
 <h1>Sea ice drift<a class="headerlink" href="#sea-ice-drift" title="Permalink to this headline">¶</a></h1>
-<p>This notebook plots NSIDC sea ice drift vectors.</p>
+<p>This notebook plots <a class="reference external" href="https://nsidc.org/data/nsidc-0116">NSIDC sea ice motion vectors</a>. The main cause of sea ice motion is wind applying force on the surface of the ice. Visualizing the direction and magnitude of sea ice drift gives an understanding of where and how fast sea ice is moving. Here, we overlay sea ice drift vectors on other variables in the xarray dataset.</p>
 <p><strong>Input</strong>:</p>
 <ul class="simple">
-<li><p>NETCDF4 file from the jupyter book’s google bucket</p></li>
+<li><p>xarray dataset from the jupyter book’s google bucket</p></li>
 </ul>
 <p><strong>Output</strong>:</p>
 <ul class="simple">
@@ -289,7 +321,7 @@
 <h2>Import notebook dependencies<a class="headerlink" href="#import-notebook-dependencies" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -297,6 +329,7 @@
 <span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
 <span class="kn">import</span> <span class="nn">pyproj</span>
 <span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">wrap</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="c1">#axes needed for plotting</span>
 <span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
@@ -309,29 +342,8 @@
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
  
 <span class="c1">#increase resolution for notebook outputs</span>
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span> 
-<span class="o">%</span><span class="n">config</span> <span class="n">InlineBackend</span><span class="o">.</span><span class="n">figure_format</span> <span class="o">=</span> <span class="s1">&#39;retina&#39;</span> 
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#helper function used in notebook</span>
-<span class="k">def</span> <span class="nf">getWinterDateRange</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">):</span> 
-    <span class="sd">&quot;&quot;&quot; Gets date range for winter season/s</span>
-<span class="sd">    Args: </span>
-<span class="sd">        start_year (int): start year </span>
-<span class="sd">        end_year (int): end year </span>
-<span class="sd">        </span>
-<span class="sd">    Returns: </span>
-<span class="sd">        winters (list): list of dates for all winter seasons in the input range (i.e: [&#39;1980-11&#39;,&#39;1980-12&#39;,&#39;1981-01&#39;,</span>
-<span class="sd">         &#39;1981-02&#39;,&#39;1981-03&#39;,&#39;1981-04&#39;)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">winters</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">winters</span> <span class="o">+=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-11&#39;</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-04&#39;</span><span class="p">,</span> <span class="n">freq</span> <span class="o">=</span> <span class="s1">&#39;MS&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">winters</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline 
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39; 
 </pre></div>
 </div>
 </div>
@@ -342,8 +354,8 @@
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
-dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-winter-data.nc&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -355,7 +367,7 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 <h3>Define function<a class="headerlink" href="#define-function" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotDriftsOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;YlGnBu&#39;</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">scale_vec</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">vector_val</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotDriftsOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;YlGnBu&#39;</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">scale_vec</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">vector_val</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot;Plots map of the arctic on North Pole Stereo projection with one month of data and drift vectors overlayed.</span>
 <span class="sd">   </span>
 <span class="sd">    Args:</span>
@@ -425,21 +437,24 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 </div>
 </div>
 </div>
-<div class="section" id="call-function">
-<h3>Call function<a class="headerlink" href="#call-function" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="plot-map-for-drift-vector-magnitude">
+<h3>Plot map for drift vector magnitude<a class="headerlink" href="#plot-map-for-drift-vector-magnitude" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotDriftsOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;drifts_magnitude&#39;</span><span class="p">,</span> <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Jan 2019&#39;</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotDriftsOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;drifts_magnitude&#39;</span><span class="p">,</span> <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Jan 2019&#39;</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ice_drift_12_0.png" src="_images/ice_drift_12_0.png" />
+<img alt="_images/ice_drift_11_0.png" src="_images/ice_drift_11_0.png" />
 </div>
 </div>
+</div>
+<div class="section" id="plot-map-for-icesat-2-sea-ice-thickness">
+<h3>Plot map for ICESat-2 sea ice thickness<a class="headerlink" href="#plot-map-for-icesat-2-sea-ice-thickness" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotDriftsOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">,</span> <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Jan 2019&#39;</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotDriftsOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">,</span> <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Jan 2019&#39;</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;PuBu&#39;</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -459,9 +474,134 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
 <h3>Define function<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#more code to come!</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotWinterDrifts</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span><span class="p">,</span> <span class="n">minval</span><span class="p">,</span> <span class="n">maxval</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;YlGnBu&#39;</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">scale_vec</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">vector_val</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot maps of the arctic on North Pole Stereo projection with several months of data overlayed, along with the sea ice edge for each month and sea ice drift. </span>
+<span class="sd">   </span>
+<span class="sd">    Args:</span>
+<span class="sd">        dataset (xr Dataset): dataset from google bucket</span>
+<span class="sd">        dataVar (str): variable of interest</span>
+<span class="sd">        minval, maxval (int): minimum and maximum values for the data variable </span>
+<span class="sd">        cbarTicks (list or np array of length 2): ticks to use on colorbar (default to [minval + 1, maxval +1])</span>
+<span class="sd">        title (str, optional): title of subplots (default to empty string)</span>
+<span class="sd">        cmap (str, optional): color map (default to viridis)</span>
+<span class="sd">        res (int): resolution to display vectors (default to 6)</span>
+<span class="sd">        scale_vec (int): scaling value for displaying vectors (default to 100)</span>
+<span class="sd">        vector_val (int): value of vector to display in quiver key (default to 10 cm)</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Figure displayed in notebook </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#define projection and transform</span>
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">NorthPolarStereo</span><span class="p">(</span><span class="n">central_longitude</span> <span class="o">=</span> <span class="o">-</span><span class="mi">45</span><span class="p">)</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
+    
+    <span class="c1">#initialize figure and axes</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.8</span><span class="p">,</span> <span class="mf">5.8</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="n">proj</span><span class="p">})</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">time</span><span class="p">)):</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span>
+        
+        <span class="c1">#plot data </span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">dataVar</span><span class="p">]</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;seaice_conc_monthly_cdr&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="n">vmin</span> <span class="o">=</span> <span class="n">minval</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">maxval</span><span class="p">,</span> <span class="n">extend</span> <span class="o">=</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span> 
+                    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">add_colorbar</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">)</span>
+    
+        <span class="c1">#add features to map</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="c1">#add coastlines </span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">LAND</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;0.95&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="c1">#add land </span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">LAKES</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="c1">#add lakes </span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span> <span class="c1">#add gridlines</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="o">-</span><span class="mi">179</span><span class="p">,</span> <span class="mi">179</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span> <span class="n">crs</span> <span class="o">=</span> <span class="n">transform</span><span class="p">)</span> <span class="c1">#zoom in so map only displays the Arctic</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%B %Y&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">])</span>
+        
+        <span class="c1">#plot vectors</span>
+        <span class="n">uvelT</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;drifts_uT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">vvelT</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;drifts_vT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">u_src_crs</span> <span class="o">=</span> <span class="n">uvelT</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">values</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+        <span class="n">v_src_crs</span> <span class="o">=</span> <span class="n">vvelT</span>
+        <span class="n">magn_src_crs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">u_src_crs</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">v_src_crs</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">var_u_scaled</span> <span class="o">=</span> <span class="n">u_src_crs</span> <span class="o">*</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;drifts_magnitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">values</span> <span class="o">/</span> <span class="n">magn_src_crs</span>
+        <span class="n">var_v_scaled</span> <span class="o">=</span> <span class="n">v_src_crs</span> <span class="o">*</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;drifts_magnitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">values</span> <span class="o">/</span> <span class="n">magn_src_crs</span>
+
+        <span class="c1">#add quiver key</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">values</span><span class="p">[::</span><span class="n">res</span><span class="p">,</span> <span class="p">::</span><span class="n">res</span><span class="p">],</span> <span class="n">dataset</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">values</span><span class="p">[::</span><span class="n">res</span><span class="p">,</span> <span class="p">::</span><span class="n">res</span><span class="p">],</span> <span class="n">var_u_scaled</span><span class="p">[::</span><span class="n">res</span><span class="p">,</span> <span class="p">::</span><span class="n">res</span><span class="p">],</span> 
+            <span class="n">var_v_scaled</span><span class="p">[::</span><span class="n">res</span><span class="p">,</span> <span class="p">::</span><span class="n">res</span><span class="p">],</span> <span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;inches&#39;</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">scale_vec</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="n">qk</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">quiverkey</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="n">vector_val</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">vector_val</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;drifts_uT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">],</span> <span class="n">coordinates</span> <span class="o">=</span> <span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">fontproperties</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>   
+
+        <span class="c1">#add colorbar</span>
+        <span class="n">cax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.34</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">])</span>
+        <span class="n">cb</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="n">cax</span> <span class="o">=</span> <span class="n">cax</span><span class="p">,</span><span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">orientation</span> <span class="o">=</span> <span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+        <span class="n">cbarTicks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">minval</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">cbarTicks</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">cbarTicks</span>
+        <span class="n">cb</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">cbarTicks</span><span class="p">)</span>
+        <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="n">dataVar</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; (&#39;</span> <span class="o">+</span> <span class="n">dataset</span><span class="p">[</span><span class="n">dataVar</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="mi">38</span><span class="p">)),</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">11</span><span class="p">)</span>
+        
+    <span class="c1">#add a title</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">title</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="s1">&#39;Drift vectors overlayed on &#39;</span> <span class="o">+</span> <span class="n">dataset</span><span class="p">[</span><span class="n">dataVar</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">],</span> <span class="mi">55</span><span class="p">)),</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">18</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">1.03</span><span class="p">,</span> <span class="n">fontweight</span> <span class="o">=</span> <span class="s1">&#39;medium&#39;</span><span class="p">)</span>
+    
+    <span class="c1">#display figure in notebook</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.13</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+<div class="section" id="plot-maps-for-different-data-variables">
+<h3>Plot maps for different data variables<a class="headerlink" href="#plot-maps-for-different-data-variables" title="Permalink to this headline">¶</a></h3>
+<p>Here, we will call the winter plotting function on some of the variables in the dataset using different arguments for minimum &amp; maximum values and colormap to allow for visualization of the data.</p>
+<div class="section" id="sea-ice-drift-magnitude">
+<h4>Sea ice drift magnitude<a class="headerlink" href="#sea-ice-drift-magnitude" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#winter 2019-2020</span>
+<span class="n">plotWinterDrifts</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2018&#39;</span><span class="p">,</span> <span class="s1">&#39;Apr 2019&#39;</span><span class="p">)),</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;drifts_magnitude&#39;</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+               <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2018-2019&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ice_drift_19_0.png" src="_images/ice_drift_19_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#winter 2019-2020</span>
+<span class="n">plotWinterDrifts</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2019&#39;</span><span class="p">,</span> <span class="s1">&#39;Apr 2020&#39;</span><span class="p">)),</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;drifts_magnitude&#39;</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+               <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2019-2020&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ice_drift_20_0.png" src="_images/ice_drift_20_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="icesat-2-sea-ice-thickness">
+<h3>ICESat-2 sea ice thickness<a class="headerlink" href="#icesat-2-sea-ice-thickness" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#winter 2018-2019</span>
+<span class="n">plotWinterDrifts</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2018&#39;</span><span class="p">,</span> <span class="s1">&#39;Apr 2019&#39;</span><span class="p">)),</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">,</span>
+               <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;PuBu&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2018-19&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ice_drift_22_0.png" src="_images/ice_drift_22_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#winter 2019-2020</span>
+<span class="n">plotWinterDrifts</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2019&#39;</span><span class="p">,</span> <span class="s1">&#39;Apr 2020&#39;</span><span class="p">)),</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;ice_thickness_filled&#39;</span><span class="p">,</span>
+               <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;PuBu&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2019-2020&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ice_drift_23_0.png" src="_images/ice_drift_23_0.png" />
 </div>
 </div>
 </div>
@@ -477,16 +617,16 @@ dataset = xr.open_dataset(&#39;icesat2-book-winter-data.nc&#39;)
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "is2intenv"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "is2intenv",
+            kernelName: "python3",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'is2intenv'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               

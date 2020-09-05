@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ICESat-2 Sea Ice Thickness Data Analysis and Visualization &#8212; ICESat-2 Sea Ice Thickness Data Analysis and Visualization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
@@ -24,11 +25,8 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -39,7 +37,7 @@
     <link rel="shortcut icon" href="_static/logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Mapping" href="mapping.html" />
+    <link rel="next" title="NOTEBOOKS" href="notebooks_intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -72,49 +70,19 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <p class="caption">
- <span class="caption-text">
-  NOTEBOOKS
- </span>
-</p>
-<ul class="nav sidenav_l1">
+  <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="mapping.html">
-   Mapping
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="regional_analysis.html">
-   Regional analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="winter_comparison.html">
-   Winter comparison
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="winter_ice_growth.html">
-   Winter sea ice growth
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="PIOMAS.html">
-   Historical ice thickness
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ice_drift.html">
-   Sea ice drift
+  <a class="reference internal" href="#">
+   ICESat-2 Sea Ice Thickness Data Analysis and Visualization
   </a>
  </li>
 </ul>
-<p class="caption">
- <span class="caption-text">
-  MISC
- </span>
-</p>
 <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="notebooks_intro.html">
+   NOTEBOOKS
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_wrangling.html">
    Data wrangling
@@ -125,6 +93,10 @@
 </nav>
 
  <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
 
 </div>
 
@@ -210,6 +182,11 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-note-on-xarray">
+   A note on xarray
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#author">
    Author
   </a>
@@ -223,8 +200,6 @@
   <a class="reference internal nav-link" href="#update-history">
    Update history
   </a>
-  <ul class="nav section-nav flex-column">
-  </ul>
  </li>
 </ul>
 
@@ -238,10 +213,14 @@
                 
   <div class="section" id="icesat-2-sea-ice-thickness-data-analysis-and-visualization">
 <h1>ICESat-2 Sea Ice Thickness Data Analysis and Visualization<a class="headerlink" href="#icesat-2-sea-ice-thickness-data-analysis-and-visualization" title="Permalink to this headline">¶</a></h1>
-<p>NASA’s Ice, Cloud, and Land Elevation Satellite-2 - or ICESat-2 for short - is a new satellite laser altimeter providing very high resolution elevation profiling of the entire Earth, and especially the fast-changing Polar Regions. For more information on ICESat-2, check out <a class="reference external" href="https://icesat-2.gsfc.nasa.gov/">https://icesat-2.gsfc.nasa.gov/</a>. ICESat-2 provides measurements of sea ice freeboard, the extension of sea ice above the local sea surface. Using assumptions regarding the snow depth and density ontop of the ice, and the density of the sea ice itself, these freeboard measurements can be converted to estimates of sea ice thickness <a class="reference external" href="http://www.alekpetty.com/papers/petty2020">(http://www.alekpetty.com/papers/petty2020)</a>. ICESat-2 has now collected data over two winter seasons across the entire Arctic Ocean (2018-2019 and 2019-2020) which we describe and analyze within this Jupyter Book.</p>
+<p>NASA’s Ice, Cloud, and Land Elevation Satellite-2 (ICESat-2) is a new satellite laser altimeter providing very high resolution elevation profiling of the entire Earth, and especially the fast-changing Polar Regions. For more information on ICESat-2, check out out <a class="reference external" href="https://icesat-2.gsfc.nasa.gov/">https://icesat-2.gsfc.nasa.gov/</a>. ICESat-2 provides measurements of sea ice freeboard, the extension of sea ice above the local sea surface. Using assumptions regarding the snow depth and density ontop of the ice, and the density of the sea ice itself, these freeboard measurements can be converted to estimates of sea ice thickness <a class="reference external" href="http://www.alekpetty.com/papers/petty2020">(http://www.alekpetty.com/papers/petty2020)</a>. ICESat-2 has now collected data over two winter seasons across the entire Arctic Ocean (2018-2019 and 2019-2020) which we describe and analyze within this Jupyter Book.</p>
 <div class="section" id="jupyter-book-description">
 <h2>Jupyter Book description<a class="headerlink" href="#jupyter-book-description" title="Permalink to this headline">¶</a></h2>
-<p>Jupyter Books <span class="xref myst">(jupyterbook.org)</span> provide a novel means of compiling Jupyter Notebooks into one convenient and well indexed location. Jupyter Notebooks are used to provide a visual demonstration of our efforts to analyze the monthly gridded ICESat-2 winter Arctic sea ice data (sea ice freeboard and thickness), along with other relevant datasets to help us understand recent winter Arctic sea ice growth. All of the code presented in the notebooks of this book are configured to run through Google Colab, although you can download the notebooks and run them on your local drive way as well (see the <a class="reference external" href="https://github.com/nicolejkeeney/icesat2-book">GitHub</a> repo to download the environment used).<br><br>Datasets used in the notebooks were regridded to the NSIDC North Polar Sterographic grid used by the gridded ICESat-2 thickness data and compiled into one xarray dataset, which can be simply loaded into each notebook. See the data wrangling page for more information on this process. <br><br>To run a notebook interacitvely, hover over the rocketship icon at the top of the webpage, and click Colab to open the notebook in Google Colab.</p>
+<p>Jupyter Books <span class="xref myst">(jupyterbook.org)</span> provide a novel means of compiling Jupyter Notebooks into one convenient and well-indexed location. Jupyter Notebooks are used to provide a visual demonstration of our efforts to analyze the monthly gridded ICESat-2 winter Arctic sea ice data (sea ice freeboard and thickness), along with other relevant datasets to help us understand recent winter Arctic sea ice growth. All of the code presented in the notebooks of this book are configured to run through Google Colab, although you can download the notebooks and run them on your local drive way as well (see the <a class="reference external" href="https://github.com/nicolejkeeney/icesat2-book">GitHub</a> repo to download the environment used).<br><br>Datasets used in the notebooks were regridded to the NSIDC North Polar Sterographic grid used by the gridded ICESat-2 thickness data and compiled into one xarray dataset, which can be simply loaded into each notebook. See the data wrangling page for more information on this process. <br><br>To run a notebook interacitvely, hover over the rocketship icon at the top of the webpage, and click Colab to open the notebook in Google Colab.</p>
+</div>
+<div class="section" id="a-note-on-xarray">
+<h2>A note on xarray<a class="headerlink" href="#a-note-on-xarray" title="Permalink to this headline">¶</a></h2>
+<p>All of the notebooks in this notebook utilize <a class="reference external" href="http://xarray.pydata.org/en/stable/">xarray</a>, a python package built for working with multi-dimensional data like the monthly gridded sea ice data. Xarray is especially useful for time series data and allows for easily plotting data on map projections.</p>
 </div>
 <div class="section" id="author">
 <h2>Author<a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h2>
@@ -265,8 +244,6 @@
 <ul class="simple">
 <li><p>9/4/2020: Version 1</p></li>
 </ul>
-<div class="toctree-wrapper compound">
-</div>
 <div class="toctree-wrapper compound">
 </div>
 </div>
@@ -300,7 +277,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='right-next' id="next-link" href="mapping.html" title="next page">Mapping</a>
+    <a class='right-next' id="next-link" href="notebooks_intro.html" title="next page">NOTEBOOKS</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

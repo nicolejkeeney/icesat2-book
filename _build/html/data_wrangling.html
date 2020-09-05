@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Data wrangling &#8212; ICESat-2 Sea Ice Thickness Data Analysis and Visualization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script src="_static/jquery.js"></script>
@@ -24,11 +25,8 @@
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/mystnb.js"></script>
     <script src="_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -72,49 +70,19 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <p class="caption">
- <span class="caption-text">
-  NOTEBOOKS
- </span>
-</p>
-<ul class="nav sidenav_l1">
+  <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="mapping.html">
-   Mapping
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="regional_analysis.html">
-   Regional analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="winter_comparison.html">
-   Winter comparison
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="winter_ice_growth.html">
-   Winter sea ice growth
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="PIOMAS.html">
-   Historical ice thickness
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ice_drift.html">
-   Sea ice drift
+  <a class="reference internal" href="home.html">
+   ICESat-2 Sea Ice Thickness Data Analysis and Visualization
   </a>
  </li>
 </ul>
-<p class="caption">
- <span class="caption-text">
-  MISC
- </span>
-</p>
 <ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="notebooks_intro.html">
+   NOTEBOOKS
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Data wrangling
@@ -125,6 +93,10 @@
 </nav>
 
  <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
 
 </div>
 
@@ -199,6 +171,12 @@
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/data_wrangling.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
         
         
         
@@ -476,7 +454,7 @@
 <h2>Import notebook dependencies<a class="headerlink" href="#import-notebook-dependencies" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="k">as</span> <span class="nn">ma</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
@@ -501,7 +479,7 @@
 <p>Define filepaths to data on your local machine</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#path to data directory</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#path to data directory</span>
 <span class="n">localDirectory</span> <span class="o">=</span> <span class="s1">&#39;/Users/nicolekeeney/Desktop/notebook_data/&#39;</span>
 
 <span class="c1">#path to monthly gridded ICESat-2 data</span>
@@ -539,7 +517,7 @@
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getWinterDateRange</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getWinterDateRange</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot; Gets date range for winter season/s</span>
 <span class="sd">    Args: </span>
 <span class="sd">        start_year (int): start year </span>
@@ -562,7 +540,7 @@
 <h4>Call function<a class="headerlink" href="#call-function" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">startYear</span> <span class="o">=</span> <span class="mi">2018</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">startYear</span> <span class="o">=</span> <span class="mi">2018</span>
 <span class="n">endYear</span> <span class="o">=</span> <span class="mi">2020</span>
 <span class="n">winters</span> <span class="o">=</span> <span class="n">getWinterDateRange</span><span class="p">(</span><span class="n">startYear</span><span class="p">,</span> <span class="n">endYear</span><span class="p">)</span> <span class="c1">#get date range for winter 18-19 and winter 19-20</span>
 </pre></div>
@@ -577,7 +555,7 @@
 <h4>Define function to load data<a class="headerlink" href="#define-function-to-load-data" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getIS2Data</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="n">dates</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getIS2Data</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="n">dates</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot;Gets ICESat-2 data for provided date range</span>
 <span class="sd">    </span>
 <span class="sd">    Args: </span>
@@ -609,7 +587,12 @@
 <h4>Call function<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">is2</span> <span class="o">=</span> <span class="n">getIS2Data</span><span class="p">(</span><span class="n">IS2_path</span><span class="p">,</span> <span class="n">winters</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is2</span> <span class="o">=</span> <span class="n">getIS2Data</span><span class="p">(</span><span class="n">IS2_path</span><span class="p">,</span> <span class="n">winters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cannot find files; check date range, filepath or if glob is imported
 </pre></div>
 </div>
 </div>
@@ -619,7 +602,7 @@
 <h4>Clean data and extract useful variables<a class="headerlink" href="#clean-data-and-extract-useful-variables" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#drop projection variable </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#drop projection variable </span>
 <span class="n">is2</span> <span class="o">=</span> <span class="n">is2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;projection&#39;</span><span class="p">)</span>
 
 <span class="c1">#get lat and lon</span>
@@ -633,6 +616,20 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="mi">3999</span><span class="n">d6296113</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">#drop projection variable</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">is2</span> <span class="o">=</span> <span class="n">is2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;projection&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> 
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1">#get lat and lon</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">is2Lats</span> <span class="o">=</span> <span class="n">is2</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+
+<span class="ne">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;drop&#39;
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -642,7 +639,7 @@
 <h4>Define function to load data<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getSICData</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="n">dates</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getSICData</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="n">dates</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot;Gets sea ice concentration data for provided date range</span>
 <span class="sd">    </span>
 <span class="sd">    Args: </span>
@@ -673,7 +670,7 @@
 <h4>Call function<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sic</span> <span class="o">=</span> <span class="n">getSICData</span><span class="p">(</span><span class="n">SIC_path</span><span class="p">,</span> <span class="n">winters</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sic</span> <span class="o">=</span> <span class="n">getSICData</span><span class="p">(</span><span class="n">SIC_path</span><span class="p">,</span> <span class="n">winters</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -684,7 +681,7 @@
 <p>Clean data by removing flagged data and filling the pole hole. We assume concentration is 100% within the pole hole because we are only looking at winter data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#remove flagged data </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#remove flagged data </span>
 <span class="n">sic_monthly_cdr</span> <span class="o">=</span> <span class="n">sic</span><span class="p">[</span><span class="s1">&#39;seaice_conc_monthly_cdr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sic</span><span class="p">[</span><span class="s1">&#39;seaice_conc_monthly_cdr&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
 
 <span class="c1">#fill pole hole as 100% concentration</span>
@@ -715,7 +712,7 @@
 <h4>Define function to load data<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getRegionMask</span><span class="p">(</span><span class="n">dataPath</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getRegionMask</span><span class="p">(</span><span class="n">dataPath</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot;Gets NSIDC region mask for map projection</span>
 <span class="sd">    </span>
 <span class="sd">     Args:</span>
@@ -746,7 +743,7 @@
 <h4>Call function<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">regionMask</span><span class="p">,</span> <span class="n">maskLons</span><span class="p">,</span> <span class="n">maskLats</span> <span class="o">=</span> <span class="n">getRegionMask</span><span class="p">(</span><span class="n">regionMask_path</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regionMask</span><span class="p">,</span> <span class="n">maskLons</span><span class="p">,</span> <span class="n">maskLats</span> <span class="o">=</span> <span class="n">getRegionMask</span><span class="p">(</span><span class="n">regionMask_path</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -757,7 +754,7 @@
 <p>These variables will be used later for creating the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#coords and attributes for Region Mask</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#coords and attributes for Region Mask</span>
 <span class="n">regionMaskCoords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;region_mask&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">regionMask</span><span class="p">)}</span>
 <span class="n">regionMaskKeys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">])</span>
 <span class="n">regionMaskLabels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;non-region oceans&#39;</span><span class="p">,</span> <span class="s1">&#39;Sea of Okhotsk and Japan&#39;</span><span class="p">,</span><span class="s1">&#39;Bering Sea&#39;</span><span class="p">,</span><span class="s1">&#39;Hudson Bay&#39;</span><span class="p">,</span><span class="s1">&#39;Gulf of St. Lawrence&#39;</span><span class="p">,</span>
@@ -774,7 +771,7 @@
 <h3>ERA5 climate reanalysis data<a class="headerlink" href="#era5-climate-reanalysis-data" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ERA5</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">ERA5_path</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERA5</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">ERA5_path</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -784,7 +781,7 @@
 <p>Clean data by removing unneccessary variables and converting temperature to Celcius</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#remove unneeded expver variable. </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#remove unneeded expver variable. </span>
 <span class="c1">#for more info on the exper variable, see https://confluence.ecmwf.int/pages/viewpage.action?pageId=173385064</span>
 <span class="n">ERA5</span> <span class="o">=</span> <span class="n">ERA5</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">expver</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">ERA5</span> <span class="o">=</span> <span class="n">ERA5</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;expver&#39;</span><span class="p">)</span>
@@ -819,7 +816,7 @@
 <h4>Define function to load the data<a class="headerlink" href="#define-function-to-load-the-data" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getPIOMASData</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="n">startYear</span> <span class="o">=</span> <span class="mi">1978</span><span class="p">,</span> <span class="n">endYear</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getPIOMASData</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="n">startYear</span> <span class="o">=</span> <span class="mi">1978</span><span class="p">,</span> <span class="n">endYear</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot;Gets PIOMAS mean monthly sea ice thickness data for an input time range. </span>
 <span class="sd">    </span>
 <span class="sd">    Args: </span>
@@ -864,7 +861,7 @@
 <h4>Call function<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">piomasData</span> <span class="o">=</span> <span class="n">getPIOMASData</span><span class="p">(</span><span class="n">PIOMAS_path</span><span class="p">,</span> <span class="n">startYear</span> <span class="o">=</span> <span class="mi">1978</span><span class="p">,</span> <span class="n">endYear</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">piomasData</span> <span class="o">=</span> <span class="n">getPIOMASData</span><span class="p">(</span><span class="n">PIOMAS_path</span><span class="p">,</span> <span class="n">startYear</span> <span class="o">=</span> <span class="mi">1978</span><span class="p">,</span> <span class="n">endYear</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -877,7 +874,7 @@
 <h4>Define function to load the data<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getDriftData</span><span class="p">(</span><span class="n">dataPath</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getDriftData</span><span class="p">(</span><span class="n">dataPath</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gets weekly NSIDC sea ice drift data for the Arctic, resamples monthly, and returns a dataset</span>
 <span class="sd">    </span>
 <span class="sd">    Args: </span>
@@ -931,7 +928,7 @@
 <h4>Call function<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drifts</span> <span class="o">=</span> <span class="n">getDriftData</span><span class="p">(</span><span class="n">drift_path</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drifts</span> <span class="o">=</span> <span class="n">getDriftData</span><span class="p">(</span><span class="n">drift_path</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -941,7 +938,7 @@
 <h4>Restrict data to winter months<a class="headerlink" href="#restrict-data-to-winter-months" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drifts</span> <span class="o">=</span> <span class="n">drifts</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winters</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drifts</span> <span class="o">=</span> <span class="n">drifts</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winters</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -954,7 +951,7 @@
 <p>Interpolate missing ICESat-2 data using the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html">scipy.griddata.interpolate</a> function and add as data variables to the dataset. Because ICESat-2 doesn’t provide full monthly coverage, interpolating fills missing grid cells with a best guess based on surrounding data. This helps avoid sampling biases when performing time series analyses, with the cavaet that this interpolation method is subjective.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#list of variables to interpolate</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#list of variables to interpolate</span>
 <span class="n">IS2VarList</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ice_type&#39;</span><span class="p">,</span><span class="s1">&#39;ice_thickness&#39;</span><span class="p">,</span><span class="s1">&#39;snow_depth&#39;</span><span class="p">,</span><span class="s1">&#39;freeboard&#39;</span><span class="p">,</span><span class="s1">&#39;ice_thickness_unc&#39;</span><span class="p">,</span><span class="s1">&#39;snow_density&#39;</span><span class="p">,</span><span class="s1">&#39;ice_density&#39;</span><span class="p">]</span>
 
 <span class="c1">#go through variables in list and add as new data variables to ICESat-2 dataset</span>
@@ -993,7 +990,7 @@
 <h3>Add descriptive attributes &amp; coordinates to all ICESat-2 variables<a class="headerlink" href="#add-descriptive-attributes-coordinates-to-all-icesat-2-variables" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#assign ICESat-2 dataset attributes to all variables </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#assign ICESat-2 dataset attributes to all variables </span>
 <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">is2</span><span class="o">.</span><span class="n">data_vars</span><span class="p">:</span>
     <span class="n">is2</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">is2</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">is2</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
 
@@ -1013,7 +1010,7 @@
 <p>This function will grid data to the ICESat-2 grid using the scipy.interpolate.griddata function</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#used in code development, bar hidden in notebook outputs </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#used in code development, bar hidden in notebook outputs </span>
 <span class="k">def</span> <span class="nf">progressBar</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">tot</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot;Display a progress bar inside a for loop </span>
 <span class="sd">    Args: </span>
@@ -1029,7 +1026,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">regridToICESat2</span><span class="p">(</span><span class="n">dataArrayNEW</span><span class="p">,</span> <span class="n">xptsNEW</span><span class="p">,</span> <span class="n">yptsNEW</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">):</span>  
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">regridToICESat2</span><span class="p">(</span><span class="n">dataArrayNEW</span><span class="p">,</span> <span class="n">xptsNEW</span><span class="p">,</span> <span class="n">yptsNEW</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">):</span>  
     <span class="sd">&quot;&quot;&quot; Regrid new data to ICESat-2 grid </span>
 <span class="sd">    </span>
 <span class="sd">    Args: </span>
@@ -1061,13 +1058,13 @@
 <p>ERA5 provides climate reananalysis data for many different variables. Here, choose data variables to maintain in the final gridded data product.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ERA5Vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span><span class="s1">&#39;msdwlwrf&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERA5Vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t2m&#39;</span><span class="p">,</span><span class="s1">&#39;msdwlwrf&#39;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;chosen variables: &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="n">ERA5</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">ERA5Vars</span><span class="p">])))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>chosen variables: 2 meter temperature, Mean surface downward long-wave radiation flux
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>chosen variables: 2 meter temperature, Mean surface downward long-wave radiation flux
 </pre></div>
 </div>
 </div>
@@ -1077,7 +1074,7 @@
 <h4>Regrid ERA5 data &amp; add to ICESat-2 dataset<a class="headerlink" href="#regrid-era5-data-add-to-icesat-2-dataset" title="Permalink to this headline">¶</a></h4>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#map projection from ICESat-2 data (can be viewed in is2.projection.attrs[&#39;srid&#39;])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#map projection from ICESat-2 data (can be viewed in is2.projection.attrs[&#39;srid&#39;])</span>
 <span class="n">IS2_proj</span> <span class="o">=</span> <span class="s1">&#39;EPSG:3411&#39;</span>
 
 <span class="c1">#initialize map projection and project data to it</span>
@@ -1107,7 +1104,7 @@
 <h3>Regrid PIOMAS data<a class="headerlink" href="#regrid-piomas-data" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#project data to ICESat-2 map projection</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#project data to ICESat-2 map projection</span>
 <span class="n">xptsPIO</span><span class="p">,</span> <span class="n">yptsPIO</span> <span class="o">=</span> <span class="n">mapProj</span><span class="p">(</span><span class="n">piomasData</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">piomasData</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
 <span class="c1">#regrid data by calling function</span>
@@ -1126,7 +1123,7 @@
 <h3>Regrid NSIDC sea ice drift data<a class="headerlink" href="#regrid-nsidc-sea-ice-drift-data" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#project data to ICESat-2 map projection</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#project data to ICESat-2 map projection</span>
 <span class="n">xptsDRIFTS</span><span class="p">,</span> <span class="n">yptsDRIFTS</span> <span class="o">=</span> <span class="n">mapProj</span><span class="p">(</span><span class="n">drifts</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">drifts</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
 <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;drifts_uT&#39;</span><span class="p">,</span> <span class="s1">&#39;drifts_vT&#39;</span><span class="p">,</span> <span class="s1">&#39;drifts_magnitude&#39;</span><span class="p">]:</span> 
@@ -1150,7 +1147,7 @@
 <p>Add region mask as descriptive coordinates to the PIOMAS regridded DataArray and save file to local directory</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#add region mask as coordinate to dataset</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#add region mask as coordinate to dataset</span>
 <span class="n">piomas_to_save</span> <span class="o">=</span> <span class="n">PIOArray</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">coords</span> <span class="o">=</span> <span class="n">regionMaskCoords</span><span class="p">)</span>
 
 <span class="c1">#add descriptive attributes </span>
@@ -1167,7 +1164,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>File &quot;piomas-regridded-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/Desktop/notebook_data/&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;piomas-regridded-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/Desktop/notebook_data/&quot;
 </pre></div>
 </div>
 </div>
@@ -1177,7 +1174,7 @@
 <h3>Add winter regridded PIOMAS data to ICESat-2 dataset<a class="headerlink" href="#add-winter-regridded-piomas-data-to-icesat-2-dataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#restrict data to same time period as ICESat-2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#restrict data to same time period as ICESat-2</span>
 <span class="n">PIOArray</span> <span class="o">=</span> <span class="n">PIOArray</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winters</span><span class="p">)</span>
 
 <span class="c1">#add to ICESat-2 dataset</span>
@@ -1192,7 +1189,7 @@
 <h2>Compile datasets into a single Dataset<a class="headerlink" href="#compile-datasets-into-a-single-dataset" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#add region mask as coordinate to dataset</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#add region mask as coordinate to dataset</span>
 <span class="n">is2</span> <span class="o">=</span> <span class="n">is2</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">coords</span> <span class="o">=</span> <span class="n">regionMaskCoords</span><span class="p">)</span>
 
 <span class="c1">#add descriptive attributes </span>
@@ -1206,7 +1203,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
 Dimensions:                   (time: 12, x: 448, y: 304)
 Coordinates:
   * time                      (time) datetime64[ns] 2018-11-01 ... 2020-04-01
@@ -1244,7 +1241,7 @@ Data variables:
 Attributes:
     description:    data used in nicolejkeeney ICESat-2 jupyter book
     note:           see individual data variables for references
-    creation date:  2020-09-04
+    creation date:  2020-09-01
 </pre></div>
 </div>
 </div>
@@ -1255,7 +1252,7 @@ Attributes:
 <p>We will use this dataset in other notebooks to plot and analyze the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;icesat2-book-winter-data.nc&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;icesat2-book-winter-data.nc&#39;</span>
 <span class="n">is2</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">localDirectory</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s1">&#39;NETCDF4&#39;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39; saved to directory &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">localDirectory</span><span class="p">)</span>
 <span class="n">is2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1263,7 +1260,7 @@ Attributes:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-winter-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/Desktop/notebook_data/&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-winter-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/Desktop/notebook_data/&quot;
 </pre></div>
 </div>
 </div>
