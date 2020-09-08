@@ -1,6 +1,9 @@
 # Folder view configuration files
 .DS_Store
 
+# notebook checkpoints
+.ipynb_checkpoints
+*/.ipynb_checkpoints/**
 
 # build files for jupyter book
 _build/
@@ -10,13 +13,5 @@ _build/
 icesat2-book-data*.nc
 
 
-#utils extra files 
-utils*.py
-
-
-#notebook checkpoints
-.ipynb_checkpoints
-
-
 #PIOMAS dataset 
-piomas-regridded-data*.nc
+piomas-regridded-data*.nc*
