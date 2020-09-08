@@ -2,6 +2,10 @@
 .DS_Store
 
 
+# build files for jupyter book
+.build/
+
+
 # NETCDF4 file from the google bucket, generated while running the code 
 icesat2-book-data*.nc
 
