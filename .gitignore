@@ -3,7 +3,7 @@
 
 
 # build files for jupyter book
-.build/
+.build/*
 
 
 # NETCDF4 file from the google bucket, generated while running the code 
