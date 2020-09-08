@@ -2,10 +2,6 @@
 .DS_Store
 
 
-#notebook outputs 
-.ipynb_checkpoints
-
-
 # NETCDF4 file from the google bucket, generated while running the code 
 icesat2-book-data*.nc
 
