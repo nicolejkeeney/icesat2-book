@@ -3,7 +3,7 @@
 
 
 # NETCDF4 file from the google bucket, generated while running the code 
-icesat2-book-winter-data*.nc
+icesat2-book-data*.nc
 
 
 #utils extra files 
