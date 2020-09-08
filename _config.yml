@@ -2,6 +2,7 @@
 title: ICESat-2 Sea Ice Thickness Data Analysis and Visualization
 author: Nicole Keeney
 logo: logo.png
+exclude_patterns: [environment.yml]
 
 latex:
   latex_documents:
@@ -21,7 +22,6 @@ execute:
   allow_errors              : false
 
 launch_buttons: 
-  colab_url                 : "https://colab.research.google.com"
-  binderhub_url             : false
+  colab_url                 : https://colab.research.google.com
 
 home_page_in_navbar: true 
