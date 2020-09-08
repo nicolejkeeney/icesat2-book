@@ -1,16 +1,16 @@
 # icesat2-book
 
-### Project description
+
+## Project description
 Code for building the ICESat-2 Jupyter Book.<br><br> Link to jupyter book: [https://nicolejkeeney.github.io/icesat2-book/](https://nicolejkeeney.github.io/icesat2-book/)
 
 
-
-### Activating the environment 
-Run **conda env create -f is2-environment.yml** in terminal.<br>To activate the environment, run **conda activate is2-book-env**
-
+## Activating the environment 
+Run **conda env create -f environment.yml** in terminal.<br>To activate the environment, run **conda activate is2-book-env**
 
 
-### Steps to build book 
+
+## Steps to build book 
  1) Update github repo with any changes
  2) Activate virtual notebook
  3) **cd** out of local book directory 
