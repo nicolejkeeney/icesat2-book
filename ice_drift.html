@@ -288,12 +288,12 @@
        Sea ice drift magnitude
       </a>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#icesat-2-sea-ice-thickness">
-       ICESat-2 sea ice thickness
-      </a>
-     </li>
     </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#icesat-2-sea-ice-thickness">
+     ICESat-2 sea ice thickness
+    </a>
    </li>
   </ul>
  </li>
@@ -346,7 +346,9 @@
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 
 <span class="c1">#increase resolution for notebook outputs</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;svg&#39;
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">125</span>
 </pre></div>
 </div>
 </div>
@@ -370,7 +372,7 @@
 <h3>Define function<a class="headerlink" href="#define-function" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotDriftsOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;YlGnBu&#39;</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">scale_vec</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">vector_val</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotDriftsOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;YlGnBu&#39;</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">scale_vec</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">vector_val</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">figPath</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot;Plots map of the arctic on North Pole Stereo projection with one month of data and drift vectors overlayed.</span>
 <span class="sd">   </span>
 <span class="sd">    Args:</span>
@@ -384,6 +386,7 @@
 <span class="sd">        res (int): resolution to display vectors (default to 4)</span>
 <span class="sd">        scale_vec (int): scaling value for displaying vectors (default to 100)</span>
 <span class="sd">        vector_val (int): value of vector to display in quiver key (default to 10 cm)</span>
+<span class="sd">        figPath (str, optional): path to save fig (default to None)</span>
 <span class="sd">        </span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Figure displayed in notebook </span>
@@ -433,7 +436,11 @@
     <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span> <span class="c1">#add gridlines</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="o">-</span><span class="mi">179</span><span class="p">,</span> <span class="mi">179</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span> <span class="n">crs</span> <span class="o">=</span> <span class="n">transform</span><span class="p">)</span> <span class="c1">#zoom in so map only displays the Arctic</span>
     
-    <span class="c1">#display figure in notebook </span>
+    <span class="c1">#save figure</span>
+    <span class="k">if</span> <span class="n">figPath</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">figPath</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
+        
+    <span class="c1">#display figure</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -449,7 +456,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ice_drift_11_0.svg" src="_images/ice_drift_11_0.svg" /></div>
+<img alt="_images/ice_drift_11_0.png" src="_images/ice_drift_11_0.png" />
+</div>
 </div>
 </div>
 <div class="section" id="plot-map-for-icesat-2-sea-ice-thickness">
@@ -461,7 +469,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ice_drift_13_0.svg" src="_images/ice_drift_13_0.svg" /></div>
+<img alt="_images/ice_drift_13_0.png" src="_images/ice_drift_13_0.png" />
+</div>
 </div>
 </div>
 </div>
@@ -475,7 +484,7 @@
 <h3>Define function<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotWinterDrifts</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span><span class="p">,</span> <span class="n">minval</span><span class="p">,</span> <span class="n">maxval</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;YlGnBu&#39;</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">scale_vec</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">vector_val</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotWinterDrifts</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span><span class="p">,</span> <span class="n">minval</span><span class="p">,</span> <span class="n">maxval</span><span class="p">,</span> <span class="n">cbarTicks</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;YlGnBu&#39;</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">scale_vec</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">vector_val</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">figPath</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Plot maps of the arctic on North Pole Stereo projection with several months of data overlayed, along with the sea ice edge for each month and sea ice drift. </span>
 <span class="sd">   </span>
 <span class="sd">    Args:</span>
@@ -488,6 +497,7 @@
 <span class="sd">        res (int): resolution to display vectors (default to 6)</span>
 <span class="sd">        scale_vec (int): scaling value for displaying vectors (default to 100)</span>
 <span class="sd">        vector_val (int): value of vector to display in quiver key (default to 10 cm)</span>
+<span class="sd">        figPath (str, optional): path to save fig (default to None)</span>
 <span class="sd">        </span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Figure displayed in notebook </span>
@@ -539,9 +549,15 @@
     <span class="c1">#add a title</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">title</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="s1">&#39;Drift vectors overlayed on &#39;</span> <span class="o">+</span> <span class="n">dataset</span><span class="p">[</span><span class="n">dataVar</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">],</span> <span class="mi">55</span><span class="p">)),</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">18</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">1.03</span><span class="p">,</span> <span class="n">fontweight</span> <span class="o">=</span> <span class="s1">&#39;medium&#39;</span><span class="p">)</span>
     
-    <span class="c1">#display figure in notebook</span>
+    <span class="c1">#display options</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.13</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    
+    <span class="c1">#save figure</span>
+    <span class="k">if</span> <span class="n">figPath</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">figPath</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
+        
+    <span class="c1">#display figure</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -561,6 +577,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/ice_drift_19_0.png" src="_images/ice_drift_19_0.png" />
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -570,10 +589,14 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/ice_drift_20_0.png" src="_images/ice_drift_20_0.png" />
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="icesat-2-sea-ice-thickness">
-<h4>ICESat-2 sea ice thickness<a class="headerlink" href="#icesat-2-sea-ice-thickness" title="Permalink to this headline">¶</a></h4>
+<h3>ICESat-2 sea ice thickness<a class="headerlink" href="#icesat-2-sea-ice-thickness" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#winter 2018-2019</span>
@@ -581,6 +604,9 @@
                <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;PuBu&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2018-19&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ice_drift_22_0.png" src="_images/ice_drift_22_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -591,6 +617,8 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/ice_drift_23_0.png" src="_images/ice_drift_23_0.png" />
 </div>
 </div>
 </div>

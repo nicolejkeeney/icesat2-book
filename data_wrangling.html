@@ -1177,11 +1177,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;piomas-regridded-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/github_repos/icesat2-book-data/&quot;
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 <div class="section" id="add-winter-regridded-piomas-data-to-icesat-2-dataset">
@@ -1216,49 +1211,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
-Dimensions:                   (time: 12, x: 448, y: 304)
-Coordinates:
-  * time                      (time) datetime64[ns] 2018-11-01 ... 2020-04-01
-    longitude                 (x, y) float32 168.32042 168.14876 ... -9.998976
-    latitude                  (x, y) float32 31.102673 31.199413 ... 34.472084
-    region_mask               (x, y) uint8 1 1 1 1 1 1 1 1 1 ... 1 1 1 1 1 1 1 1
-Dimensions without coordinates: x, y
-Data variables:
-    xgrid                     (time, x, y) float32 -3837500.0 ... 3737500.0
-    ygrid                     (time, x, y) float32 5837500.0 ... -5337500.0
-    ice_thickness             (time, x, y) float32 0.0 0.0 0.0 ... 0.0 0.0 0.0
-    ice_thickness_int         (time, x, y) float32 nan nan nan ... nan nan nan
-    ice_thickness_unc         (time, x, y) float32 nan nan nan ... nan nan nan
-    num_segments              (time, x, y) float32 nan nan nan ... nan nan nan
-    mean_day_of_month         (time, x, y) float32 nan nan nan ... nan nan nan
-    snow_depth                (time, x, y) float32 nan nan nan ... nan nan nan
-    snow_density              (time, x, y) float32 nan nan nan ... nan nan nan
-    freeboard                 (time, x, y) float32 nan nan nan ... nan nan nan
-    ice_type                  (time, x, y) float32 nan nan nan ... nan nan nan
-    ice_density               (time, x, y) float32 nan nan nan ... nan nan nan
-    seaice_conc_monthly_cdr   (time, x, y) float32 0.0 0.0 0.0 ... 0.0 0.0 0.0
-    ice_type_filled           (time, x, y) float32 nan nan nan ... nan nan nan
-    ice_thickness_filled      (time, x, y) float32 0.0 0.0 0.0 ... 0.0 0.0 0.0
-    snow_depth_filled         (time, x, y) float32 nan nan nan ... nan nan nan
-    freeboard_filled          (time, x, y) float32 nan nan nan ... nan nan nan
-    ice_thickness_unc_filled  (time, x, y) float32 nan nan nan ... nan nan nan
-    snow_density_filled       (time, x, y) float32 nan nan nan ... nan nan nan
-    ice_density_filled        (time, x, y) float32 nan nan nan ... nan nan nan
-    t2m                       (time, x, y) float32 nan nan nan ... nan nan nan
-    msdwlwrf                  (time, x, y) float32 nan nan nan ... nan nan nan
-    drifts_uT                 (time, x, y) float32 nan nan nan ... nan nan nan
-    drifts_vT                 (time, x, y) float32 nan nan nan ... nan nan nan
-    drifts_magnitude          (time, x, y) float32 nan nan nan ... nan nan nan
-    PIOMAS_ice_thickness      (time, x, y) float32 0.0 0.0 0.0 ... 0.0 0.0 0.0
-Attributes:
-    description:    data used in nicolejkeeney ICESat-2 jupyter book
-    note:           see individual data variables for references
-    creation date:  2020-09-07
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 <div class="section" id="save-dataset-to-your-local-machine">
@@ -1270,11 +1222,6 @@ Attributes:
 <span class="n">is2</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">localDirectory</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s1">&#39;NETCDF4&#39;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39; saved to directory &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">localDirectory</span><span class="p">)</span>
 <span class="n">is2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/github_repos/icesat2-book-data/&quot;
 </pre></div>
 </div>
 </div>

@@ -395,7 +395,7 @@
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
  
 <span class="c1">#increase resolution for notebook outputs</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;svg&#39;
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
 </pre></div>
 </div>
 </div>
@@ -576,7 +576,8 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_mon</span><span class="p">(</span><span class="n">xarray_val</span><span class="p">,</span> <span class="n">desired_mon</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Check if current month is desired month &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; Check if current month is desired month </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">xarray_mon</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">xarray_val</span><span class="p">)</span><span class="o">.</span><span class="n">month</span>
     <span class="k">if</span> <span class="n">xarray_mon</span> <span class="o">==</span> <span class="n">desired_mon</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">xarray_val</span>
@@ -644,7 +645,21 @@
 <h3>Define plotting function<a class="headerlink" href="#define-plotting-function" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotMeans</span><span class="p">(</span><span class="n">PIO</span><span class="p">,</span> <span class="n">IS2</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>  
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotMeans</span><span class="p">(</span><span class="n">PIO</span><span class="p">,</span> <span class="n">IS2</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">figPath</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot ICESat-2 ice thickness and PIOMAS ice thickness on the same axis</span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        PIO (xr Dataset): dataset with PIOMAS mean ice thickness and mean ice thickness detrended uncertainty</span>
+<span class="sd">        IS2 (xr Dataset): dataset with ICESat-2 mean ice thickness and mean ice thickness uncertainty</span>
+<span class="sd">        title (str, optional): string description of plot (default to None)</span>
+<span class="sd">        figPath (str, optional): path to save fig (default to None)</span>
+
+<span class="sd">    Returns: </span>
+<span class="sd">        Figure displayed in notebook </span>
+<span class="sd">        </span>
+<span class="sd">    Notes: </span>
+<span class="sd">        Uncertainties commented out of function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="c1">#initialize figure and axes</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> 
@@ -678,26 +693,20 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/PIOMAS_32_0.svg" src="_images/PIOMAS_32_0.svg" /></div>
+<img alt="_images/PIOMAS_32_0.png" src="_images/PIOMAS_32_0.png" />
+</div>
 </div>
 </div>
 <div class="section" id="plot-comparison-for-winter-19-20">
 <h3>Plot comparison for winter 19-20<a class="headerlink" href="#plot-comparison-for-winter-19-20" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotMeans</span><span class="p">(</span><span class="n">PIO</span> <span class="o">=</span> <span class="n">PIO</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2019&#39;</span><span class="p">,</span><span class="s1">&#39;Apr 2020&#39;</span><span class="p">)),</span> <span class="n">IS2</span> <span class="o">=</span> <span class="n">IS2</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winter_19_20</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotMeans</span><span class="p">(</span><span class="n">PIO</span> <span class="o">=</span> <span class="n">PIO</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2019&#39;</span><span class="p">,</span><span class="s1">&#39;Apr 2020&#39;</span><span class="p">)),</span> <span class="n">IS2</span> <span class="o">=</span> <span class="n">IS2</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2019&#39;</span><span class="p">,</span><span class="s1">&#39;Apr 2020&#39;</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">16</span><span class="o">-</span><span class="n">a18a515512aa</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">plotMeans</span><span class="p">(</span><span class="n">PIO</span> <span class="o">=</span> <span class="n">PIO</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2019&#39;</span><span class="p">,</span><span class="s1">&#39;Apr 2020&#39;</span><span class="p">)),</span> <span class="n">IS2</span> <span class="o">=</span> <span class="n">IS2</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winter_19_20</span><span class="p">))</span>
-
-<span class="ne">NameError</span>: name &#39;winter_19_20&#39; is not defined
-</pre></div>
-</div>
+<img alt="_images/PIOMAS_34_0.png" src="_images/PIOMAS_34_0.png" />
 </div>
 </div>
 </div>
@@ -729,6 +738,9 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PIOMAS_36_0.png" src="_images/PIOMAS_36_0.png" />
 </div>
 </div>
 </div>
@@ -775,6 +787,9 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PIOMAS_41_0.png" src="_images/PIOMAS_41_0.png" />
 </div>
 </div>
 </div>
