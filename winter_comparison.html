@@ -324,9 +324,7 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
  
 <span class="c1">#increase resolution for notebook outputs</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;svg&#39;
 </pre></div>
 </div>
 </div>
@@ -337,8 +335,8 @@
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-winter-data.nc&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://is2-pso-seaice/icesat2-book-data.nc ./
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-data.nc&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -497,8 +495,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_14_0.png" src="_images/winter_comparison_14_0.png" />
-</div>
+<img alt="_images/winter_comparison_14_0.svg" src="_images/winter_comparison_14_0.svg" /></div>
 </div>
 </div>
 <div class="section" id="piomas-ice-thickness">
@@ -510,8 +507,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_16_0.png" src="_images/winter_comparison_16_0.png" />
-</div>
+<img alt="_images/winter_comparison_16_0.svg" src="_images/winter_comparison_16_0.svg" /></div>
 </div>
 </div>
 <div class="section" id="osi-saf-ice-type">
@@ -524,8 +520,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_18_0.png" src="_images/winter_comparison_18_0.png" />
-</div>
+<img alt="_images/winter_comparison_18_0.svg" src="_images/winter_comparison_18_0.svg" /></div>
 </div>
 </div>
 <div class="section" id="era5-2-meter-temperature">
@@ -537,8 +532,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_20_0.png" src="_images/winter_comparison_20_0.png" />
-</div>
+<img alt="_images/winter_comparison_20_0.svg" src="_images/winter_comparison_20_0.svg" /></div>
 </div>
 </div>
 <div class="section" id="era5-mean-surface-downward-long-wave-radiation-flux">
@@ -550,8 +544,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_22_0.png" src="_images/winter_comparison_22_0.png" />
-</div>
+<img alt="_images/winter_comparison_22_0.svg" src="_images/winter_comparison_22_0.svg" /></div>
 </div>
 </div>
 </div>

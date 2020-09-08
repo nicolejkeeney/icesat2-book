@@ -516,27 +516,23 @@
 <p>Define filepaths to data on your local machine</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#path to data directory</span>
-<span class="n">localDirectory</span> <span class="o">=</span> <span class="s1">&#39;/Users/nicolekeeney/Desktop/notebook_data/&#39;</span>
-
-<span class="c1">#path to monthly gridded ICESat-2 data</span>
-<span class="n">IS2_path</span> <span class="o">=</span> <span class="n">localDirectory</span> <span class="o">+</span> <span class="s1">&#39;cpom_thickness/&#39;</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#path to monthly gridded ICESat-2 data</span>
+<span class="n">IS2_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
 <span class="c1">#path to NSIDC weekly sea ice concentration data</span>
-<span class="n">SIC_path</span> <span class="o">=</span> <span class="n">localDirectory</span> <span class="o">+</span> <span class="s1">&#39;SIC/&#39;</span>
+<span class="n">SIC_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
 <span class="c1">#path to NSIDC region mask for the Arctic</span>
-<span class="n">regionMask_path</span> <span class="o">=</span> <span class="n">localDirectory</span> <span class="o">+</span> <span class="s1">&#39;regionMask/&#39;</span>
+<span class="n">regionMask_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
 <span class="c1">#path to ERA5 climate reanalysis data </span>
-<span class="n">ERA5_filename</span> <span class="o">=</span> <span class="s1">&#39;adaptor.mars.internal-1593801470.6369596-17327-1-b6ff618a-cfd2-4a13-9eb8-87c048affbf2.nc&#39;</span>
-<span class="n">ERA5_path</span> <span class="o">=</span> <span class="n">localDirectory</span>  <span class="o">+</span> <span class="s1">&#39;ERA5/&#39;</span> <span class="o">+</span> <span class="n">ERA5_filename</span>
+<span class="n">ERA5_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
 <span class="c1">#path to PIOMAS data</span>
-<span class="n">PIOMAS_path</span> <span class="o">=</span> <span class="n">localDirectory</span> <span class="o">+</span> <span class="s1">&#39;PIOMAS_monthly_thickness/&#39;</span>
+<span class="n">PIOMAS_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
 <span class="c1">#path to NSIDC sea ice drift data </span>
-<span class="n">drift_path</span> <span class="o">=</span> <span class="n">localDirectory</span> <span class="o">+</span> <span class="s1">&#39;drifts/&#39;</span>
+<span class="n">drift_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -628,11 +624,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cannot find files; check date range, filepath or if glob is imported
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 <div class="section" id="clean-data-and-extract-useful-variables">
@@ -650,20 +641,6 @@
 
 <span class="c1">#assign lat and lon as coordinates to dataset</span>
 <span class="n">is2</span> <span class="o">=</span> <span class="n">is2</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">is2Lats</span><span class="p">),</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="n">is2Lons</span><span class="p">)})</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="mi">3999</span><span class="n">d6296113</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">#drop projection variable</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">is2</span> <span class="o">=</span> <span class="n">is2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;projection&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1">#get lat and lon</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">is2Lats</span> <span class="o">=</span> <span class="n">is2</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
-
-<span class="ne">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;drop&#39;
 </pre></div>
 </div>
 </div>
@@ -1201,7 +1178,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;piomas-regridded-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/Desktop/notebook_data/&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;piomas-regridded-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/github_repos/icesat2-book-data/&quot;
 </pre></div>
 </div>
 </div>
@@ -1278,7 +1255,7 @@ Data variables:
 Attributes:
     description:    data used in nicolejkeeney ICESat-2 jupyter book
     note:           see individual data variables for references
-    creation date:  2020-09-01
+    creation date:  2020-09-07
 </pre></div>
 </div>
 </div>
@@ -1289,7 +1266,7 @@ Attributes:
 <p>We will use this dataset in other notebooks to plot and analyze the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;icesat2-book-winter-data.nc&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;icesat2-book-data.nc&#39;</span>
 <span class="n">is2</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">localDirectory</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s1">&#39;NETCDF4&#39;</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39; saved to directory &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">localDirectory</span><span class="p">)</span>
 <span class="n">is2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1297,7 +1274,7 @@ Attributes:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-winter-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/Desktop/notebook_data/&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/github_repos/icesat2-book-data/&quot;
 </pre></div>
 </div>
 </div>

@@ -288,12 +288,12 @@
        Sea ice drift magnitude
       </a>
      </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#icesat-2-sea-ice-thickness">
+       ICESat-2 sea ice thickness
+      </a>
+     </li>
     </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#icesat-2-sea-ice-thickness">
-     ICESat-2 sea ice thickness
-    </a>
    </li>
   </ul>
  </li>
@@ -341,14 +341,12 @@
 <span class="kn">from</span> <span class="nn">cartopy.mpl.geoaxes</span> <span class="kn">import</span> <span class="n">GeoAxes</span>
 <span class="n">GeoAxes</span><span class="o">.</span><span class="n">_pcolormesh_patched</span> <span class="o">=</span> <span class="n">Axes</span><span class="o">.</span><span class="n">pcolormesh</span>
 
-<span class="c1"># Ignore warnings in the notebook to improve display</span>
-<span class="c1"># You might want to remove this when debugging/writing new code</span>
+<span class="c1">#remove warnings to improve display</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
- 
+
 <span class="c1">#increase resolution for notebook outputs</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline 
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39; 
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;svg&#39;
 </pre></div>
 </div>
 </div>
@@ -359,8 +357,8 @@
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-winter-data.nc&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://is2-pso-seaice/icesat2-book-data.nc ./
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-data.nc&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -451,8 +449,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ice_drift_11_0.png" src="_images/ice_drift_11_0.png" />
-</div>
+<img alt="_images/ice_drift_11_0.svg" src="_images/ice_drift_11_0.svg" /></div>
 </div>
 </div>
 <div class="section" id="plot-map-for-icesat-2-sea-ice-thickness">
@@ -464,8 +461,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ice_drift_13_0.png" src="_images/ice_drift_13_0.png" />
-</div>
+<img alt="_images/ice_drift_13_0.svg" src="_images/ice_drift_13_0.svg" /></div>
 </div>
 </div>
 </div>
@@ -565,9 +561,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/ice_drift_19_0.png" src="_images/ice_drift_19_0.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -577,14 +570,10 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/ice_drift_20_0.png" src="_images/ice_drift_20_0.png" />
-</div>
-</div>
 </div>
 </div>
 <div class="section" id="icesat-2-sea-ice-thickness">
-<h3>ICESat-2 sea ice thickness<a class="headerlink" href="#icesat-2-sea-ice-thickness" title="Permalink to this headline">¶</a></h3>
+<h4>ICESat-2 sea ice thickness<a class="headerlink" href="#icesat-2-sea-ice-thickness" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#winter 2018-2019</span>
@@ -592,9 +581,6 @@
                <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;PuBu&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2018-19&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/ice_drift_22_0.png" src="_images/ice_drift_22_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -605,8 +591,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/ice_drift_23_0.png" src="_images/ice_drift_23_0.png" />
 </div>
 </div>
 </div>

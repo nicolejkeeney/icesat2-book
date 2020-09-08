@@ -360,9 +360,7 @@
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 
 <span class="c1">#increase resolution for notebook outputs</span>
-<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">125</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;svg&#39;
 </pre></div>
 </div>
 </div>
@@ -373,8 +371,8 @@
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil cp gs://icesat2-book-data/icesat2-book-winter-data.nc ./
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-winter-data.nc&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://is2-pso-seaice/icesat2-book-data.nc ./
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-data.nc&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -459,8 +457,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_12_0.png" src="_images/mapping_12_0.png" />
-</div>
+<img alt="_images/mapping_12_0.svg" src="_images/mapping_12_0.svg" /></div>
 </div>
 <p>You can also restrict the data by using the <span style="color:darkmagenta; font-family: Courier">restrictRegionally</span> function from the <a class="reference external" href="https://nicolejkeeney.github.io/icesat2-book/regional_analysis.html">regional analysis</a> notebook.</p>
 <div class="cell docutils container">
@@ -549,8 +546,7 @@
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Regions selected: Inner Arctic
 </pre></div>
 </div>
-<img alt="_images/mapping_15_1.png" src="_images/mapping_15_1.png" />
-</div>
+<img alt="_images/mapping_15_1.svg" src="_images/mapping_15_1.svg" /></div>
 </div>
 </div>
 <div class="section" id="plot-winter-data">
@@ -643,9 +639,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_21_0.png" src="_images/mapping_21_0.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -654,9 +647,6 @@
                <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2019-2020&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_22_0.png" src="_images/mapping_22_0.png" />
 </div>
 </div>
 </div>
@@ -670,9 +660,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_24_0.png" src="_images/mapping_24_0.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -681,9 +668,6 @@
                <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2019-2020&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_25_0.png" src="_images/mapping_25_0.png" />
 </div>
 </div>
 </div>
@@ -698,9 +682,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_27_0.png" src="_images/mapping_27_0.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -709,9 +690,6 @@
                <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;plasma&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2019-2020&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_28_0.png" src="_images/mapping_28_0.png" />
 </div>
 </div>
 </div>
@@ -725,9 +703,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_30_0.png" src="_images/mapping_30_0.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -736,9 +711,6 @@
                <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;YlOrRd&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2019-2020&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_31_0.png" src="_images/mapping_31_0.png" />
 </div>
 </div>
 </div>
@@ -752,9 +724,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_33_0.png" src="_images/mapping_33_0.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -763,9 +732,6 @@
                <span class="n">minval</span> <span class="o">=</span> <span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2019-2020&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_34_0.png" src="_images/mapping_34_0.png" />
 </div>
 </div>
 </div>
@@ -779,9 +745,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_36_0.png" src="_images/mapping_36_0.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -790,9 +753,6 @@
                <span class="n">minval</span> <span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">250</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;PuRd&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2019-2020&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_37_0.png" src="_images/mapping_37_0.png" />
 </div>
 </div>
 </div>
@@ -807,9 +767,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_39_0.png" src="_images/mapping_39_0.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -818,9 +775,6 @@
                <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;YlGnBu&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Winter 2019-2020&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/mapping_40_0.png" src="_images/mapping_40_0.png" />
 </div>
 </div>
 </div>
@@ -835,20 +789,10 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;2019-01-01T00:00:00.000000000&#39;]
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="s1">&#39;January 2019&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;2019-01-01T00:00:00.000000000&#39;]
 </pre></div>
 </div>
 </div>
@@ -859,23 +803,11 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;2019-01-01T00:00:00.000000000&#39;]
-</pre></div>
-</div>
-</div>
 </div>
 <p>Note how all three strings to represent January 2019 outputted the same results. <br><br>Xarray also allows you to easily select a range of data. Using the same format, you can select a slice of months representing a range of consecutive months. This is how the data was selected in the winter plotting section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="s1">&#39;Nov 2019&#39;</span><span class="p">,</span> <span class="s1">&#39;Apr 2020&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;2019-11-01T00:00:00.000000000&#39; &#39;2019-12-01T00:00:00.000000000&#39;
- &#39;2020-01-01T00:00:00.000000000&#39; &#39;2020-02-01T00:00:00.000000000&#39;
- &#39;2020-03-01T00:00:00.000000000&#39; &#39;2020-04-01T00:00:00.000000000&#39;]
 </pre></div>
 </div>
 </div>
