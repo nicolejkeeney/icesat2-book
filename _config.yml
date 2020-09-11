@@ -16,6 +16,7 @@ html:
   use_issues_button         : true
   use_edit_page_button      : true
   favicon                   : logo.png
+  google_analytics_id       : "UA-177768395-1"
 
 execute:
   allow_errors              : false
