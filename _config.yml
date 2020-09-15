@@ -23,6 +23,5 @@ execute:
 
 launch_buttons: 
   colab_url                 : https://colab.research.google.com
-  binderhub_url.            : null
 
 home_page_in_navbar: true 
