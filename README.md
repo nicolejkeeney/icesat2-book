@@ -12,7 +12,7 @@ Run **conda env create -f environment.yml** in terminal.<br>To activate the envi
 
 ## Steps to build book 
  1) Update github repo with any changes
- 2) Activate virtual notebook
+ 2) Activate virtual environment associated with book
  3) **cd** out of local book directory 
  4) In terminal, run: **jb build icesat2-book** 
  5) **cd** into local book directory 
