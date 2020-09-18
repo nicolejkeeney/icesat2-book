@@ -1029,7 +1029,7 @@
     <span class="sd">&quot;&quot;&quot;Display a progress bar inside a for loop </span>
 <span class="sd">    Args: </span>
 <span class="sd">        i (int): iteration number</span>
-<span class="sd">        tot (tot): total number of iterations</span>
+<span class="sd">        tot (int): total number of iterations</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">tot</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1"> [</span><span class="si">%-20s</span><span class="s1">] </span><span class="si">%d%%</span><span class="s1"> complete&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="mi">20</span><span class="o">*</span><span class="n">j</span><span class="p">),</span> <span class="mi">100</span><span class="o">*</span><span class="n">j</span><span class="p">))</span>
