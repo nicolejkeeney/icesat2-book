@@ -32,3 +32,4 @@ Alek Petty (internship supervisor)
 ## Update history  
 If you find any typos or errors in the code or have any suggestions for the book, feel free to open an issue, which you can find by mousing over the GitHub icon at the top of each page. If you are familiar with GitHub, you can also fork the book's repository and suggest an edit that way. 
  - 9/4/2020: Version 1 
+ - 11/18/2020: Updated with new gridded ice thickness dataset
