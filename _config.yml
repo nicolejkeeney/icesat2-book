@@ -22,7 +22,7 @@ execute:
   allow_errors              : false
   exclude_patterns:
     - 'data_wrangling'
-    - 'README'
+    - 'README.md'
     - 'LICENSE'
 
 
