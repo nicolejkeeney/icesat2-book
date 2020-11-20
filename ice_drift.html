@@ -557,7 +557,7 @@
     
     <span class="c1">#save figure</span>
     <span class="k">if</span> <span class="n">figPath</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">figPath</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">figPath</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">250</span><span class="p">)</span>
     
     <span class="c1">#display figure</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
