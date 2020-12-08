@@ -18,3 +18,5 @@ Run **conda env create -f environment.yml** in terminal.<br>To activate the envi
  5) **cd** into local book directory 
  6) In terminal, run: **ghp-import -n -p -f _build/html** 
  
+## To access google bucket with public data 
+https://console.cloud.google.com/storage/browser/sea-ice-thickness-data/xarray

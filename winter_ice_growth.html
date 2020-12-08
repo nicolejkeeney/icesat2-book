@@ -346,7 +346,7 @@
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://is2-pso-seaice/icesat2-book-data.nc ./
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://sea-ice-thickness-data/xarray/icesat2-book-data.nc ./
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-data.nc&#39;</span><span class="p">)</span>
 </pre></div>
 </div>

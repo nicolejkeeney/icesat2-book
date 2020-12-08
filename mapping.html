@@ -373,7 +373,7 @@
 <p>Copy file from the book’s google bucket and load into an xarray dataset.</p>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://is2-pso-seaice/icesat2-book-data.nc ./
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>gsutil -m cp gs://sea-ice-thickness-data/xarray/icesat2-book-data.nc ./
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;icesat2-book-data.nc&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -459,12 +459,22 @@
 <p>Call function</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;ice_thickness&#39;</span><span class="p">,</span> <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Feb 2019&#39;</span><span class="p">,</span> <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span>  <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;ice_thickness&#39;</span><span class="p">,</span> <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Feb 2019&#39;</span><span class="p">,</span> <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/mapping_12_0.png" src="_images/mapping_12_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotOneMonth</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dataVar</span> <span class="o">=</span> <span class="s1">&#39;ice_thickness&#39;</span><span class="p">,</span> <span class="n">month</span> <span class="o">=</span> <span class="s1">&#39;Feb 2020&#39;</span><span class="p">,</span> <span class="n">minval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/mapping_13_0.png" src="_images/mapping_13_0.png" />
 </div>
 </div>
 <p>You can also restrict the data by using the <span style="color:darkmagenta; font-family: Courier">restrictRegionally</span> function from the <a class="reference external" href="https://nicolejkeeney.github.io/icesat2-book/regional_analysis.html">regional analysis</a> notebook.</p>
@@ -554,7 +564,7 @@
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Regions selected: Inner Arctic
 </pre></div>
 </div>
-<img alt="_images/mapping_15_1.png" src="_images/mapping_15_1.png" />
+<img alt="_images/mapping_16_1.png" src="_images/mapping_16_1.png" />
 </div>
 </div>
 </div>
@@ -658,7 +668,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_21_0.png" src="_images/mapping_21_0.png" />
+<img alt="_images/mapping_22_0.png" src="_images/mapping_22_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -670,7 +680,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_22_0.png" src="_images/mapping_22_0.png" />
+<img alt="_images/mapping_23_0.png" src="_images/mapping_23_0.png" />
 </div>
 </div>
 </div>
@@ -685,7 +695,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_24_0.png" src="_images/mapping_24_0.png" />
+<img alt="_images/mapping_25_0.png" src="_images/mapping_25_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -697,7 +707,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_25_0.png" src="_images/mapping_25_0.png" />
+<img alt="_images/mapping_26_0.png" src="_images/mapping_26_0.png" />
 </div>
 </div>
 </div>
@@ -713,7 +723,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_27_0.png" src="_images/mapping_27_0.png" />
+<img alt="_images/mapping_28_0.png" src="_images/mapping_28_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -725,7 +735,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_28_0.png" src="_images/mapping_28_0.png" />
+<img alt="_images/mapping_29_0.png" src="_images/mapping_29_0.png" />
 </div>
 </div>
 </div>
@@ -740,7 +750,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_30_0.png" src="_images/mapping_30_0.png" />
+<img alt="_images/mapping_31_0.png" src="_images/mapping_31_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -752,7 +762,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_31_0.png" src="_images/mapping_31_0.png" />
+<img alt="_images/mapping_32_0.png" src="_images/mapping_32_0.png" />
 </div>
 </div>
 </div>
@@ -767,7 +777,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_33_0.png" src="_images/mapping_33_0.png" />
+<img alt="_images/mapping_34_0.png" src="_images/mapping_34_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -779,7 +789,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_34_0.png" src="_images/mapping_34_0.png" />
+<img alt="_images/mapping_35_0.png" src="_images/mapping_35_0.png" />
 </div>
 </div>
 </div>
@@ -794,7 +804,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_36_0.png" src="_images/mapping_36_0.png" />
+<img alt="_images/mapping_37_0.png" src="_images/mapping_37_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -806,7 +816,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_37_0.png" src="_images/mapping_37_0.png" />
+<img alt="_images/mapping_38_0.png" src="_images/mapping_38_0.png" />
 </div>
 </div>
 </div>
@@ -822,7 +832,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_39_0.png" src="_images/mapping_39_0.png" />
+<img alt="_images/mapping_40_0.png" src="_images/mapping_40_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -834,7 +844,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_40_0.png" src="_images/mapping_40_0.png" />
+<img alt="_images/mapping_41_0.png" src="_images/mapping_41_0.png" />
 </div>
 </div>
 </div>
