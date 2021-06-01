@@ -8,10 +8,6 @@
 # build files for jupyter book
 _build/
 
+# ICESat-2 data 
+IS2SITMOGR4/
 
-# NETCDF4 file from the google bucket, generated while running the code 
-icesat2-book-data*.nc
-
-
-#PIOMAS dataset 
-piomas-regridded-data*.nc*
