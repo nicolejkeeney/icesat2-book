@@ -13,3 +13,7 @@ IS2SITMOGR4/
 
 # pycache 
 */*pycache*/**
+
+# data 
+*.nc*
+IS2SITMOGR4/*

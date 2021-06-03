@@ -1,7 +1,7 @@
 # Book settings
 title: ICESat-2 Sea Ice Thickness Data Analysis and Visualization
 author: Nicole Keeney
-logo: logo.png
+logo: figs/logo.png
 
 latex:
   latex_documents:

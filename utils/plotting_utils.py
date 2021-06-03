@@ -125,18 +125,19 @@ def polar_fig_and_axes(hemisphere, figsize=(10,10), num_rows=1, num_columns=3, l
 
 
 
-def arcticComparisonMaps(data1, data2, vmin=None, vmax=None, vmin_diff=None, vmax_diff=None, hemisphere='nh', lat=55, title1="data_1", title2="data_2"):
+def arcticComparisonMaps(data1, data2, plot_diff=True, vmin=None, vmax=None, vmin_diff=None, vmax_diff=None, hemisphere='nh', lat=55, title1="data_1", title2="data_2"):
     """ Plot comparison maps for two xr.DataArrays, along with gridcell difference 
     Both input DataArrays must be on the same grid and contain the coordinates latitude and longitude
     
     Args: 
         data1 (xr.DataArray): data to plot on leftmost plot. 
         data2 (xr.DataArray): data to plot on middle plot
-        vmin (float): minimum value to use colorbar (default to 1st percentile of data1)
-        vmax (float): maximum value to use colorbar (default to 99th percentile of data1)
-        vmin_diff (float): minimum value to use for plotting data range (default to mapping default, with 0 at center)
-        vmax_diff (float): maximum value to use for plotting data range (default to mapping default, with 0 at center)
-        hemisphere ('nh' or 'sh'): string indicating projection to use for map (default to 'nh')
+        plot_diff (bool, optional): plot gridcell difference (data1 - data2) on a third map? (default to True)
+        vmin (float, optional): minimum value to use colorbar (default to 1st percentile of data1)
+        vmax (float, optional): maximum value to use colorbar (default to 99th percentile of data1)
+        vmin_diff (float, optional): minimum value to use for plotting data range (default to mapping default, with 0 at center)
+        vmax_diff (float, optional): maximum value to use for plotting data range (default to mapping default, with 0 at center)
+        hemisphere ('nh' or 'sh', optional): string indicating projection to use for map (default to 'nh')
         lat (float, optional): positive float value to restrict above (northern hemisphere) or below (southern hemisphere) (default to 55)
     
     Returns: 
@@ -151,23 +152,25 @@ def arcticComparisonMaps(data1, data2, vmin=None, vmax=None, vmin_diff=None, vma
         vmax = round(np.nanpercentile(data1.values, 99),1) 
 
     # Generate figure and axes 
-    fig, axes = polar_fig_and_axes(hemisphere, figsize=(16,6), lat=lat)
-    ax1, ax2, ax3 = axes[0], axes[1], axes[2]
+    num_columns = 3 if (plot_diff==True) else 2
+
+    fig, axes = polar_fig_and_axes(hemisphere, figsize=(16,6), num_columns=num_columns, lat=lat)
+    titles = [title1,title2]
 
     # Overlay data
-    im1 = data1.plot(x='longitude', y='latitude', ax=ax1, transform=ccrs.PlateCarree(), vmin=vmin, vmax=vmax, zorder=8, cmap='viridis', cbar_kwargs = {'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
-    im2 = data2.plot(x='longitude', y='latitude', ax=ax2, transform=ccrs.PlateCarree(), vmin=vmin, vmax=vmax, zorder=8, cmap='viridis', cbar_kwargs = {'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
+    im1 = data1.plot(x='longitude', y='latitude', ax=axes[0], transform=ccrs.PlateCarree(), vmin=vmin, vmax=vmax, zorder=8, cmap='viridis', cbar_kwargs = {'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
+    im2 = data2.plot(x='longitude', y='latitude', ax=axes[1], transform=ccrs.PlateCarree(), vmin=vmin, vmax=vmax, zorder=8, cmap='viridis', cbar_kwargs = {'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
     
     # Plot gricell difference 
-    gridcell_diff = data2-data1
-    if (vmax_diff is not None) and (vmin_diff is not None): 
-        diff_im = gridcell_diff.plot(x='longitude', y='latitude', ax=ax3, transform=ccrs.PlateCarree(), vmin = vmin_diff, vmax=vmax_diff, zorder=8, cmap='coolwarm', cbar_kwargs={'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
-    else: 
-        diff_im = gridcell_diff.plot(x='longitude', y='latitude', ax=ax3, transform=ccrs.PlateCarree(), zorder=8, center=0, cmap='coolwarm', cbar_kwargs={'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
-
-    # Add titles to figure and axes 
-    for ax, title in zip([ax1,ax2,ax3],[title1,title2,'Gridcell Difference']): 
+    if plot_diff: 
+        gridcell_diff = data2-data1
+        if (vmax_diff is not None) and (vmin_diff is not None): 
+            diff_im = gridcell_diff.plot(x='longitude', y='latitude', ax=axes[2], transform=ccrs.PlateCarree(), vmin = vmin_diff, vmax=vmax_diff, zorder=8, cmap='coolwarm', cbar_kwargs={'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
+        else: 
+            diff_im = gridcell_diff.plot(x='longitude', y='latitude', ax=axes[2], transform=ccrs.PlateCarree(), zorder=8, center=0, cmap='coolwarm', cbar_kwargs={'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
+        titles.append("Griddcell Difference")
+    
+    for ax, title in zip(axes,titles): # Add titles to figure and axes 
         ax.title.set_text(title)
 
-    # Show fig in notebook 
-    plt.show()
+    plt.show() # Show fig in notebook 

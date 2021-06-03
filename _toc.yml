@@ -1,8 +1,8 @@
 - file: home
 - part: NOTEBOOKS
   chapters: 
+     - file: is2_intro
      - file: mapping
-     - file: regional_analysis
      - file: winter_comparison
      - file: winter_ice_growth
      - file: PIOMAS
