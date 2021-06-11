@@ -15,7 +15,7 @@ html:
   use_repository_button     : true
   use_issues_button         : true
   use_edit_page_button      : true
-  favicon                   : logo.png
+  favicon                   : "figs/logo.png"
   google_analytics_id       : "UA-177768395-1"
 
 execute:
