@@ -104,92 +104,6 @@ def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all"):
     return ds_interp
 
 
-def compute_stats(data): 
-    """ Compute mean value and standard deviation for each time step
-    If data is a xr.Dataset containing more than one data variable, the funciton will convert it to a xr.DataArray and compute statistics using the first data variable
-    
-    Args: 
-        data (xr.Dataset or xr.DataArray)
-    
-    Returns: 
-        mean (xr.DataArray): mean value 
-        std (xr.DataArray): standard deviation 
-    """
-    
-    # Turn Dataset object into DataArray
-    try: 
-        data = data[list(data.data_vars)[0]]  # Get first data variable from list of data variables 
-    except: # If data is already a DataArray, pass
-        pass
-    
-    # Compute mean value
-    mean = data.mean(dim = ['lat','lon'], skipna = True)
-    mean = mean.assign_attrs({'long_name':'mean value', 'reference': 'http://xarray.pydata.org/en/stable/generated/xarray.DataArray.mean.html'})
-    mean.name = 'mean_value'
-
-    # Compute standard deviation
-    std = data.std(dim = ['lat','lon'], skipna = True)
-    std = std.assign_attrs({'long_name':'standard deviation', 'reference': 'http://xarray.pydata.org/en/stable/generated/xarray.DataArray.std.html'})
-    std.name = 'std'
-
-    return mean, std
-
-
-
-def compute_comparative_stats(obs_data, model_data): 
-    """ Compute comparative statistics 
-    Requires that both input datasets are on the same grid and contain the dimensions "time", "lat", "lon"
-    Statistical metrics computed using xskillscore package.
-    If obs_data or model_data is a xr.Dataset containing more than one data variable, the funciton will convert it to a xr.DataArray and compute statistics using the first data variable
-    
-    Args: 
-        obs_data (xr.Dataset or xr.DataArray): observational data 
-        model_data (xr.Dataset or xr.DataArray): model data 
-        
-    Returns: 
-        gridcell_diff (xr.DataArray): gridcell difference model - observational data 
-        RMSE_monthly (xr.DataArray): root mean square error per month; returns one value per month 
-        RMSE_tot (xr.DataArray): root mean square error over all dimensions; returns a single value 
-        pearson_monthly (xr.DataArray): pearson r per month; returns one value per month
-        pearson_tot (xr.DataArray): pearson r over all dimensions; returns a single value
-    
-    """
-    # Turn Dataset objects into DataArrays
-    try: 
-        model_data = model_data[list(model_data.data_vars)[0]]  # Get first data variable from list of data variables 
-    except: # If data is already a DataArray, pass
-        pass
-    try: 
-        obs_data = obs_data[list(obs_data.data_vars)[0]]  # Get first data variable from list of data variables 
-    except: # If data is already a DataArray, pass
-        pass
-    
-    # Compute griddcell_diff
-    gridcell_diff = (model_data - obs_data).assign_attrs({'long_name': 'gridcell difference (model - observation)'})
-    gridcell_diff.name = 'gridcell_diff'
-    
-    # Rechunk to avoid chunking issues 
-    try: 
-        obs_data = obs_data.chunk({"time":-1})
-        model_data = model_data.chunk({"time":-1})
-    except: 
-        pass 
-    
-    # Compute RMSE 
-    rmse_tot = xs.rmse(obs_data, model_data, dim = ["time","lat", "lon"], skipna = True).assign_attrs({'long_name':'root mean square error', 'reference':'https://xskillscore.readthedocs.io/en/stable/api/xskillscore.rmse.html#xskillscore.rmse'})
-    rmse_monthly = xs.rmse(obs_data, model_data, dim = ["lat", "lon"], skipna = True).assign_attrs({'long_name':'root mean square error', 'reference':'https://xskillscore.readthedocs.io/en/stable/api/xskillscore.rmse.html#xskillscore.rmse'})
-    rmse_tot.name = 'RMSE'
-    rmse_monthly.name = 'RMSE_monthly'
-    
-    # Compute pearson R
-    pearson_tot = xs.pearson_r(obs_data, model_data, dim = ["time", "lat", "lon"], skipna = True).assign_attrs({'long_name':'pearson r', 'reference':'https://xskillscore.readthedocs.io/en/stable/api/xskillscore.pearson_r.html#xskillscore.pearson_r'})
-    pearson_monthly = xs.pearson_r(obs_data, model_data, dim = ["lat", "lon"], skipna = True).assign_attrs({'long_name':'pearson r', 'reference':'https://xskillscore.readthedocs.io/en/stable/api/xskillscore.pearson_r.html#xskillscore.pearson_r'})
-    pearson_tot.name = 'pearson_R'
-    pearson_monthly.name = 'pearson_R_monthly'
-    
-    return gridcell_diff, rmse_tot, rmse_monthly, pearson_tot, pearson_monthly
-
-
 #function from regional_analysis notebook
 def restrictRegionally(dataset, regionKeyList): 
     """Restrict dataset to input regions.
@@ -211,11 +125,9 @@ def restrictRegionally(dataset, regionKeyList):
         """
         if type(regionKeyList) != list: #raise a ValueError if regionKeyList is not a list 
             raise ValueError('regionKeyList needs to be a list. \nFor example, if you want to restrict data to the Beaufort Sea, define regionKeyList = [13]')
-
         for key in regionKeyList: 
             if key not in list(regionTbl['key']): 
                 raise ValueError('Region key ' + str(key) + ' does not exist in region mask. \n Redefine regionKeyList with key numbers from table')
-
         if len(regionKeyList) == 0: 
             warnings.warn('You removed all the data from the dataset. Are you sure you wanted to do this? \n If not, make sure the list regionKeyList is not empty and try again. \n If you intended to keep data from all regions, set regionKeyList = list(tbl[\"key\"])')
  
@@ -226,22 +138,20 @@ def restrictRegionally(dataset, regionKeyList):
     #call function to check if regionKeyList was defined correctly
     checkKeys(regionKeyList, regionTbl)
     
-    #keys to remove (all keys that are note listed in regionKeyList)
-    keysToRemove = [key for key in list(regionTbl['key']) if key not in regionKeyList]
-    
     #filter elements from the ice thickness DataArray where the region is the desired region
+    keysToRemove = [key for key in list(regionTbl['key']) if key not in regionKeyList]
     regionalDataset = dataset.copy()
     for var in dataset.data_vars: 
-        if var != 'seaice_conc_monthly_cdr':
-            regionalVar = regionalDataset[var]
-            for key in keysToRemove: 
+        regionalVar = regionalDataset[var]
+        for key in keysToRemove: 
+            try:
                 regionalVar = regionalVar.where(regionalVar['region_mask'] != key)
-            regionalDataset[var] = regionalVar
-    
-    #find name of labels 
-    labels = [regionTbl[regionTbl['key'] == key]['label'].item() for key in regionKeyList]
+            except: 
+                pass
+        regionalDataset[var] = regionalVar
     
     #add new attributes describing changes made to the dataset
+    labels = [regionTbl[regionTbl['key'] == key]['label'].item() for key in regionKeyList]
     if len(labels) < len(regionTbl['key']): 
         if set(regionKeyList) == set([10,11,12,13,15]): #convert to sets so unordered lists are compared
             regionalDataset.attrs['regions with data'] = 'Inner Arctic'

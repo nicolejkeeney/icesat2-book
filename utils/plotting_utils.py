@@ -123,9 +123,7 @@ def polar_fig_and_axes(hemisphere, figsize=(10,10), num_rows=1, num_columns=3, l
     return fig, axes
 
 
-
-
-def arcticComparisonMaps(data1, data2, plot_diff=True, vmin=None, vmax=None, vmin_diff=None, vmax_diff=None, hemisphere='nh', lat=55, title1="data_1", title2="data_2"):
+def arcticComparisonMaps(data1, data2, plot_diff=True, vmin=None, vmax=None, vmin_diff=None, vmax_diff=None, hemisphere='nh', cmap="viridis", lat=55, title1="data_1", title2="data_2"):
     """ Plot comparison maps for two xr.DataArrays, along with gridcell difference 
     Both input DataArrays must be on the same grid and contain the coordinates latitude and longitude
     
@@ -138,6 +136,9 @@ def arcticComparisonMaps(data1, data2, plot_diff=True, vmin=None, vmax=None, vmi
         vmin_diff (float, optional): minimum value to use for plotting data range (default to mapping default, with 0 at center)
         vmax_diff (float, optional): maximum value to use for plotting data range (default to mapping default, with 0 at center)
         hemisphere ('nh' or 'sh', optional): string indicating projection to use for map (default to 'nh')
+        title1 (str, optional): title to give plot of data1 (default to "data1")
+        title2 (str, optional): title to give plot of data2 (default to "data2")
+        cmap (str, optional): colormap to use (default to viridis)
         lat (float, optional): positive float value to restrict above (northern hemisphere) or below (southern hemisphere) (default to 55)
     
     Returns: 
@@ -150,27 +151,26 @@ def arcticComparisonMaps(data1, data2, plot_diff=True, vmin=None, vmax=None, vmi
         vmin = round(np.nanpercentile(data1.values, 1),1)
     if vmax is None: 
         vmax = round(np.nanpercentile(data1.values, 99),1) 
-
+        
     # Generate figure and axes 
     num_columns = 3 if (plot_diff==True) else 2
-
     fig, axes = polar_fig_and_axes(hemisphere, figsize=(16,6), num_columns=num_columns, lat=lat)
     titles = [title1,title2]
 
     # Overlay data
-    im1 = data1.plot(x='longitude', y='latitude', ax=axes[0], transform=ccrs.PlateCarree(), vmin=vmin, vmax=vmax, zorder=8, cmap='viridis', cbar_kwargs = {'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
-    im2 = data2.plot(x='longitude', y='latitude', ax=axes[1], transform=ccrs.PlateCarree(), vmin=vmin, vmax=vmax, zorder=8, cmap='viridis', cbar_kwargs = {'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
+    im1 = data1.plot(x='longitude', y='latitude', ax=axes[0], cmap=cmap, transform=ccrs.PlateCarree(), vmin=vmin, vmax=vmax, zorder=8, cbar_kwargs = {'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
+    im2 = data2.plot(x='longitude', y='latitude', ax=axes[1], cmap=cmap, transform=ccrs.PlateCarree(), vmin=vmin, vmax=vmax, zorder=8, cbar_kwargs = {'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
     
     # Plot gricell difference 
     if plot_diff: 
         gridcell_diff = data2-data1
         if (vmax_diff is not None) and (vmin_diff is not None): 
-            diff_im = gridcell_diff.plot(x='longitude', y='latitude', ax=axes[2], transform=ccrs.PlateCarree(), vmin = vmin_diff, vmax=vmax_diff, zorder=8, cmap='coolwarm', cbar_kwargs={'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
+            diff_im = gridcell_diff.plot(x='longitude', y='latitude', ax=axes[2], transform=ccrs.PlateCarree(), vmin = vmin_diff, vmax=vmax_diff, zorder=8, cmap='coolwarm', cbar_kwargs={'orientation':'horizontal', 'pad':0.02, 'extend':'both', 'label':'difference'})
         else: 
-            diff_im = gridcell_diff.plot(x='longitude', y='latitude', ax=axes[2], transform=ccrs.PlateCarree(), zorder=8, center=0, cmap='coolwarm', cbar_kwargs={'orientation':'horizontal', 'pad':0.02, 'extend':'both'})
+            diff_im = gridcell_diff.plot(x='longitude', y='latitude', ax=axes[2], transform=ccrs.PlateCarree(), zorder=8, center=0, cmap='coolwarm', cbar_kwargs={'orientation':'horizontal', 'pad':0.02, 'extend':'both', 'label':'difference'})
         titles.append("Griddcell Difference")
     
     for ax, title in zip(axes,titles): # Add titles to figure and axes 
-        ax.title.set_text(title)
+        ax.set_title("\n".join(wrap(title, 40)), fontsize = 13, y = 1, fontweight = 'medium')
 
     plt.show() # Show fig in notebook 

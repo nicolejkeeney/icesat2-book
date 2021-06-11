@@ -4,12 +4,10 @@
      - file: is2_intro
      - file: mapping
      - file: winter_comparison
-     - file: winter_ice_growth
-     - file: PIOMAS
-     - file: ice_drift
 - part: MISC
   chapters: 
      - file: data_wrangling
+     - file: utils
 
 
 
