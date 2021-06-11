@@ -24,6 +24,7 @@ execute:
     - 'data_wrangling'
     - 'README.md'
     - 'LICENSE'
+    - 'delete/*'
 
 
 launch_buttons: 
