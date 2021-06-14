@@ -12,7 +12,7 @@ _build/
 IS2SITMOGR4/
 
 # pycache 
-*/*pycache*/**
+__pycache__/*
 
 # data 
 *.nc*
