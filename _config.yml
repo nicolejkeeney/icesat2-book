@@ -28,6 +28,6 @@ execute:
 
 
 launch_buttons: 
-  binderhub_url: "https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/HEAD"
+  binderhub_url: "https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master"
 
 home_page_in_navbar: true 
