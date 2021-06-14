@@ -1,13 +1,12 @@
-- file: home
-- part: NOTEBOOKS
-  chapters: 
-     - file: is2_intro
-     - file: mapping
-     - file: winter_comparison
-- part: MISC
-  chapters: 
-     - file: data_wrangling
-     - file: utils
-
-
-
+format: jb-book
+root: home
+parts:
+- caption: NOTEBOOKS
+  chapters:
+  - file: is2_intro
+  - file: mapping
+  - file: winter_comparison
+- caption: MISC
+  chapters:
+  - file: data_wrangling
+  - file: utils
