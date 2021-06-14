@@ -25,7 +25,7 @@ This book was created by the author during a summer 2020 student internship at N
 
 # Accessing the data 
 ICESat-2 data is publicly avaiable through the National Snow and Ice Data Center (NSIDC): https://nsidc.org/data/icesat-2 
-<br><br>For user convenience, we also provide a copy of the ICESat-2 monthly gridded freeboard data on a google storage bucket: <br>https://console.cloud.google.com/storage/browser/sea-ice-thickness-data/xarray <br><br>The monthly gridded ICESat-2 freeboard data is stored in the folder IS2SITMOGR4. The file icesat2-book-data.nc contains additional datasets used in the project, but all datasets have be wrangled and regridded. Information about the datasets (including citation and data contact) are included in this file are included in the file attributes, and information about data wrangling is included in the notebook data_wrangling.ipynb. 
+<br><br>For user convenience, we also provide a copy of the ICESat-2 monthly gridded freeboard data on a google storage bucket: <br>https://console.cloud.google.com/storage/browser/is2-pso-seaice <br><br>The monthly gridded ICESat-2 freeboard data is stored in the folder IS2SITMOGR4. The file icesat2-book-data.nc contains additional datasets used in the project, but all datasets have be wrangled and regridded. Information about the datasets (including citation and data contact) are included in this file are included in the file attributes, and information about data wrangling is included in the notebook data_wrangling.ipynb. 
 
 
 # Update history  
