@@ -125,7 +125,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="utils.html">
-   Helper functions
+   utils
   </a>
  </li>
 </ul>
@@ -212,7 +212,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/winter_comparison.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/winter_comparison.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -240,8 +240,8 @@
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#read-in-data">
-   1) Read in data
+  <a class="reference internal nav-link" href="#read-data">
+   1) Read data
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -306,10 +306,10 @@
 <h1>Winter comparison<a class="headerlink" href="#winter-comparison" title="Permalink to this headline">¶</a></h1>
 <p>This notebook calculates mean monthly values for each data variable, and then compares mean values between winter 2018-19 and winter 2019-20. This allows us to visualize any differences between the two winter seasons.</p>
 </div>
-<div class="section" id="read-in-data">
-<h1>1) Read in data<a class="headerlink" href="#read-in-data" title="Permalink to this headline">¶</a></h1>
-<p>Here, we set the start and end years that define our analysis time period. We read in the ICESat-2 monthly files and the book dataset (produced in the data wrangling notebook) from the book’s google storage bucket. You can also set interpolation preferences for the ICESat-2 data, which has some holes. By setting interpolation=True, the code calls an interpolation function that is defined in the utils module.</p>
-<div class="cell tag_hide-cell docutils container">
+<div class="section" id="read-data">
+<h1>1) Read data<a class="headerlink" href="#read-data" title="Permalink to this headline">¶</a></h1>
+<p>Here, we set the start and end years that define our analysis time period. We read in the ICESat-2 monthly files and the book dataset (produced in the data wrangling notebook) from the google storage bucket. You can also set interpolation preferences for the ICESat-2 data, which has some holes. By setting <code class="docutils literal notranslate"><span class="pre">interpolation=True</span></code>, the code calls an interpolation function that is defined in the utils module. Interpolation takes some time to run; to go through the notebook faster, set <code class="docutils literal notranslate"><span class="pre">interpolation=False</span></code>.</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import notebook dependencies</span>
 <span class="kn">import</span> <span class="nn">os</span>

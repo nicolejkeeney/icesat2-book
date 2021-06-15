@@ -125,7 +125,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="utils.html">
-   Helper functions
+   utils
   </a>
  </li>
 </ul>
@@ -212,7 +212,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/mapping.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/mapping.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -311,12 +311,12 @@
                 
   <div class="section" id="mapping">
 <h1>Mapping<a class="headerlink" href="#mapping" title="Permalink to this headline">¶</a></h1>
-<p>This notebook uses the cartopy package to generate maps of the data variables of interest across the Arctic Ocean. This allows for visually examining differences between months in a given winter season. We also present sea ice drift vector data, giving an indication of the motion of sea ice throughout the season.</p>
+<p>This notebook uses the cartopy package to generate maps of the data variables of interest across the Arctic Ocean. This allows for visually examining differences between months in a given winter season. We also present sea ice drift vector data, which describes the magnitude and direction of sea ice movement throughout the season.</p>
 </div>
 <div class="section" id="read-data">
 <h1>1) Read data<a class="headerlink" href="#read-data" title="Permalink to this headline">¶</a></h1>
-<p>Here, we set the start and end years that define our analysis time period. We read in the ICESat-2 monthly files and the book dataset (produced in the data wrangling notebook) from the book’s google storage bucket. You can also set interpolation preferences for the ICESat-2 data, which has some holes. By setting interpolation=True, the code calls an interpolation function that is defined in the utils module. Interpolation takes some time to run; to go through the notebook faster, set interpolation to False.</p>
-<div class="cell tag_hide-cell docutils container">
+<p>Here, we set the start and end years that define our analysis time period. We read in the ICESat-2 monthly files and the book dataset (produced in the data wrangling notebook) from the google storage bucket. You can also set interpolation preferences for the ICESat-2 data, which has some holes. By setting <code class="docutils literal notranslate"><span class="pre">interpolation=True</span></code>, the code calls an interpolation function that is defined in the utils module. Interpolation takes some time to run; to go through the notebook faster, set <code class="docutils literal notranslate"><span class="pre">interpolation=False</span></code>.</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
@@ -337,7 +337,7 @@
 
 <span class="n">GeoAxes</span><span class="o">.</span><span class="n">_pcolormesh_patched</span> <span class="o">=</span> <span class="n">Axes</span><span class="o">.</span><span class="n">pcolormesh</span>
 <span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">150</span>
 </pre></div>
 </div>
 </div>
@@ -388,7 +388,7 @@ Here, we’ll restrict our data to the Inner Arctic, which is defined as the com
 <p><img alt="Inner Arctic region map" src="_images/inner_arctic_petty2020.png" /></p>
 <div class="section" id="display-regions">
 <h2>Display regions<a class="headerlink" href="#display-regions" title="Permalink to this headline">¶</a></h2>
-<p>Keys correspond to regions</p>
+<p>Keys correspond to regions. You can restrict the data by selecting keys corresponding to regions of interest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;labels&quot;</span><span class="p">:</span><span class="n">ds</span><span class="o">.</span><span class="n">region_mask</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]},</span>
@@ -499,7 +499,7 @@ Here, we’ll restrict our data to the Inner Arctic, which is defined as the com
 </div>
 <div class="section" id="select-regions-corresponding-to-the-innerarctic">
 <h2>Select regions corresponding to the InnerArctic<a class="headerlink" href="#select-regions-corresponding-to-the-innerarctic" title="Permalink to this headline">¶</a></h2>
-<p>The function used for this is included in the utils module. We’ll select all the keys corresponding to regions that make up the Inner Arctic, and call the function on the dataset to restrict it to those regions.</p>
+<p>The function used for this is included in the utils module. We’ll select all the keys corresponding to regions that make up the Inner Arctic.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regionKeyList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span> <span class="c1">#Inner Arctic</span>
@@ -525,18 +525,13 @@ Here, we’ll restrict our data to the Inner Arctic, which is defined as the com
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="o">+</span><span class="s2">&quot; (&quot;</span><span class="o">+</span><span class="n">time</span><span class="o">+</span><span class="s2">&quot;)&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fontweight</span> <span class="o">=</span> <span class="s1">&#39;medium&#39;</span><span class="p">)</span>   
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.93</span><span class="p">,</span> <span class="mf">0.326</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.352</span><span class="p">]),</span> <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;sea ice thickness (m)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">ds_innerArctic</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/mapping_9_0.png" src="_images/mapping_9_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">ds_innerArctic</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-</pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -620,8 +615,8 @@ Winter 2019-2020: 11-2019, 12-2019, 01-2020, 02-2020, 03-2020, 04-2020
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_16_0.png" src="_images/mapping_16_0.png" />
-<img alt="_images/mapping_16_1.png" src="_images/mapping_16_1.png" />
+<img alt="_images/mapping_15_0.png" src="_images/mapping_15_0.png" />
+<img alt="_images/mapping_15_1.png" src="_images/mapping_15_1.png" />
 </div>
 </div>
 </div>
@@ -708,8 +703,8 @@ Winter 2019-2020: 11-2019, 12-2019, 01-2020, 02-2020, 03-2020, 04-2020
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_19_0.png" src="_images/mapping_19_0.png" />
-<img alt="_images/mapping_19_1.png" src="_images/mapping_19_1.png" />
+<img alt="_images/mapping_18_0.png" src="_images/mapping_18_0.png" />
+<img alt="_images/mapping_18_1.png" src="_images/mapping_18_1.png" />
 </div>
 </div>
 </div>
@@ -730,14 +725,14 @@ Winter 2019-2020: 11-2019, 12-2019, 01-2020, 02-2020, 03-2020, 04-2020
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_21_0.png" src="_images/mapping_21_0.png" />
-<img alt="_images/mapping_21_1.png" src="_images/mapping_21_1.png" />
+<img alt="_images/mapping_20_0.png" src="_images/mapping_20_0.png" />
+<img alt="_images/mapping_20_1.png" src="_images/mapping_20_1.png" />
 </div>
 </div>
 </div>
 <div class="section" id="plot-just-a-month-or-two-of-data">
 <h2>Plot just a month or two of data<a class="headerlink" href="#plot-just-a-month-or-two-of-data" title="Permalink to this headline">¶</a></h2>
-<p>The two mapping functions defined in this notebook also work if you just want to plot fewer months of data. You can also set the argument col_wrap to adjust the number of columns in the plot to make the plot more visually appealing.</p>
+<p>The two mapping functions defined in this notebook are written to work even if you just want to plot a month or two of data. You can also set the argument col_wrap to adjust the number of columns in the plot to make the plot more visually appealing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds_2_months</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="s2">&quot;Nov 2018&quot;</span><span class="p">,</span><span class="s2">&quot;Dec 2018&quot;</span><span class="p">))</span>
@@ -748,7 +743,7 @@ Winter 2019-2020: 11-2019, 12-2019, 01-2020, 02-2020, 03-2020, 04-2020
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_23_0.png" src="_images/mapping_23_0.png" />
+<img alt="_images/mapping_22_0.png" src="_images/mapping_22_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -758,15 +753,15 @@ Winter 2019-2020: 11-2019, 12-2019, 01-2020, 02-2020, 03-2020, 04-2020
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/mapping_24_0.png" src="_images/mapping_24_0.png" />
+<img alt="_images/mapping_23_0.png" src="_images/mapping_23_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="try-with-another-variable">
 <h2>Try with another variable!<a class="headerlink" href="#try-with-another-variable" title="Permalink to this headline">¶</a></h2>
-<p>Try running this code in Binder! Select any variable and try plotting it. Just set the variable “var” to your variable of interest, and adjust the function arguments as needed.</p>
+<p>Try running this code in Binder! Select any variable and try plotting it. Just set <code class="docutils literal notranslate"><span class="pre">var</span></code> to your variable of interest, and adjust the function arguments as needed.</p>
 <p>To view the variables in the
-dataset just run the cell below:</p>
+dataset, run the cell below:</p>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="p">)</span>

@@ -125,7 +125,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="utils.html">
-   Helper functions
+   utils
   </a>
  </li>
 </ul>
@@ -212,7 +212,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/is2_intro.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/is2_intro.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -295,7 +295,10 @@
 </div>
 <div class="section" id="read-data">
 <h1>1) Read data<a class="headerlink" href="#read-data" title="Permalink to this headline">¶</a></h1>
-<div class="cell tag_hide-cell docutils container">
+<div class="section" id="set-desired-date-range">
+<h2>Set desired date range<a class="headerlink" href="#set-desired-date-range" title="Permalink to this headline">¶</a></h2>
+<p>Our analysis looks at winter data, so we’ll only load data for the Northern Hemisphere’s winter season (Nov-Apr)</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
@@ -321,9 +324,6 @@
 </div>
 </div>
 </div>
-<div class="section" id="set-desired-date-range">
-<h2>Set desired date range<a class="headerlink" href="#set-desired-date-range" title="Permalink to this headline">¶</a></h2>
-<p>Our analysis looks at winter data, so we’ll only load data for the Northern Hemisphere’s winter season (Nov-Apr)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_year</span> <span class="o">=</span> <span class="s2">&quot;2018&quot;</span>
