@@ -125,7 +125,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="utils.html">
-   utils.md
+   Helper functions
   </a>
  </li>
 </ul>
@@ -212,7 +212,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/winter_comparison.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/winter_comparison.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -241,24 +241,19 @@
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#read-in-data">
-   Read in data
+   1) Read in data
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#restrict-data-to-the-inner-arctic">
-   Restrict data to the Inner Arctic
+   2) Restrict data to the Inner Arctic
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#visualize-mean-differences">
-   Visualize mean differences
+   3) Visualize mean differences
   </a>
   <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#functions">
-     Functions
-    </a>
-   </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#icesat-2-sea-ice-thickness">
      ICESat-2 sea ice thickness
@@ -312,7 +307,7 @@
 <p>This notebook calculates mean monthly values for each data variable, and then compares mean values between winter 2018-19 and winter 2019-20. This allows us to visualize any differences between the two winter seasons.</p>
 </div>
 <div class="section" id="read-in-data">
-<h1>Read in data<a class="headerlink" href="#read-in-data" title="Permalink to this headline">¶</a></h1>
+<h1>1) Read in data<a class="headerlink" href="#read-in-data" title="Permalink to this headline">¶</a></h1>
 <p>Here, we set the start and end years that define our analysis time period. We read in the ICESat-2 monthly files and the book dataset (produced in the data wrangling notebook) from the book’s google storage bucket. You can also set interpolation preferences for the ICESat-2 data, which has some holes. By setting interpolation=True, the code calls an interpolation function that is defined in the utils module.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
@@ -381,7 +376,7 @@
 </div>
 </div>
 <div class="section" id="restrict-data-to-the-inner-arctic">
-<h1>Restrict data to the Inner Arctic<a class="headerlink" href="#restrict-data-to-the-inner-arctic" title="Permalink to this headline">¶</a></h1>
+<h1>2) Restrict data to the Inner Arctic<a class="headerlink" href="#restrict-data-to-the-inner-arctic" title="Permalink to this headline">¶</a></h1>
 <p>The Inner Arctic is defined as the combined area of the Central Arctic, Beaufort Sea, Chukchi Sea, E Siberian Sea and the Laptev Sea. See the mapping notebook for more detail on this region and the methods used to restrict the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -398,11 +393,9 @@
 </div>
 </div>
 <div class="section" id="visualize-mean-differences">
-<h1>Visualize mean differences<a class="headerlink" href="#visualize-mean-differences" title="Permalink to this headline">¶</a></h1>
-<p>Compute mean values for each winter season, and plot.</p>
-<div class="section" id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
-<p>Click the + button to expand the functions used to compute means and plot the data</p>
+<h1>3) Visualize mean differences<a class="headerlink" href="#visualize-mean-differences" title="Permalink to this headline">¶</a></h1>
+<p>Compute mean values for each winter season, and plot.<br><br>
+Click the + button to expand the functions used to compute means and plot the data</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_monthly_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">da_uncertainty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_uncertainty</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -544,7 +537,6 @@
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="icesat-2-sea-ice-thickness">
 <h2>ICESat-2 sea ice thickness<a class="headerlink" href="#icesat-2-sea-ice-thickness" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -560,8 +552,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_12_0.png" src="_images/winter_comparison_12_0.png" />
-<img alt="_images/winter_comparison_12_1.png" src="_images/winter_comparison_12_1.png" />
+<img alt="_images/winter_comparison_11_0.png" src="_images/winter_comparison_11_0.png" />
+<img alt="_images/winter_comparison_11_1.png" src="_images/winter_comparison_11_1.png" />
 </div>
 </div>
 </div>
@@ -580,8 +572,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_14_0.png" src="_images/winter_comparison_14_0.png" />
-<img alt="_images/winter_comparison_14_1.png" src="_images/winter_comparison_14_1.png" />
+<img alt="_images/winter_comparison_13_0.png" src="_images/winter_comparison_13_0.png" />
+<img alt="_images/winter_comparison_13_1.png" src="_images/winter_comparison_13_1.png" />
 </div>
 </div>
 </div>
@@ -600,8 +592,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_16_0.png" src="_images/winter_comparison_16_0.png" />
-<img alt="_images/winter_comparison_16_1.png" src="_images/winter_comparison_16_1.png" />
+<img alt="_images/winter_comparison_15_0.png" src="_images/winter_comparison_15_0.png" />
+<img alt="_images/winter_comparison_15_1.png" src="_images/winter_comparison_15_1.png" />
 </div>
 </div>
 </div>
@@ -620,8 +612,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_18_0.png" src="_images/winter_comparison_18_0.png" />
-<img alt="_images/winter_comparison_18_1.png" src="_images/winter_comparison_18_1.png" />
+<img alt="_images/winter_comparison_17_0.png" src="_images/winter_comparison_17_0.png" />
+<img alt="_images/winter_comparison_17_1.png" src="_images/winter_comparison_17_1.png" />
 </div>
 </div>
 </div>
@@ -641,8 +633,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_20_0.png" src="_images/winter_comparison_20_0.png" />
-<img alt="_images/winter_comparison_20_1.png" src="_images/winter_comparison_20_1.png" />
+<img alt="_images/winter_comparison_19_0.png" src="_images/winter_comparison_19_0.png" />
+<img alt="_images/winter_comparison_19_1.png" src="_images/winter_comparison_19_1.png" />
 </div>
 </div>
 </div>
@@ -661,8 +653,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_22_0.png" src="_images/winter_comparison_22_0.png" />
-<img alt="_images/winter_comparison_22_1.png" src="_images/winter_comparison_22_1.png" />
+<img alt="_images/winter_comparison_21_0.png" src="_images/winter_comparison_21_0.png" />
+<img alt="_images/winter_comparison_21_1.png" src="_images/winter_comparison_21_1.png" />
 </div>
 </div>
 </div>
@@ -681,8 +673,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_24_0.png" src="_images/winter_comparison_24_0.png" />
-<img alt="_images/winter_comparison_24_1.png" src="_images/winter_comparison_24_1.png" />
+<img alt="_images/winter_comparison_23_0.png" src="_images/winter_comparison_23_0.png" />
+<img alt="_images/winter_comparison_23_1.png" src="_images/winter_comparison_23_1.png" />
 </div>
 </div>
 </div>

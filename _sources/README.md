@@ -1,5 +1,6 @@
 ICESat-2 Sea Ice Thickness Data Analysis and Visualization
 =============================================
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master)
 
 NASA's Ice, Cloud, and Land Elevation Satellite-2 (ICESat-2) is a new satellite laser altimetry mission providing very high resolution elevation profiling of the entire Earth, and especially the fast-changing Polar Regions. ICESat-2 provides measurements of sea ice freeboard, the extension of sea ice above the local sea surface. Using assumptions regarding the snow depth and density ontop of the ice, and the density of the sea ice itself, these freeboard measurements can be converted to estimates of sea ice thickness [(http://www.alekpetty.com/papers/petty2020)](http://www.alekpetty.com/papers/petty2020). ICESat-2 has now collected data over two winter seasons across the entire Arctic Ocean (2018-2019 and 2019-2020) which we describe and analyze within this Jupyter Book. <br><br> For more information on ICESat-2, see the project homepage: [https://icesat-2.gsfc.nasa.gov/](https://icesat-2.gsfc.nasa.gov/).
 
@@ -25,7 +26,7 @@ This book was created by the author during a summer 2020 student internship at N
 
 # Accessing the data 
 ICESat-2 data is publicly avaiable through the National Snow and Ice Data Center (NSIDC): https://nsidc.org/data/icesat-2 
-<br><br>For user convenience, we also provide a copy of the ICESat-2 monthly gridded freeboard data on a google storage bucket: <br>https://console.cloud.google.com/storage/browser/sea-ice-thickness-data/xarray <br><br>The monthly gridded ICESat-2 freeboard data is stored in the folder IS2SITMOGR4. The file icesat2-book-data.nc contains additional datasets used in the project, but all datasets have be wrangled and regridded. Information about the datasets (including citation and data contact) are included in this file are included in the file attributes, and information about data wrangling is included in the notebook data_wrangling.ipynb. 
+<br><br>For user convenience, we also provide a copy of the ICESat-2 monthly gridded freeboard data on a google storage bucket: <br>https://console.cloud.google.com/storage/browser/is2-pso-seaice <br><br>The monthly gridded ICESat-2 freeboard data is stored in the folder IS2SITMOGR4. The file icesat2-book-data.nc contains additional datasets used in the project, but all datasets have be wrangled and regridded. Information about the datasets (including citation and data contact) are included in this file are included in the file attributes, and information about data wrangling is included in the notebook data_wrangling.ipynb. 
 
 
 # Update history  

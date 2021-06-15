@@ -125,7 +125,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="utils.html">
-   utils.md
+   Helper functions
   </a>
  </li>
 </ul>
@@ -212,7 +212,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/is2_intro.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master/v2/gh/nicolejkeeney/icesat2-book/master?urlpath=tree/is2_intro.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -240,23 +240,30 @@
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#set-desired-date-range">
-   Set desired date range
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#read-data">
-   Read data
+   1) Read data
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#set-interpolation-preferences">
-   Set interpolation preferences
-  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-desired-date-range">
+     Set desired date range
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#read-in-icesat-2-data">
+     Read in ICESat-2 data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-interpolation-preferences">
+     Set interpolation preferences
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#plot-mean-winter-ice-thickness">
-   Plot mean winter ice thickness
+   2) Plot mean winter ice thickness
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -286,9 +293,8 @@
 <h1>ATLAS/ICESat-2 Monthly Gridded Sea Ice Freeboard<a class="headerlink" href="#atlas-icesat-2-monthly-gridded-sea-ice-freeboard" title="Permalink to this headline">¶</a></h1>
 <p><em>Introduce dataset here</em></p>
 </div>
-<div class="section" id="set-desired-date-range">
-<h1>Set desired date range<a class="headerlink" href="#set-desired-date-range" title="Permalink to this headline">¶</a></h1>
-<p>Our analysis looks at winter data, so we’ll only load data for the Northern Hemisphere’s winter season (Nov-Apr)</p>
+<div class="section" id="read-data">
+<h1>1) Read data<a class="headerlink" href="#read-data" title="Permalink to this headline">¶</a></h1>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -315,6 +321,9 @@
 </div>
 </div>
 </div>
+<div class="section" id="set-desired-date-range">
+<h2>Set desired date range<a class="headerlink" href="#set-desired-date-range" title="Permalink to this headline">¶</a></h2>
+<p>Our analysis looks at winter data, so we’ll only load data for the Northern Hemisphere’s winter season (Nov-Apr)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_year</span> <span class="o">=</span> <span class="s2">&quot;2018&quot;</span>
@@ -334,8 +343,9 @@
 </div>
 </div>
 </div>
-<div class="section" id="read-data">
-<h1>Read data<a class="headerlink" href="#read-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="read-in-icesat-2-data">
+<h2>Read in ICESat-2 data<a class="headerlink" href="#read-in-icesat-2-data" title="Permalink to this headline">¶</a></h2>
+<p>If the data doesn’t already exist in the user’s local drive, the function read_is2_data will download the files from the google storage bucket.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is2_ds</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">read_is2_data</span><span class="p">()</span> <span class="c1"># Read in data</span>
@@ -376,7 +386,7 @@ Attributes:
 </div>
 </div>
 <div class="section" id="set-interpolation-preferences">
-<h1>Set interpolation preferences<a class="headerlink" href="#set-interpolation-preferences" title="Permalink to this headline">¶</a></h1>
+<h2>Set interpolation preferences<a class="headerlink" href="#set-interpolation-preferences" title="Permalink to this headline">¶</a></h2>
 <p>The dataset included uninterpolated data, or we can interpolate the data using a simple nearest neighbor interpolation function. Because ICESat-2 doesn’t provide full monthly coverage, interpolating fills missing grid cells with a best guess based on surrounding data. This helps avoid sampling biases when performing time series analyses, with the cavaet that this interpolation method is subjective. <br><br>
 In order to definte the interpolation bounds (so that we don’t try and interpolate over land, or other areas where there wouldn’t be sea ice!), we use the <a class="reference external" href="https://nsidc.org/data/g02202">NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration</a> dataset to infer the location of the sea ice. By setting interpolation=True, the code calls an interpolation function that is defined in the utils module.</p>
 <div class="cell docutils container">
@@ -392,8 +402,9 @@ In order to definte the interpolation bounds (so that we don’t try and interpo
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="plot-mean-winter-ice-thickness">
-<h1>Plot mean winter ice thickness<a class="headerlink" href="#plot-mean-winter-ice-thickness" title="Permalink to this headline">¶</a></h1>
+<h1>2) Plot mean winter ice thickness<a class="headerlink" href="#plot-mean-winter-ice-thickness" title="Permalink to this headline">¶</a></h1>
 <p>Using the cartopy mapping package for python, we overlay mean ice thickness for each winter season on a basemap of the Arctic.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -459,7 +470,7 @@ In order to definte the interpolation bounds (so that we don’t try and interpo
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/is2_intro_12_0.png" src="_images/is2_intro_12_0.png" />
+<img alt="_images/is2_intro_13_0.png" src="_images/is2_intro_13_0.png" />
 </div>
 </div>
 </div>
@@ -477,7 +488,7 @@ In order to definte the interpolation bounds (so that we don’t try and interpo
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/is2_intro_14_0.png" src="_images/is2_intro_14_0.png" />
+<img alt="_images/is2_intro_15_0.png" src="_images/is2_intro_15_0.png" />
 </div>
 </div>
 </div>

@@ -123,7 +123,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="utils.html">
-   utils.md
+   Helper functions
   </a>
  </li>
 </ul>
@@ -275,6 +275,7 @@
                 
   <div class="section" id="icesat-2-sea-ice-thickness-data-analysis-and-visualization">
 <h1>ICESat-2 Sea Ice Thickness Data Analysis and Visualization<a class="headerlink" href="#icesat-2-sea-ice-thickness-data-analysis-and-visualization" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://mybinder.org/v2/gh/nicolejkeeney/icesat2-book/master"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
 <p>NASA’s Ice, Cloud, and Land Elevation Satellite-2 (ICESat-2) is a new satellite laser altimetry mission providing very high resolution elevation profiling of the entire Earth, and especially the fast-changing Polar Regions. ICESat-2 provides measurements of sea ice freeboard, the extension of sea ice above the local sea surface. Using assumptions regarding the snow depth and density ontop of the ice, and the density of the sea ice itself, these freeboard measurements can be converted to estimates of sea ice thickness <a class="reference external" href="http://www.alekpetty.com/papers/petty2020">(http://www.alekpetty.com/papers/petty2020)</a>. ICESat-2 has now collected data over two winter seasons across the entire Arctic Ocean (2018-2019 and 2019-2020) which we describe and analyze within this Jupyter Book. <br><br> For more information on ICESat-2, see the project homepage: <a class="reference external" href="https://icesat-2.gsfc.nasa.gov/">https://icesat-2.gsfc.nasa.gov/</a>.</p>
 </div>
 <div class="section" id="jupyter-book-description">
@@ -300,7 +301,7 @@ Jupyter Books <a class="reference external" href="https://jupyterbook.org/intro.
 <div class="section" id="accessing-the-data">
 <h1>Accessing the data<a class="headerlink" href="#accessing-the-data" title="Permalink to this headline">¶</a></h1>
 <p>ICESat-2 data is publicly avaiable through the National Snow and Ice Data Center (NSIDC): <a class="reference external" href="https://nsidc.org/data/icesat-2">https://nsidc.org/data/icesat-2</a>
-<br><br>For user convenience, we also provide a copy of the ICESat-2 monthly gridded freeboard data on a google storage bucket: <br><a class="reference external" href="https://console.cloud.google.com/storage/browser/sea-ice-thickness-data/xarray">https://console.cloud.google.com/storage/browser/sea-ice-thickness-data/xarray</a> <br><br>The monthly gridded ICESat-2 freeboard data is stored in the folder IS2SITMOGR4. The file <a class="reference external" href="http://icesat2-book-data.nc">icesat2-book-data.nc</a> contains additional datasets used in the project, but all datasets have be wrangled and regridded. Information about the datasets (including citation and data contact) are included in this file are included in the file attributes, and information about data wrangling is included in the notebook data_wrangling.ipynb.</p>
+<br><br>For user convenience, we also provide a copy of the ICESat-2 monthly gridded freeboard data on a google storage bucket: <br><a class="reference external" href="https://console.cloud.google.com/storage/browser/is2-pso-seaice">https://console.cloud.google.com/storage/browser/is2-pso-seaice</a> <br><br>The monthly gridded ICESat-2 freeboard data is stored in the folder IS2SITMOGR4. The file <a class="reference external" href="http://icesat2-book-data.nc">icesat2-book-data.nc</a> contains additional datasets used in the project, but all datasets have be wrangled and regridded. Information about the datasets (including citation and data contact) are included in this file are included in the file attributes, and information about data wrangling is included in the notebook data_wrangling.ipynb.</p>
 </div>
 <div class="section" id="update-history">
 <h1>Update history<a class="headerlink" href="#update-history" title="Permalink to this headline">¶</a></h1>

@@ -1,5 +1,5 @@
-# utils.md
-This is a markdown rendering of the utils module used in the notebooks provided here for user reference. The utils.py module can be viewed and downloaded from the github repository. 
+# Helper functions
+This is a markdown rendering of the utils module used in the notebooks provided here for user reference. The `utils.py` module can be viewed and downloaded from the github repository. 
 
 
 ```
