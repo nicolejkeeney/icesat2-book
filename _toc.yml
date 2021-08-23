@@ -6,7 +6,11 @@ parts:
   - file: is2_intro
   - file: mapping
   - file: winter_comparison
-- caption: MISC
+- caption: DATA WRANGLING 
   chapters:
   - file: data_wrangling
-  - file: utils
+- caption: HELPER FUNCTIONS
+  - chapters: 
+      - file: utils/markdown_rendering/read_data_utils
+      - file: utils/markdown_rendering/plotting_utils
+      - file: utils/markdown_rendering/misc_utils
