@@ -114,7 +114,7 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  MISC
+  DATA WRANGLING
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -123,9 +123,26 @@
    Data wrangling
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  HELPER FUNCTIONS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="utils.html">
-   utils
+  <a class="reference internal" href="utils/markdown_rendering/read_data_utils.html">
+   Reading data from Google Cloud
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="utils/markdown_rendering/plotting_utils.html">
+   Plotting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="utils/markdown_rendering/misc_utils.html">
+   Miscellaneous helper functions
   </a>
  </li>
 </ul>
@@ -265,11 +282,6 @@
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#icesat-2-sea-ice-thickness-uncertainty">
-     ICESat-2 sea ice thickness uncertainty
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#icesat-2-snow-depth">
      ICESat-2 snow depth
     </a>
@@ -304,11 +316,11 @@
                 
   <div class="section" id="winter-comparison">
 <h1>Winter comparison<a class="headerlink" href="#winter-comparison" title="Permalink to this headline">¶</a></h1>
-<p>This notebook calculates mean monthly values for each data variable, and then compares mean values between winter 2018-19 and winter 2019-20. This allows us to visualize any differences between the two winter seasons.</p>
+<p>This notebook calculates mean monthly values for each data variable, and then compares mean values over several winter seasons. This allows us to visualize any differences between the two winter seasons.</p>
 </div>
 <div class="section" id="read-data">
 <h1>1) Read data<a class="headerlink" href="#read-data" title="Permalink to this headline">¶</a></h1>
-<p>Here, we set the start and end years that define our analysis time period. We read in the ICESat-2 monthly files and the book dataset (produced in the data wrangling notebook) from the google storage bucket. You can also set interpolation preferences for the ICESat-2 data, which has some holes. By setting <code class="docutils literal notranslate"><span class="pre">interpolation=True</span></code>, the code calls an interpolation function that is defined in the utils module. Interpolation takes some time to run; to go through the notebook faster, set <code class="docutils literal notranslate"><span class="pre">interpolation=False</span></code>.</p>
+<p>Here, we set the start and end years that define our analysis time period. We read in the ICESat-2 monthly files and the book dataset (produced in the data wrangling notebook) from the google storage bucket. You can also set interpolation preferences for the ICESat-2 data, which has some holes. By setting <code class="docutils literal notranslate"><span class="pre">interpolation=True</span></code>, the code calls an interpolation function that is defined in the module <code class="docutils literal notranslate"><span class="pre">misc_utils.py</span></code>. Interpolation takes some time to run; to go through the notebook faster, set <code class="docutils literal notranslate"><span class="pre">interpolation=False</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import notebook dependencies</span>
@@ -316,8 +328,14 @@
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">utils</span> <span class="c1"># See utils module in github repository</span>
-<span class="kn">import</span> <span class="nn">warnings</span> <span class="c1"># Remove warnings to improve display</span>
+
+<span class="c1"># Import utils </span>
+<span class="kn">from</span> <span class="nn">utils.misc_utils</span> <span class="kn">import</span> <span class="n">restrictRegionally</span><span class="p">,</span> <span class="n">is2_interp2d</span><span class="p">,</span> <span class="n">getWinterDateRange</span>
+<span class="kn">from</span> <span class="nn">utils.read_data_utils</span> <span class="kn">import</span> <span class="n">read_is2_data</span><span class="p">,</span> <span class="n">read_book_data</span>
+<span class="kn">from</span> <span class="nn">utils.plotting_utils</span> <span class="kn">import</span> <span class="n">plot_winter_means</span><span class="p">,</span> <span class="n">arcticComparisonMaps</span>
+
+<span class="c1"># Remove warnings to improve display</span>
+<span class="kn">import</span> <span class="nn">warnings</span> 
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 
 <span class="c1"># Plotting</span>
@@ -339,37 +357,30 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set desired date range </span>
-<span class="n">start_year</span> <span class="o">=</span> <span class="s2">&quot;2018&quot;</span>
-<span class="n">end_year</span> <span class="o">=</span> <span class="s2">&quot;2020&quot;</span>
-<span class="n">winter_months</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getWinterDateRange</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">)</span>
+<span class="n">winter18_19</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2018-11-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2019-04-01&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">)</span> <span class="c1"># ICESat-2 started collecting data in Nov of 2018</span>
+<span class="n">winter19_20</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2019-09-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-04-01&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">)</span>
+<span class="n">winter20_21</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2020-09-01&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-12-01&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">)</span> <span class="c1"># We don&#39;t have data for 2021 yet for several of the datasets</span>
+<span class="n">winter_months</span> <span class="o">=</span> <span class="n">winter18_19</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">winter19_20</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">winter20_21</span><span class="p">)</span>
 
 <span class="c1"># Read book data </span>
-<span class="n">book_ds</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">read_book_data</span><span class="p">()</span>
-<span class="n">book_ds</span> <span class="o">=</span> <span class="n">book_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winter_months</span><span class="p">)</span> <span class="c1"># Get winter months</span>
+<span class="n">book_ds</span> <span class="o">=</span> <span class="n">read_book_data</span><span class="p">()</span>
+<span class="n">book_ds</span> <span class="o">=</span> <span class="n">book_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">winter_months</span><span class="p">)</span> <span class="c1"># Get winter months</span>
 
 <span class="c1"># Read ICESat-2 data </span>
-<span class="n">is2_ds</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">read_is2_data</span><span class="p">()</span> 
-<span class="n">is2_ds</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">winter_months</span><span class="p">)</span> <span class="c1"># Get winter months</span>
+<span class="n">is2_ds</span> <span class="o">=</span> <span class="n">read_is2_data</span><span class="p">()</span> 
+<span class="n">is2_ds</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">winter_months</span><span class="p">)</span> <span class="c1"># Get winter months</span>
 
 <span class="c1"># Decide whether or not to interpolate the ICESat-2 data or use the raw product, which has some holes in the data</span>
-<span class="n">interpolate</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">interpolate</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">interpolate</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span> 
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Interpolating ICESat-2 data...&quot;</span><span class="p">)</span>
-    <span class="n">cdr_da</span> <span class="o">=</span> <span class="n">book_ds</span><span class="p">[</span><span class="s2">&quot;seaice_conc_monthly_cdr&quot;</span><span class="p">]</span> <span class="c1"># Get CDR data</span>
-    <span class="n">is2_ds</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">is2_interp2d</span><span class="p">(</span><span class="n">is2_ds</span><span class="p">,</span> <span class="n">cdr_da</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">interp_var</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+    <span class="n">cdr_da</span> <span class="o">=</span> <span class="n">book_ds</span><span class="p">[</span><span class="s2">&quot;cdr_seaice_conc_monthly&quot;</span><span class="p">]</span> <span class="c1"># Get CDR data</span>
+    <span class="n">is2_ds</span> <span class="o">=</span> <span class="n">is2_interp2d</span><span class="p">(</span><span class="n">is2_ds</span><span class="p">,</span> <span class="n">cdr_da</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">interp_var</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Complete!&quot;</span><span class="p">)</span>
     
 <span class="c1"># Combine datasets </span>
 <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">is2_ds</span><span class="p">,</span> <span class="n">book_ds</span><span class="p">])</span>
 <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">drop_vars</span><span class="p">(</span><span class="s2">&quot;projection&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Interpolating ICESat-2 data...
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Complete!
 </pre></div>
 </div>
 </div>
@@ -381,7 +392,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regionKeyList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]</span> <span class="c1">#Inner Arctic</span>
-<span class="n">ds</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">restrictRegionally</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">regionKeyList</span><span class="p">)</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">restrictRegionally</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">regionKeyList</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -394,166 +405,36 @@
 </div>
 <div class="section" id="visualize-mean-differences">
 <h1>3) Visualize mean differences<a class="headerlink" href="#visualize-mean-differences" title="Permalink to this headline">¶</a></h1>
-<p>Compute mean values for each winter season, and plot.<br><br>
-Click the + button to expand the functions used to compute means and plot the data</p>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_monthly_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">da_uncertainty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_uncertainty</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Generate a line plot of winter monthly means for all winters included in the dataset. DataArray must contain x,y as dimensions. </span>
-<span class="sd">    </span>
-<span class="sd">    Args: </span>
-<span class="sd">        da (xr.DataArray): data to compute mean for </span>
-<span class="sd">        start_year (str): year to start computation for (i.e. &quot;2018&quot;)</span>
-<span class="sd">        end_year (str): year to end computation for (i.e. &quot;2019&quot;)</span>
-<span class="sd">        show_ucertainty (bool, optional): show detrended uncertainty (default to True)</span>
-<span class="sd">        da_uncertainty (xr.DataArray, optional): uncertainty corresponding to da. If not inputted, the function will compute detrended uncertainty (default to None)</span>
-<span class="sd">        </span>
-<span class="sd">    Returns: </span>
-<span class="sd">        Figure displayed in notebook </span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-    <span class="n">curr_yr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span>
-    <span class="k">while</span> <span class="n">curr_yr</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_year</span><span class="p">):</span>
-        <span class="k">try</span><span class="p">:</span> 
-            <span class="n">winter_n</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getWinterDateRange</span><span class="p">(</span><span class="n">start_year</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">curr_yr</span><span class="p">),</span> <span class="n">end_year</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">curr_yr</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># Get winter season </span>
-            <span class="n">winter_monthly_mean</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">winter_n</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">values</span> <span class="c1"># Compute mean</span>
-        <span class="k">except</span><span class="p">:</span> 
-            <span class="k">break</span>
-        
-        <span class="c1"># Plot lines </span>
-        <span class="n">winter_str</span> <span class="o">=</span> <span class="s2">&quot;winter &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">curr_yr</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">curr_yr</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">winter_n</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b&quot;</span><span class="p">),</span> <span class="n">winter_monthly_mean</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">winter_str</span><span class="p">)</span>
-        <span class="n">gridlines</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span> <span class="c1"># Add gridlines </span>
-        
-        <span class="c1"># Show uncertainty</span>
-        <span class="k">if</span> <span class="n">show_uncertainty</span><span class="p">:</span> 
-            <span class="k">if</span> <span class="n">da_uncertainty</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
-                <span class="n">da_mean_unc</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">winter_n</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
-                <span class="n">unc_descrip</span> <span class="o">=</span> <span class="s1">&#39;+/-1 std&#39;</span>
-            <span class="k">else</span><span class="p">:</span> 
-                <span class="n">da_mean_unc</span> <span class="o">=</span> <span class="n">da_uncertainty</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">winter_n</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
-                <span class="n">unc_descrip</span> <span class="o">=</span> <span class="s1">&#39;uncertainty&#39;</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">winter_n</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b&quot;</span><span class="p">),</span> <span class="n">winter_monthly_mean</span><span class="o">-</span><span class="n">da_mean_unc</span><span class="p">,</span> <span class="n">winter_monthly_mean</span><span class="o">+</span><span class="n">da_mean_unc</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">winter_str</span><span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span><span class="n">unc_descrip</span><span class="p">)</span>  
-
-        <span class="k">try</span><span class="p">:</span> <span class="c1"># Try adding attributes for name and units as ylabel</span>
-            <span class="n">ylabel_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;long_name&quot;</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot; (&quot;</span><span class="o">+</span><span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;)&quot;</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel_str</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span> <span class="c1"># Leave ylabel blank if not </span>
-            <span class="k">pass</span>
-        
-        <span class="n">curr_yr</span><span class="o">+=</span><span class="mi">1</span>
-        
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;small&quot;</span><span class="p">)</span> <span class="c1"># Add legend</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Compute gridcell mean winter values for a given data variable </span>
-<span class="sd">    If start_year=2018 and end_year=2020, the function will return an xr.DataArray with two time dimension components for each winter season (winter 18-19 and winter )</span>
-<span class="sd">    </span>
-<span class="sd">    Args: </span>
-<span class="sd">        da (xr.DataArray): data to compute mean for </span>
-<span class="sd">        start_year (str): year to start computation for (i.e. &quot;2008&quot;)</span>
-<span class="sd">        end_year (str): year to end computation for (i.e. &quot;2009&quot;)</span>
-<span class="sd">        </span>
-<span class="sd">    Returns: </span>
-<span class="sd">        var_merged_da (xr.DataArray): mean of da for each winter season </span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">curr_year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span>
-    <span class="n">yrly_means</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">while</span> <span class="n">curr_year</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_year</span><span class="p">):</span>
-        <span class="n">winter</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">getWinterDateRange</span><span class="p">(</span><span class="n">curr_year</span><span class="p">,</span> <span class="n">curr_year</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-       
-        <span class="n">xr_winter_mean</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">winter</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">])</span>
-        <span class="n">xr_winter_mean</span> <span class="o">=</span> <span class="n">xr_winter_mean</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
-        <span class="n">xr_winter_mean</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_mean&quot;</span>
-        <span class="n">xr_winter_mean</span> <span class="o">=</span> <span class="n">xr_winter_mean</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">({</span><span class="s2">&quot;time&quot;</span><span class="p">:</span><span class="s2">&quot;winter_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">curr_year</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">curr_year</span><span class="o">+</span><span class="mi">1</span><span class="p">)})</span>
-        <span class="n">xr_winter_mean</span> <span class="o">=</span> <span class="n">xr_winter_mean</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
-        
-        <span class="n">yrly_means</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xr_winter_mean</span><span class="p">)</span>
-        <span class="n">curr_year</span> <span class="o">+=</span><span class="mi">1</span>
-    <span class="n">var_merged</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">yrly_means</span><span class="p">)</span>
-    <span class="n">var_merged_da</span> <span class="o">=</span> <span class="n">var_merged</span><span class="p">[</span><span class="n">xr_winter_mean</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">var_merged_da</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">plot_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmin_diff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax_diff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;data_1&quot;</span><span class="p">,</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;data_2&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Plot comparison maps for two xr.DataArrays, along with gridcell difference </span>
-<span class="sd">    Both input DataArrays must be on the same grid and contain the coordinates latitude and longitude</span>
-<span class="sd">    </span>
-<span class="sd">    Args: </span>
-<span class="sd">        data1 (xr.DataArray): data to plot on leftmost plot. </span>
-<span class="sd">        data2 (xr.DataArray): data to plot on middle plot</span>
-<span class="sd">        plot_diff (bool, optional): plot gridcell difference (data1 - data2) on a third map? (default to True)</span>
-<span class="sd">        vmin (float, optional): minimum value to use colorbar (default to 1st percentile of data1)</span>
-<span class="sd">        vmax (float, optional): maximum value to use colorbar (default to 99th percentile of data1)</span>
-<span class="sd">        vmin_diff (float, optional): minimum value to use for plotting data range (default to mapping default, with 0 at center)</span>
-<span class="sd">        vmax_diff (float, optional): maximum value to use for plotting data range (default to mapping default, with 0 at center)</span>
-<span class="sd">        title1 (str, optional): title to give plot of data1 (default to &quot;data1&quot;)</span>
-<span class="sd">        title2 (str, optional): title to give plot of data2 (default to &quot;data2&quot;)</span>
-<span class="sd">        cmap (str, optional): colormap to use (default to viridis)</span>
-<span class="sd">        </span>
-<span class="sd">    Returns: </span>
-<span class="sd">        figure displayed in notebook </span>
-<span class="sd">        </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1"># Compute min and max for plotting </span>
-    <span class="n">vmin</span> <span class="o">=</span> <span class="n">vmin</span> <span class="k">if</span> <span class="n">vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">data1</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">vmax</span> <span class="o">=</span> <span class="n">vmax</span> <span class="k">if</span> <span class="n">vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">data1</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="mi">99</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span> 
-        
-    <span class="c1"># Plot</span>
-    <span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="n">title1</span><span class="p">,</span><span class="n">title2</span><span class="p">]</span>
-    <span class="n">num_columns</span> <span class="o">=</span> <span class="mi">3</span> <span class="k">if</span> <span class="p">(</span><span class="n">plot_diff</span><span class="o">==</span><span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="mi">2</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_columns</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;projection&#39;</span><span class="p">:</span><span class="n">ccrs</span><span class="o">.</span><span class="n">NorthPolarStereo</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=-</span><span class="mi">45</span><span class="p">)})</span>
-    <span class="n">im1</span> <span class="o">=</span> <span class="n">data1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cbar_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;orientation&#39;</span><span class="p">:</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="s1">&#39;pad&#39;</span><span class="p">:</span><span class="mf">0.02</span><span class="p">,</span> <span class="s1">&#39;extend&#39;</span><span class="p">:</span><span class="s1">&#39;both&#39;</span><span class="p">})</span>
-    <span class="n">im2</span> <span class="o">=</span> <span class="n">data2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cbar_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;orientation&#39;</span><span class="p">:</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="s1">&#39;pad&#39;</span><span class="p">:</span><span class="mf">0.02</span><span class="p">,</span> <span class="s1">&#39;extend&#39;</span><span class="p">:</span><span class="s1">&#39;both&#39;</span><span class="p">})</span>
-     
-    <span class="k">if</span> <span class="n">plot_diff</span><span class="p">:</span> <span class="c1"># Plot gricell difference</span>
-        <span class="n">gridcell_diff</span> <span class="o">=</span> <span class="n">data2</span> <span class="o">-</span> <span class="n">data1</span>
-        <span class="n">diff_im</span> <span class="o">=</span> <span class="n">gridcell_diff</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin_diff</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_diff</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;orientation&#39;</span><span class="p">:</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span><span class="s1">&#39;pad&#39;</span><span class="p">:</span><span class="mf">0.02</span><span class="p">,</span><span class="s1">&#39;extend&#39;</span><span class="p">:</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="s1">&#39;label&#39;</span><span class="p">:</span><span class="s1">&#39;difference&#39;</span><span class="p">})</span>
-        <span class="n">titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Griddcell Difference&quot;</span><span class="p">)</span>
-    
-    <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span><span class="n">titles</span><span class="p">):</span> <span class="c1"># Add title and features to axes </span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="mi">40</span><span class="p">)),</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">13</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fontweight</span> <span class="o">=</span> <span class="s1">&#39;medium&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="c1"># Coastlines</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">LAND</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;0.95&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>    <span class="c1"># Land</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">LAKES</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># Lakes</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span> <span class="c1"># Gridlines</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="o">-</span><span class="mi">179</span><span class="p">,</span> <span class="mi">179</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span> <span class="c1"># Set extent to zoom in on Arctic</span>
-
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># Show fig in notebook </span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Compute mean values for each winter season, and plot.<br>
+See the <code class="docutils literal notranslate"><span class="pre">plotting_utils</span></code> module for more information on the functions used.</p>
 <div class="section" id="icesat-2-sea-ice-thickness">
 <h2>ICESat-2 sea ice thickness<a class="headerlink" href="#icesat-2-sea-ice-thickness" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;ice_thickness&quot;</span><span class="p">]</span>
-<span class="n">plot_monthly_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">,</span> <span class="n">da_uncertainty</span><span class="o">=</span><span class="n">ds</span><span class="p">[</span><span class="s2">&quot;ice_thickness_unc&quot;</span><span class="p">])</span> <span class="c1"># Generate line plot</span>
-
-<span class="n">da_mean</span> <span class="o">=</span> <span class="n">compute_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Compute gridcell seasonal mean </span>
-<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="n">start_year</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean ICESat-2 ice thickness&quot;</span><span class="p">,</span> 
-                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean ICESat-2 ice thickness&quot;</span><span class="p">,</span> 
-                     <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmin_diff</span><span class="o">=-</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">vmax_diff</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">start_year</span> <span class="o">=</span> <span class="s2">&quot;2018&quot;</span>
+<span class="n">end_year</span><span class="o">=</span> <span class="s2">&quot;2021&quot;</span>
+<span class="n">plot_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">,</span> <span class="n">da_uncertainty</span><span class="o">=</span><span class="n">ds</span><span class="p">[</span><span class="s2">&quot;ice_thickness_unc&quot;</span><span class="p">])</span> <span class="c1"># Generate line plot</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_11_0.png" src="_images/winter_comparison_11_0.png" />
-<img alt="_images/winter_comparison_11_1.png" src="_images/winter_comparison_11_1.png" />
+<img alt="_images/winter_comparison_8_0.png" src="_images/winter_comparison_8_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da_mean_winter18_19</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2018-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2019-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">da_mean_winter19_20</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2019-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+
+<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean_winter18_19</span><span class="p">,</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Nov 2018 - Apr 2019 gridcell mean&quot;</span><span class="p">,</span> 
+                           <span class="n">data2</span><span class="o">=</span><span class="n">da_mean_winter19_20</span><span class="p">,</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Nov 2019 - Apr 2020 gridcell mean&quot;</span><span class="p">,</span> 
+                           <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmin_diff</span><span class="o">=-</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">vmax_diff</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/winter_comparison_9_0.png" src="_images/winter_comparison_9_0.png" />
 </div>
 </div>
 </div>
@@ -562,38 +443,27 @@ Click the + button to expand the functions used to compute means and plot the da
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;piomas_ice_thickness&quot;</span><span class="p">]</span>
-<span class="n">plot_monthly_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
+<span class="n">plot_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/winter_comparison_11_0.png" src="_images/winter_comparison_11_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da_mean_winter18_19</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2018-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2019-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">da_mean_winter19_20</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2019-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
 
-<span class="n">da_mean</span> <span class="o">=</span> <span class="n">compute_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Compute gridcell seasonal mean </span>
-<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="n">start_year</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean PIOMAS ice thickness&quot;</span><span class="p">,</span> 
-                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean PIOMAS ice thickness&quot;</span><span class="p">,</span> 
+<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean_winter18_19</span><span class="p">,</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Nov 2018 - Apr 2019 gridcell mean&quot;</span><span class="p">,</span> 
+                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean_winter19_20</span><span class="p">,</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Nov 2019 - Apr 2020 gridcell mean&quot;</span><span class="p">,</span> 
                      <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmin_diff</span><span class="o">=-</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">vmax_diff</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_13_0.png" src="_images/winter_comparison_13_0.png" />
-<img alt="_images/winter_comparison_13_1.png" src="_images/winter_comparison_13_1.png" />
-</div>
-</div>
-</div>
-<div class="section" id="icesat-2-sea-ice-thickness-uncertainty">
-<h2>ICESat-2 sea ice thickness uncertainty<a class="headerlink" href="#icesat-2-sea-ice-thickness-uncertainty" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;ice_thickness_unc&quot;</span><span class="p">]</span>
-<span class="n">plot_monthly_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">,</span> <span class="n">show_uncertainty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
-
-<span class="n">da_mean</span> <span class="o">=</span> <span class="n">compute_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Compute gridcell seasonal mean </span>
-<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="n">start_year</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean ice thickness uncertainty&quot;</span><span class="p">,</span> 
-                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean ice thickness uncertainty&quot;</span><span class="p">,</span> 
-                    <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmin_diff</span><span class="o">=-</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">vmax_diff</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;plasma&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/winter_comparison_15_0.png" src="_images/winter_comparison_15_0.png" />
-<img alt="_images/winter_comparison_15_1.png" src="_images/winter_comparison_15_1.png" />
+<img alt="_images/winter_comparison_12_0.png" src="_images/winter_comparison_12_0.png" />
 </div>
 </div>
 </div>
@@ -602,18 +472,27 @@ Click the + button to expand the functions used to compute means and plot the da
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;snow_depth&quot;</span><span class="p">]</span>
-<span class="n">plot_monthly_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">,</span> <span class="n">show_uncertainty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
+<span class="n">plot_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">,</span> <span class="n">show_uncertainty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/winter_comparison_14_0.png" src="_images/winter_comparison_14_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da_mean_winter18_19</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2018-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2019-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">da_mean_winter19_20</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2019-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
 
-<span class="n">da_mean</span> <span class="o">=</span> <span class="n">compute_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Compute gridcell seasonal mean </span>
-<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="n">start_year</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean ICESat-2 snow depth&quot;</span><span class="p">,</span> 
-                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean ICESat-2 snow depth&quot;</span><span class="p">,</span> 
+<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean_winter18_19</span><span class="p">,</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Nov 2018 - Apr 2019 gridcell mean&quot;</span><span class="p">,</span> 
+                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean_winter19_20</span><span class="p">,</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Nov 2019 - Apr 2020 gridcell mean&quot;</span><span class="p">,</span> 
                      <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">vmin_diff</span><span class="o">=-</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">vmax_diff</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;PuBuGn&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_17_0.png" src="_images/winter_comparison_17_0.png" />
-<img alt="_images/winter_comparison_17_1.png" src="_images/winter_comparison_17_1.png" />
+<img alt="_images/winter_comparison_15_0.png" src="_images/winter_comparison_15_0.png" />
 </div>
 </div>
 </div>
@@ -623,18 +502,27 @@ Click the + button to expand the functions used to compute means and plot the da
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;ice_type&quot;</span><span class="p">]</span>
-<span class="n">plot_monthly_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">,</span> <span class="n">show_uncertainty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
+<span class="n">plot_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">,</span> <span class="n">show_uncertainty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/winter_comparison_17_0.png" src="_images/winter_comparison_17_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da_mean_winter18_19</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2018-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2019-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">da_mean_winter19_20</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2019-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
 
-<span class="n">da_mean</span> <span class="o">=</span> <span class="n">compute_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Compute gridcell seasonal mean </span>
-<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="n">start_year</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean ice type&quot;</span><span class="p">,</span> 
-                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean ice type&quot;</span><span class="p">,</span> 
+<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean_winter18_19</span><span class="p">,</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Nov 2018 - Apr 2019 gridcell mean&quot;</span><span class="p">,</span> 
+                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean_winter19_20</span><span class="p">,</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Nov 2019 - Apr 2020 gridcell mean&quot;</span><span class="p">,</span> 
                      <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmin_diff</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmax_diff</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlOrRd&quot;</span><span class="p">)</span> 
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/winter_comparison_19_0.png" src="_images/winter_comparison_19_0.png" />
-<img alt="_images/winter_comparison_19_1.png" src="_images/winter_comparison_19_1.png" />
+<img alt="_images/winter_comparison_18_0.png" src="_images/winter_comparison_18_0.png" />
 </div>
 </div>
 </div>
@@ -643,18 +531,27 @@ Click the + button to expand the functions used to compute means and plot the da
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;t2m&quot;</span><span class="p">]</span>
-<span class="n">plot_monthly_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
+<span class="n">plot_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/winter_comparison_20_0.png" src="_images/winter_comparison_20_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da_mean_winter18_19</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2018-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2019-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">da_mean_winter19_20</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2019-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
 
-<span class="n">da_mean</span> <span class="o">=</span> <span class="n">compute_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Compute gridcell seasonal mean </span>
-<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="n">start_year</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean 2-meter temperature&quot;</span><span class="p">,</span> 
-                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean 2-meter temperature&quot;</span><span class="p">,</span> 
+<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean_winter18_19</span><span class="p">,</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Nov 2018 - Apr 2019 gridcell mean&quot;</span><span class="p">,</span> 
+                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean_winter19_20</span><span class="p">,</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Nov 2019 - Apr 2020 gridcell mean&quot;</span><span class="p">,</span> 
                      <span class="n">vmin</span><span class="o">=-</span><span class="mi">35</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=-</span><span class="mi">25</span><span class="p">,</span> <span class="n">vmin_diff</span><span class="o">=-</span><span class="mi">6</span><span class="p">,</span> <span class="n">vmax_diff</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma_r&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/winter_comparison_21_0.png" src="_images/winter_comparison_21_0.png" />
-<img alt="_images/winter_comparison_21_1.png" src="_images/winter_comparison_21_1.png" />
 </div>
 </div>
 </div>
@@ -663,18 +560,27 @@ Click the + button to expand the functions used to compute means and plot the da
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;msdwlwrf&quot;</span><span class="p">]</span>
-<span class="n">plot_monthly_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
-
-<span class="n">da_mean</span> <span class="o">=</span> <span class="n">compute_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Compute gridcell seasonal mean </span>
-<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="n">start_year</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean downward longwave radiation&quot;</span><span class="p">,</span> 
-                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_year</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; mean downward longwave radiation&quot;</span><span class="p">,</span> 
-                     <span class="n">vmin</span><span class="o">=</span><span class="mi">170</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">220</span><span class="p">,</span> <span class="n">vmin_diff</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">vmax_diff</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;PuRd&quot;</span><span class="p">)</span>
+<span class="n">plot_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">)</span> <span class="c1"># Generate line plot</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/winter_comparison_23_0.png" src="_images/winter_comparison_23_0.png" />
-<img alt="_images/winter_comparison_23_1.png" src="_images/winter_comparison_23_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da_mean_winter18_19</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2018-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2019-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">da_mean_winter19_20</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;2019-11&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;2020-04&quot;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+
+<span class="n">arcticComparisonMaps</span><span class="p">(</span><span class="n">data1</span><span class="o">=</span><span class="n">da_mean_winter18_19</span><span class="p">,</span> <span class="n">title1</span><span class="o">=</span><span class="s2">&quot;Nov 2018 - Apr 2019 gridcell mean&quot;</span><span class="p">,</span> 
+                     <span class="n">data2</span><span class="o">=</span><span class="n">da_mean_winter19_20</span><span class="p">,</span> <span class="n">title2</span><span class="o">=</span><span class="s2">&quot;Nov 2019 - Apr 2020 gridcell mean&quot;</span><span class="p">,</span> 
+                     <span class="n">vmin</span><span class="o">=</span><span class="mi">170</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">220</span><span class="p">,</span> <span class="n">vmin_diff</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">vmax_diff</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;PuRd&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/winter_comparison_24_0.png" src="_images/winter_comparison_24_0.png" />
 </div>
 </div>
 </div>

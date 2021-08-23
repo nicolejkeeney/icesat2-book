@@ -113,7 +113,7 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  MISC
+  DATA WRANGLING
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -122,9 +122,26 @@
    Data wrangling
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  HELPER FUNCTIONS
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="utils.html">
-   utils
+  <a class="reference internal" href="utils/markdown_rendering/read_data_utils.html">
+   Reading data from Google Cloud
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="utils/markdown_rendering/plotting_utils.html">
+   Plotting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="utils/markdown_rendering/misc_utils.html">
+   Miscellaneous helper functions
   </a>
  </li>
 </ul>
@@ -261,12 +278,12 @@
                 
   <div class="section" id="icesat-2-sea-ice-thickness-data-analysis-and-visualization">
 <h1>ICESat-2 Sea Ice Thickness Data Analysis and Visualization<a class="headerlink" href="#icesat-2-sea-ice-thickness-data-analysis-and-visualization" title="Permalink to this headline">¶</a></h1>
-<p>NASA’s Ice, Cloud, and Land Elevation Satellite-2 (ICESat-2) is a new satellite laser altimetry mission providing very high resolution elevation profiling of the entire Earth, and especially the fast-changing Polar Regions. ICESat-2 provides measurements of sea ice freeboard, the extension of sea ice above the local sea surface. Using assumptions regarding the snow depth and density ontop of the ice, and the density of the sea ice itself, these freeboard measurements can be converted to estimates of sea ice thickness <a class="reference external" href="http://www.alekpetty.com/papers/petty2020">(http://www.alekpetty.com/papers/petty2020)</a>. ICESat-2 has now collected data over two winter seasons across the entire Arctic Ocean (2018-2019 and 2019-2020) which we describe and analyze within this Jupyter Book. <br><br> For more information on ICESat-2, see the project homepage: <a class="reference external" href="https://icesat-2.gsfc.nasa.gov/">https://icesat-2.gsfc.nasa.gov/</a>.</p>
+<p>NASA’s Ice, Cloud, and Land Elevation Satellite-2 (ICESat-2) is a new satellite laser altimetry mission providing very high resolution elevation profiling of the entire Earth’s surface, and especially the fast-changing Polar Regions. ICESat-2 provides measurements of sea ice freeboard, the extension of sea ice above the local sea surface. Using assumptions regarding the snow depth and density ontop of the ice, and the density of the sea ice itself, these freeboard measurements can be converted to estimates of sea ice thickness <a class="reference external" href="http://www.alekpetty.com/papers/petty2020">(http://www.alekpetty.com/papers/petty2020)</a>. ICESat-2 has now collected and released data over two winter seasons across the entire Arctic Ocean (2018-2019 and 2019-2020) which we describe and analyze within this Jupyter Book. <br><br> For more information on ICESat-2, see the project homepage: <a class="reference external" href="https://icesat-2.gsfc.nasa.gov/">https://icesat-2.gsfc.nasa.gov/</a>.</p>
 </div>
 <div class="section" id="jupyter-book-description">
 <h1>Jupyter Book description<a class="headerlink" href="#jupyter-book-description" title="Permalink to this headline">¶</a></h1>
 <p>Jupyter Books <a class="reference external" href="https://jupyterbook.org/intro.html">(jupyterbook.org)</a> provide a novel means of compiling Jupyter Notebooks into one convenient and well-indexed location. Jupyter Notebooks are used to provide a visual demonstration of our efforts to analyze the monthly gridded ICESat-2 winter Arctic sea ice data (sea ice freeboard and thickness), along with other relevant datasets to help us understand recent winter Arctic sea ice growth. All of the code presented in the notebooks of this book are configured to run in Binder, so you can run the code without needing to download anything– even python! To run a notebook in Binder, just click Binder under the rocket ship icon at the top of each notebook.<br><br>
-The ICESat-2 monthly gridded data can be downloaded from the google storage bucket associated with this jupyter book, along with additional datasets used in the notebook. All other datasets used were regridded to the NSIDC North Polar Sterographic grid (the grid used by the ICESat-2 data) such that they can be easily compared between each other. See the data wrangling page for more information on this process.<br><br></p>
+The ICESat-2 monthly gridded data can be downloaded from the google storage bucket associated with this Jupyter Book, along with additional datasets used in the notebook. All other datasets used were regridded to the NSIDC North Polar Sterographic grid (the grid used by the ICESat-2 data) such that they can be easily compared between each other. See the data wrangling page for more information on this process.<br><br></p>
 </div>
 <div class="section" id="contact">
 <h1>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h1>
@@ -299,6 +316,8 @@ The ICESat-2 monthly gridded data can be downloaded from the google storage buck
 <div class="section" id="a-note-on-xarray">
 <h1>A note on xarray<a class="headerlink" href="#a-note-on-xarray" title="Permalink to this headline">¶</a></h1>
 <p>All of the notebooks in this notebook utilize <a class="reference external" href="http://xarray.pydata.org/en/stable/">xarray</a>, a python package built for working with multi-dimensional data like the monthly gridded sea ice data. Xarray is especially useful for time series data and allows for easily plotting data on map projections via compatability with the python package cartopy.</p>
+<div class="toctree-wrapper compound">
+</div>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
