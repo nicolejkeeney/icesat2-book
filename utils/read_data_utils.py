@@ -51,23 +51,23 @@ def read_is2_data(data_dir="IS2SITMOGR4", bucket_name="sea-ice-thickness-data"):
     return is2_ds
 
 
-
-def read_book_data(filepath = "icesat2-book-data.nc"): 
+def read_book_data(): 
     """ Read in data for ICESat2 jupyter book. 
     If the file does not already exist on the user's local drive, it is downloaded from the books google storage bucket (https://console.cloud.google.com/storage/browser/is2-pso-seaice)
     The netcdf file is then read in as an xr.Dataset object 
     
     Args: 
-        filepath (str, optional): name of file to read in (default to "icesat2-book-data.nc", the name of the file in the bucket)
+        None
     Returns: 
         book_ds (xr.Dataset): data 
     
     """
-    exists_locally = os.path.isfile(filepath) # Check if file exists on local drive
+    filename = "icesat2-book-data.nc"
+    exists_locally = os.path.isfile(filename) # Check if file exists on local drive
     if (exists_locally == False): # Download data 
         print("Downloading jupyter book data from the google storage bucket...")
-        os.system("gsutil -m cp gs://is2-pso-seaice/" + filepath + " ./") # Make sure theres a space before the final ./ (i.e. " ./")
+        os.system("gsutil -m cp gs://sea-ice-thickness-data/icesat2-book-data/"+filename+" ./") # Make sure theres a space before the final ./ (i.e. " ./")
         print("Download complete")
 
-    book_ds = xr.open_dataset(filepath)
+    book_ds = xr.open_dataset(filename)
     return book_ds
