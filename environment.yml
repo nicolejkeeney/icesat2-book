@@ -21,3 +21,4 @@ dependencies:
     - jupyter-book
     - gsutil
     - ghp-import
+    - hvplot
