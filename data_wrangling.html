@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -42,7 +42,7 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
@@ -81,7 +81,7 @@
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -249,7 +249,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
@@ -460,7 +460,7 @@
 <ul class="simple">
 <li><p><strong>Variables used</strong>: 2m temperature; Mean surface downward long-wave radiation flux</p></li>
 <li><p><strong>Product type</strong>: Monthly averaged reanalysis</p></li>
-<li><p><strong>Download link</strong>: <a class="reference external" href="https://cds.climate.copernicus.eu/cdsapp#%21/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview">https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview</a></p></li>
+<li><p><strong>Download link</strong>: <a class="reference external" href="https://cds.climate.copernicus.eu/cdsapp#%21/dataset/reanalysis-era5-single-levels-monthly-means">https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels-monthly-means</a></p></li>
 <li><p><strong>Reference</strong>: Hersbach, H., Bell, B., Berrisford, P., Biavati, G., Horányi, A., Muñoz Sabater, J., Nicolas, J., Peubey, C., Radu, R., Rozum, I., Schepers, D., Simmons, A., Soci, C., Dee, D., Thépaut, J-N. (2019): ERA5 monthly averaged data on single levels from 1979 to present. Copernicus Climate Change Service (C3S) Climate Data Store (CDS). (Accessed on 16-08-2021), 10.24381/cds.f17050d7</p></li>
 </ul>
 </div>
@@ -502,6 +502,7 @@
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">utils.read_data_utils</span> <span class="kn">import</span> <span class="n">read_is2_data</span> <span class="c1"># This allows us to read the ICESAT2 data directly from the google storage bucket</span>
+<span class="kn">from</span> <span class="nn">utils.misc_utils</span> <span class="kn">import</span> <span class="n">create_empty_xr_ds</span> <span class="c1"># Allows you to fill in empty data to overcome data coverage issues </span>
 
 <span class="c1"># Ignore warnings in the notebook to improve display</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -534,7 +535,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_date</span> <span class="o">=</span> <span class="s2">&quot;Sep 2018&quot;</span>
-<span class="n">end_date</span> <span class="o">=</span> <span class="s2">&quot;Dec 2020&quot;</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="s2">&quot;Apr 2021&quot;</span>
 <span class="n">date_range</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;MS&#39;</span><span class="p">)</span> <span class="c1"># MS indicates a time frequency of start of the month</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">date_range</span><span class="p">)</span>
 </pre></div>
@@ -547,7 +548,8 @@
                &#39;2019-09-01&#39;, &#39;2019-10-01&#39;, &#39;2019-11-01&#39;, &#39;2019-12-01&#39;,
                &#39;2020-01-01&#39;, &#39;2020-02-01&#39;, &#39;2020-03-01&#39;, &#39;2020-04-01&#39;,
                &#39;2020-05-01&#39;, &#39;2020-06-01&#39;, &#39;2020-07-01&#39;, &#39;2020-08-01&#39;,
-               &#39;2020-09-01&#39;, &#39;2020-10-01&#39;, &#39;2020-11-01&#39;, &#39;2020-12-01&#39;],
+               &#39;2020-09-01&#39;, &#39;2020-10-01&#39;, &#39;2020-11-01&#39;, &#39;2020-12-01&#39;,
+               &#39;2021-01-01&#39;, &#39;2021-02-01&#39;, &#39;2021-03-01&#39;, &#39;2021-04-01&#39;],
               dtype=&#39;datetime64[ns]&#39;, freq=&#39;MS&#39;)
 </pre></div>
 </div>
@@ -571,36 +573,50 @@
 <h2>Sea ice concentration<a class="headerlink" href="#sea-ice-concentration" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_cdr_data</span><span class="p">(</span><span class="n">dataPath</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_cdr_data</span><span class="p">(</span><span class="n">filepaths</span><span class="p">,</span> <span class="n">varname</span><span class="o">=</span><span class="s2">&quot;cdr_seaice_conc_monthly&quot;</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot;Reads in CDR data, renames coordinates, and sets lat/lon variables to coordinates</span>
+<span class="sd">    Selects one variable, defined by varname, and returns a DataArray with descriptive attributes for the entire dataset </span>
 <span class="sd">    </span>
 <span class="sd">     Args:</span>
-<span class="sd">         dataPath (str): path to CDR file </span>
+<span class="sd">         filepaths (list of str): paths to CDR files </span>
+<span class="sd">         varname (str, optional): name of variable to select (default to &quot;cdr_seaice_conc_monthly&quot;, monthly sea ice concentration)</span>
 <span class="sd">         </span>
 <span class="sd">     Returns: </span>
-<span class="sd">         cdr_ds (xr.Dataset): data </span>
+<span class="sd">         cdr_da (xr.DataArray): data </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="n">cdr_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">cdr_path</span><span class="p">)</span>
-    <span class="n">cdr_ds</span> <span class="o">=</span> <span class="n">cdr_ds</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s2">&quot;tdim&quot;</span><span class="p">:</span><span class="s2">&quot;time&quot;</span><span class="p">,</span><span class="s2">&quot;xgrid&quot;</span><span class="p">:</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;ygrid&quot;</span><span class="p">:</span><span class="s2">&quot;y&quot;</span><span class="p">})</span>  <span class="c1"># Coords and dimensions have slightly different names. Rename so they match </span>
-    <span class="n">cdr_ds</span> <span class="o">=</span> <span class="n">cdr_ds</span><span class="o">.</span><span class="n">set_coords</span><span class="p">([</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span><span class="s2">&quot;longitude&quot;</span><span class="p">])</span> <span class="c1"># Set lat and lon dimensions as coordinate variables</span>
-    <span class="k">return</span> <span class="n">cdr_ds</span>
+    <span class="k">def</span> <span class="nf">xr_rename_coords</span><span class="p">(</span><span class="n">da</span><span class="p">):</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s2">&quot;tdim&quot;</span><span class="p">:</span><span class="s2">&quot;time&quot;</span><span class="p">,</span><span class="s2">&quot;xgrid&quot;</span><span class="p">:</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;ygrid&quot;</span><span class="p">:</span><span class="s2">&quot;y&quot;</span><span class="p">})</span> <span class="c1"># Rename coordinates to match dimensions </span>
+        <span class="k">return</span> <span class="n">da</span>
+    
+    <span class="n">cdr_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="n">filepaths</span><span class="p">,</span> 
+                               <span class="n">concat_dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">],</span> 
+                               <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">,</span> 
+                               <span class="n">preprocess</span><span class="o">=</span><span class="n">xr_rename_coords</span><span class="p">)</span>
+    <span class="n">cdr_ds</span> <span class="o">=</span> <span class="n">cdr_ds</span><span class="o">.</span><span class="n">set_coords</span><span class="p">([</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span><span class="s2">&quot;longitude&quot;</span><span class="p">])</span> <span class="c1"># Set lat and lon as coordinates </span>
+    <span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_ds</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span> <span class="c1"># Select one variable from Dataset</span>
+    <span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="n">variables</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Sort by time ascending</span>
+
+    <span class="c1"># Add descriptive attributes from main Dataset </span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;metadata_link&quot;</span><span class="p">,</span><span class="s2">&quot;contributor_name&quot;</span><span class="p">,</span><span class="s2">&quot;contributor_role&quot;</span><span class="p">,</span><span class="s2">&quot;license&quot;</span><span class="p">,</span><span class="s2">&quot;summary&quot;</span><span class="p">]:</span>
+        <span class="n">cdr_da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdr_ds</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> 
+    <span class="n">cdr_da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;reference&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Meier, W. N., F. Fetterer, A. K. Windnagel, and S. Stewart. 2021. NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration, Version 4. Mean monthly aggregated, northern hemisphere. Boulder, Colorado USA. NSIDC: National Snow and Ice Data Center https://doi.org/10.7265/efmz-2t65. 08-21-2021.&quot;</span>
+    
+    <span class="k">return</span> <span class="n">cdr_da</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdr_ds</span> <span class="o">=</span> <span class="n">read_cdr_data</span><span class="p">(</span><span class="n">dataPath</span><span class="o">=</span><span class="n">cdr_path</span><span class="p">)</span>
-<span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_ds</span><span class="p">[</span><span class="s2">&quot;cdr_seaice_conc_monthly&quot;</span><span class="p">]</span> <span class="c1"># Select sea ice concentration variable</span>
-<span class="n">cdr_da</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">cdr_da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">date_range</span><span class="p">)</span> 
-<span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cdr_da</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&gt;</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1"># Restrict to ICESat-2 latitude</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Paths to data </span>
+<span class="n">cdr_nrt_filepaths</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">cdr_path</span><span class="o">+</span><span class="s2">&quot;NRT/*.nc&quot;</span><span class="p">)</span>  <span class="c1">#NRT data, available as single netcdf files by month in 2021 </span>
+<span class="n">cdr_agg</span> <span class="o">=</span> <span class="n">cdr_path</span><span class="o">+</span><span class="s2">&quot;seaice_conc_monthly_nh_197811_202012_v04r00.nc&quot;</span> <span class="c1"># Aggreggated monthly data, in one file 1979-2020</span>
 
-<span class="c1"># Add descriptive attributes from main Dataset </span>
-<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;metadata_link&quot;</span><span class="p">,</span><span class="s2">&quot;contributor_name&quot;</span><span class="p">,</span><span class="s2">&quot;contributor_role&quot;</span><span class="p">,</span><span class="s2">&quot;license&quot;</span><span class="p">,</span><span class="s2">&quot;summary&quot;</span><span class="p">]:</span>
-    <span class="n">cdr_da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdr_ds</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> 
-<span class="n">cdr_da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;reference&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Meier, W. N., F. Fetterer, A. K. Windnagel, and S. Stewart. 2021. NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration, Version 4. Mean monthly aggregated, northern hemisphere. Boulder, Colorado USA. NSIDC: National Snow and Ice Data Center https://doi.org/10.7265/efmz-2t65. 08-21-2021.&quot;</span>
+<span class="c1"># Read in data </span>
+<span class="n">cdr_da</span> <span class="o">=</span> <span class="n">read_cdr_data</span><span class="p">(</span><span class="n">filepaths</span><span class="o">=</span><span class="n">cdr_nrt_filepaths</span><span class="o">+</span><span class="p">[</span><span class="n">cdr_agg</span><span class="p">],</span> <span class="n">varname</span><span class="o">=</span><span class="s2">&quot;cdr_seaice_conc_monthly&quot;</span><span class="p">)</span>
+<span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">date_range</span><span class="p">)</span> <span class="c1"># Select desired date range set at top of notebook </span>
+<span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cdr_da</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&gt;</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1"># Restrict to ICESat-2 latitude</span>
 </pre></div>
 </div>
 </div>
@@ -616,7 +632,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/data_wrangling_17_0.png" src="_images/data_wrangling_17_0.png" />
+<img alt="_images/data_wrangling_18_0.png" src="_images/data_wrangling_18_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -631,7 +647,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/data_wrangling_18_0.png" src="_images/data_wrangling_18_0.png" />
+<img alt="_images/data_wrangling_19_0.png" src="_images/data_wrangling_19_0.png" />
 </div>
 </div>
 </div>
@@ -693,6 +709,7 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read data </span>
 <span class="n">ERA5</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">ERA5_path</span><span class="p">)</span>
 <span class="n">ERA5</span> <span class="o">=</span> <span class="n">ERA5</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">date_range</span><span class="p">)</span> <span class="c1"># Select for date range of interest</span>
+<span class="n">ERA5</span> <span class="o">=</span> <span class="n">ERA5</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ERA5</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&gt;</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1"># Restrict to ICESat-2 latitude</span>
 <span class="n">ERA5</span> <span class="o">=</span> <span class="n">ERA5</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">expver</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;expver&#39;</span><span class="p">)</span> <span class="c1"># Remove weird variable</span>
 
 <span class="c1"># Convert t2m temperature from Kelvin to Celcius </span>
@@ -706,9 +723,6 @@
               <span class="s1">&#39;website&#39;</span><span class="p">:</span> <span class="s1">&#39;https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview&#39;</span><span class="p">,</span> 
               <span class="s1">&#39;contact&#39;</span><span class="p">:</span> <span class="s1">&#39;copernicus-support@ecmwf.int&#39;</span><span class="p">,</span>
               <span class="s1">&#39;citation&#39;</span><span class="p">:</span> <span class="s1">&#39;Copernicus Climate Change Service (C3S) (2017): ERA5: Fifth generation of ECMWF atmospheric reanalyses of the global climate . Copernicus Climate Change Service Climate Data Store (CDS), July 2020. https://cds.climate.copernicus.eu/cdsapp#!/home&#39;</span><span class="p">}</span>
-
-<span class="c1"># Restrict to ICESat-2 latitude </span>
-<span class="n">ERA5</span> <span class="o">=</span> <span class="n">ERA5</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ERA5</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&gt;</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -775,7 +789,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pio_da</span> <span class="o">=</span> <span class="n">get_piomas_data</span><span class="p">(</span><span class="n">date_range</span> <span class="o">=</span> <span class="n">date_range</span><span class="p">,</span> <span class="n">data_dir</span> <span class="o">=</span> <span class="n">PIOMAS_path</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pio_da</span> <span class="o">=</span> <span class="n">get_piomas_data</span><span class="p">(</span><span class="n">date_range</span><span class="o">=</span><span class="n">date_range</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">PIOMAS_path</span><span class="p">)</span>
 <span class="n">pio_da</span> <span class="o">=</span> <span class="n">pio_da</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pio_da</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&gt;</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1"># Restrict to ICESat-2 latitude </span>
 </pre></div>
 </div>
@@ -784,6 +798,7 @@
 </div>
 <div class="section" id="nsidc-sea-ice-motion-vectors">
 <h2>NSIDC sea ice motion vectors<a class="headerlink" href="#nsidc-sea-ice-motion-vectors" title="Permalink to this headline">¶</a></h2>
+<p>As of Aug 2021, this dataset does not have data for 2021, so I create an empty dataset filled with nans for Jan - Apr 2021</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_uv_from_xy</span><span class="p">(</span><span class="n">xdrift</span><span class="p">,</span> <span class="n">ydrift</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
@@ -838,9 +853,11 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drifts</span> <span class="o">=</span> <span class="n">getDriftData</span><span class="p">(</span><span class="n">drift_path</span><span class="p">)</span>   <span class="c1"># Read data</span>
-<span class="n">drifts</span> <span class="o">=</span> <span class="n">drifts</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">date_range</span><span class="p">)</span> <span class="c1"># Restrict data to winter months</span>
-<span class="n">drifts</span> <span class="o">=</span> <span class="n">drifts</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">drifts</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&gt;</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1"># Restrict to ICESat-2 latitude </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drifts_curr</span> <span class="o">=</span> <span class="n">getDriftData</span><span class="p">(</span><span class="n">drift_path</span><span class="p">)</span>   <span class="c1"># Read data</span>
+<span class="n">empty_drifts_2021</span> <span class="o">=</span> <span class="n">create_empty_xr_ds</span><span class="p">(</span><span class="n">xr_ds</span><span class="o">=</span><span class="n">drifts_curr</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;2021-01-01&quot;</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;2021-04-01&quot;</span><span class="p">)</span> <span class="c1"># Create empty drifts dataset for 2021 </span>
+<span class="n">drifts</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">drifts_curr</span><span class="p">,</span> <span class="n">empty_drifts_2021</span><span class="p">])</span> <span class="c1"># Combine</span>
+<span class="n">drifts</span> <span class="o">=</span> <span class="n">drifts</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">date_range</span><span class="p">)</span> <span class="c1"># Restrict data to winter months</span>
+<span class="n">drifts</span> <span class="o">=</span> <span class="n">drifts</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">drifts</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&gt;</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1"># Restrict to ICESat-2 latitude</span>
 </pre></div>
 </div>
 </div>
@@ -901,6 +918,41 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">8</span><span class="n">v</span><span class="o">/</span><span class="n">cr06mz0n3bjd5jr12_9v6n200000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_71198</span><span class="o">/</span><span class="mf">1576104076.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="c1">#regrid data</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">cdr_regridded</span> <span class="o">=</span> <span class="n">regridToICESat2</span><span class="p">(</span><span class="n">cdr_da</span><span class="p">,</span> <span class="n">xptsCDR</span><span class="p">,</span> <span class="n">yptsCDR</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">13</span> <span class="n">cdr_regridded</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">cdr_regridded</span><span class="p">,</span> 
+<span class="g g-Whitespace">     </span><span class="mi">14</span>                              <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">],</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>                              <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">out_lats</span><span class="p">),</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">out_lons</span><span class="p">),</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">pio_da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">},</span>
+
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/xarray/core/dataarray.py</span> in <span class="ni">__init__</span><span class="nt">(self, data, coords, dims, name, attrs, indexes, fastpath)</span>
+<span class="g g-Whitespace">    </span><span class="mi">408</span>             <span class="n">data</span> <span class="o">=</span> <span class="n">_check_data_shape</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">409</span>             <span class="n">data</span> <span class="o">=</span> <span class="n">as_compatible_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">410</span>             <span class="n">coords</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">_infer_coords_and_dims</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">411</span>             <span class="n">variable</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">fastpath</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">412</span>             <span class="n">indexes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/xarray/core/dataarray.py</span> in <span class="ni">_infer_coords_and_dims</span><span class="nt">(shape, coords, dims)</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span>     <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">is_dict_like</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">139</span>         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">coords</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="ne">--&gt; </span><span class="mi">140</span>             <span class="n">new_coords</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">as_variable</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">141</span>     <span class="k">elif</span> <span class="n">coords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">142</span>         <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">coord</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/xarray/core/variable.py</span> in <span class="ni">as_variable</span><span class="nt">(obj, name)</span>
+<span class="g g-Whitespace">    </span><span class="mi">119</span>     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">120</span>         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">DataArray</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">121</span>             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">122</span>                 <span class="s2">&quot;Using a DataArray object to construct a variable is&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span>                 <span class="s2">&quot; ambiguous, please extract the data using the .data property.&quot;</span>
+
+<span class="ne">TypeError</span>: Using a DataArray object to construct a variable is ambiguous, please extract the data using the .data property.
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="id2">
@@ -926,45 +978,6 @@
     <span class="n">ERAArray</span> <span class="o">=</span> <span class="n">ERAArray</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">ERA5</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
     <span class="n">ERA5_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ERAArray</span><span class="p">)</span>
 <span class="n">ERA5_regridded</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">ERA5_list</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">19</span><span class="o">-</span><span class="mi">1</span><span class="n">a6902ff0204</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">ERA5_list</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">ERA5Vars</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">11</span>     <span class="n">ERA5gridded</span> <span class="o">=</span> <span class="n">regridToICESat2</span><span class="p">(</span><span class="n">ERA5</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="n">xptsERA</span><span class="p">,</span> <span class="n">yptsERA</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">ERAArray</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">ERA5gridded</span><span class="p">,</span> 
-<span class="g g-Whitespace">     </span><span class="mi">13</span>                             <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">],</span>
-
-<span class="nn">&lt;ipython-input-17-cd54afd15a6c&gt;</span> in <span class="ni">regridToICESat2</span><span class="nt">(dataArrayNEW, xptsNEW, yptsNEW, xptsIS2, yptsIS2)</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">gridded</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">)):</span>
-<span class="ne">---&gt; </span><span class="mi">17</span>         <span class="n">monthlyGridded</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">griddata</span><span class="p">((</span><span class="n">xptsNEW</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span><span class="n">yptsNEW</span><span class="o">.</span><span class="n">flatten</span><span class="p">()),</span> <span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="p">(</span><span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span>         <span class="n">gridded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">monthlyGridded</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">gridded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gridded</span><span class="p">)</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/scipy/interpolate/ndgriddata.py</span> in <span class="ni">griddata</span><span class="nt">(points, values, xi, method, fill_value, rescale)</span>
-<span class="g g-Whitespace">    </span><span class="mi">256</span>     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;nearest&#39;</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">257</span>         <span class="n">ip</span> <span class="o">=</span> <span class="n">NearestNDInterpolator</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">rescale</span><span class="o">=</span><span class="n">rescale</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">258</span>         <span class="k">return</span> <span class="n">ip</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">259</span>     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">260</span>         <span class="n">ip</span> <span class="o">=</span> <span class="n">LinearNDInterpolator</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="n">fill_value</span><span class="p">,</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/scipy/interpolate/ndgriddata.py</span> in <span class="ni">__call__</span><span class="nt">(self, *args)</span>
-<span class="g g-Whitespace">    </span><span class="mi">109</span>         <span class="n">xi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_call_shape</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">110</span>         <span class="n">xi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scale_x</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">111</span>         <span class="n">dist</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">112</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">113</span> 
-
-<span class="nn">ckdtree.pyx</span> in <span class="ni">scipy.spatial.ckdtree.cKDTree.query</span><span class="nt">()</span>
-
-<span class="nn">&lt;__array_function__ internals&gt;</span> in <span class="ni">reshape</span><span class="nt">(*args, **kwargs)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -1045,25 +1058,25 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
-Dimensions:                  (time: 28, x: 304, y: 448)
+Dimensions:                  (time: 32, x: 304, y: 448)
 Coordinates:
     latitude                 (y, x) float32 31.1 31.2 31.3 ... 34.68 34.58 34.47
     longitude                (y, x) float32 168.3 168.1 168.0 ... -10.18 -9.999
-  * time                     (time) datetime64[ns] 2018-09-01 ... 2020-12-01
+  * time                     (time) datetime64[ns] 2018-09-01 ... 2021-04-01
     region_mask              (y, x) uint8 1 1 1 1 1 1 1 1 1 ... 1 1 1 1 1 1 1 1
 Dimensions without coordinates: x, y
 Data variables:
     cdr_seaice_conc_monthly  (time, y, x) float32 nan 0.0 0.0 ... 0.0 0.0 0.0
     piomas_ice_thickness     (time, y, x) float32 0.0 0.0 0.0 ... 0.0 0.0 0.0
-    t2m                      (time, y, x) float32 nan 15.69 ... 7.397 7.398
-    msdwlwrf                 (time, y, x) float32 nan 406.3 ... 339.6 339.2
+    t2m                      (time, y, x) float32 nan 15.69 ... 7.272 7.321
+    msdwlwrf                 (time, y, x) float32 nan 406.3 ... 335.3 334.9
     drifts_uT                (time, y, x) float32 nan nan nan ... nan nan nan
     drifts_vT                (time, y, x) float32 nan nan nan ... nan nan nan
     drifts_magnitude         (time, y, x) float32 nan nan nan ... nan nan nan
 Attributes:
     description:    Data used in ICESat-2 jupyter book
     note:           See individual data variables for references
-    creation date:  2021-08-23
+    creation date:  2021-09-03
 </pre></div>
 </div>
 </div>
@@ -1112,12 +1125,32 @@ Attributes:
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="winter_comparison.html" title="previous page">Winter comparison</a>
-    <a class='right-next' id="next-link" href="utils/markdown_rendering/read_data_utils.html" title="next page">Reading data from Google Cloud</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="winter_comparison.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Winter comparison</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="utils/markdown_rendering/read_data_utils.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Reading data from Google Cloud</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>

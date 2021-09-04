@@ -83,10 +83,6 @@ def plot_winter_means(da, start_year, end_year, da_uncertainty=None, show_uncert
 ```
 
 
-```
-
-```
-
 
 ```
 def arcticComparisonMaps(data1, data2, plot_diff=True, vmin=None, vmax=None, vmin_diff=None, vmax_diff=None, cmap="viridis", title1="data_1", title2="data_2"):
