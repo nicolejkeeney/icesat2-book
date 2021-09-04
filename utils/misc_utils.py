@@ -26,6 +26,10 @@ def restrictRegionally(dataset, regionKeyList):
         regionalDataset (xr Dataset): dataset with restricted data to input regions
     """
     
+    # If the user imputs a DataArray, convert to Dataset 
+    if type(dataset) == xr.DataArray: 
+        dataset = dataset.to_dataset()
+    
     def checkKeys(regionKeyList, regionTbl): 
         """Check that regionKeyList was defined correctly
 
@@ -73,7 +77,6 @@ def restrictRegionally(dataset, regionKeyList):
         print('Regions selected: All \nNo regions will be removed')
     
     return regionalDataset
-
 
 
 def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all"): 
@@ -133,7 +136,7 @@ def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all"):
                                      coords=da.coords,
                                      attrs={**da.attrs,'interpolation':'interpolated from original variable using ' + method + ' interpolation'},
                                      name=da.name)
-            da_interp = da_interp.where(lats < 88, np.nan) # Set pole hole to nan
+            da_interp = da_interp.where(lats<88, np.nan) # Set pole hole to nan
             da_interp = da_interp.expand_dims("time") # Add time as a dimension. Allows for merging DataArrays 
             var_interp_list.append(da_interp)
         
@@ -142,6 +145,104 @@ def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all"):
     
     return ds_interp
 
+
+def create_empty_xr_ds(xr_ds, start_date, end_date, freq="MS"):
+    """ Create an empty xarray dataset for the date range defined by start date --> end date
+    
+        Args: 
+            xr_ds (xr.Dataset, xr.DataArray): dataset to model dimensions off of 
+            start_date (str): date for which to start time dimension (i.e "2021-01")
+            end_date (str): date for which to end time dimension (default to "2021-04-01")
+            freq (str, optional): freqency to do sampling (default to month start, "MS")
+        
+        Returns: 
+            empty_xr_ds (xr.Dataset): empty dataset with time dimension set to the datetime range define by start date -> end date 
+    
+    """
+    if type(xr_ds) == xr.DataArray: 
+        xr_ds = xr_ds.to_dataset()
+
+    months = pd.date_range(start=start_date, end=end_date, freq=freq) # date range with month start frequency 
+    xr_ds_nan = xr.Dataset(data_vars=xr_ds.where(np.isnan(xr_ds), np.nan).data_vars) # xr_ds, but with all variables set to nan 
+    xr_ds_nan_one_timestep = xr_ds_nan.isel(time=0) # Just grab one timestep
+    empty_xr_ds = xr.concat([xr_ds_nan_one_timestep]*len(months), dim="time") # Make a xr.Dataset with desired number of empty months
+    empty_xr_ds["time"] = months # Reassign time dimension to desired date range 
+    return empty_xr_ds
+
+
+def compute_winter_means(da, start_year=None, end_year=None, x_dim="x", y_dim="y", mask_nans=True): 
+    """ Compute winter mean monthly values by horizontal dimensions 
+    Winter is defined by the months Sep --> Apr 
+    
+    Args: 
+        da (xr.DataArray): DataArray to compute mean values. Must contain a time dimension and two horizontal dimensions 
+        start_year (int, optional): Year to start computing means for (default to first year in da)
+        end_year (int, optional): Year to end computing means for (default to last year in da)
+        x_dim (str, optional): Name of x dimension in da (default to "x")
+        y_dim (str, optional): Name of y dimension in da (default to "y")
+        mask_nans (bool, optional): Mask nans across the same months through each winter season? I.e. if Dec 2020 is missing data in the Laptev Sea, mask out missing gridcells in the Laptev Sea for December for all years (default to True)
+        
+    Returns: 
+        df_means (pd.DataFrame): table of means with months Sep --> Apr as column values, Winter name (i.e. "Winter 2019-20") as columns
+        returns None if no data found in the time range to compute means for 
+
+    """
+    
+    # Get start and end year 
+    if start_year is None: 
+        start_year = pd.to_datetime(da.time.values[0]).year 
+    if end_year is None: 
+        end_year = pd.to_datetime(da.time.values[-1]).year
+
+    # If winter season is missing data for any months, fill it with an empty DataArray
+    # I wrote this because sep and oct 2018 don't have any data! 
+    winter_months = [] # Empty list to store timestamps corresponding with months in a winter season 
+    curr_year = int(start_year) 
+    while curr_year < end_year: 
+        winter_n = getWinterDateRange(start_year=str(curr_year), end_year=str(curr_year+1), start_month="September", end_month="April")
+        winter_months.append(winter_n)
+        missing_months = [time for time in winter_n if time not in da.time.values]
+        for missing_month in missing_months: 
+            #print("No data for "+missing_month.strftime("%Y-%m-%d")+"...created empty DataArray to fill timestep")
+            empty_da = create_empty_xr_ds(xr_ds=da, start_date=missing_month, end_date=missing_month)[da.name] # Create emmpty DataArray. Function returns an xr.Dataset, so I convert to DataArray by grabbing the variable name 
+            da = xr.concat([empty_da, da], dim="time") # Add to original dataframe
+        curr_year+=1
+
+    # Set to nan any cells that are nan in any other month 
+    # We just want to compare grid cells that have data in all years for a given month 
+    # This avoids one winter having an inflated mean due to regional differences in data coverage
+    if mask_nans==True: 
+        da_list = []
+        for mon in [9,10,11,12,1,2,3,4]: 
+            # Get all months in da that have month mon_sel; i.e. grab all Decemeber months (Dec 2018, Dec 2019, Dec 2010, etc)
+            month_timesteps_all = [time for time in pd.to_datetime(da.time.values) if time.month==mon] 
+            da_mon = da.sel(time=month_timesteps_all)
+
+            for mon_yr in month_timesteps_all: 
+                if np.isnan(da_mon.sel(time=mon_yr).mean(dim=[x_dim,y_dim]).values.item()): # If no data in that month, ignore it, since the mean function will set it to nan anyways 
+                    pass 
+                else: 
+                    da_mon = da_mon.where(~np.isnan(da_mon.sel(time=mon_yr)), np.nan)
+
+                da_list.append(da_mon)
+        da = xr.merge(da_list)[da.name]
+    else:
+        pass
+
+    means_da = da.mean(dim=[x_dim,y_dim])
+
+    # Put data in a pd.DataFrame object for easy plotting 
+    df_means = pd.DataFrame(index=["Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr"])
+    for winter in winter_months: 
+        winter_str = "Winter "+str(winter[0].year)+"-"+str(winter[-1].year)[2:] # i.e. "Winter 2020-21"
+        df_means[winter_str] = means_da.sel(time=winter).values
+
+    df_means.columns.name = "time period"
+    df_means.index.name = "month"
+    if len(df_means.T) == 0: # Return None if df is empty 
+        return None
+    else: 
+        return df_means 
 
 
 def getWinterDateRange(start_year, end_year, start_month="September", end_month="April"): 

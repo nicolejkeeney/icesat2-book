@@ -34,20 +34,18 @@ def read_is2_data(data_dir="IS2SITMOGR4", bucket_name="sea-ice-thickness-data"):
             os.system("gsutil -m -o 'GSUtil:parallel_process_count=1' cp gs://"+bucket_name+"/"+data_dir+"/"+file+" "+data_dir) # Make sure theres a space before the final segment, idicating the download directory ./ (i.e. " download dir")
 
     # Read in files for each month as a single xr.Dataset
-    # Need to create a preprocessing function to call before merging because dimensions and coordinates are not set
-    # This allows each DataArray for each month to be merged into one xr.Dataset
-    def xr_set_coords_and_dims(da_monthly):
-        da_monthly = da_monthly.set_coords(["latitude","longitude","xgrid","ygrid"]) # Set data variables as coordinates
-        da_monthly = da_monthly.expand_dims("time") # Set month as a dimension 
-        return da_monthly
-    
     filenames = os.listdir(data_dir)
-    is2_ds = xr.open_mfdataset([data_dir + "/" + filename for filename in filenames], # Filepath, including data directory in path
-                               concat_dim=["time"], 
-                               combine='nested', 
-                               preprocess=xr_set_coords_and_dims)
-    time = [file.split("IS2SITMOGR4_01_")[1].split("_004_001.nc")[0] for file in filenames] # Get time from filenames
-    is2_ds = is2_ds.assign_coords({"time":pd.to_datetime(time, format = "%Y%m")}) # Add time as coordinate
+    datasets_list = []
+    for file in filenames: 
+        ds_monthly = xr.open_dataset(data_dir + "/" + file)
+        ds_monthly = ds_monthly.set_coords(["latitude","longitude","xgrid","ygrid"]) # Set data variables as coordinates
+        time = file.split("IS2SITMOGR4_01_")[1].split("_004_001.nc")[0] # Get time from filename 
+        ds_monthly = ds_monthly.assign_coords({"time":pd.to_datetime(time, format = "%Y%m")}) # Add time as coordinate
+        ds_monthly = ds_monthly.expand_dims("time") # Set month as a dimension 
+        datasets_list.append(ds_monthly)
+
+    is2_ds = xr.merge(datasets_list)
+    is2_ds = is2_ds.sortby("time")
     return is2_ds
 
 
