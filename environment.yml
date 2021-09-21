@@ -2,24 +2,27 @@ name: icesat2_book
 
 channels:
   - conda-forge
+  - pyviz
 dependencies:
   - python=3.8
   - cartopy=0.18.0 
-  - xarray
-  - netcdf4
-  - matplotlib 
-  - pandas
-  - numpy
-  - scipy 
-  - pip
-  - pyproj
-  - zarr 
-  - dask
+  - xarray=0.19.0
+  - netcdf4=1.5.6
+  - matplotlib=3.4.3
+  - pandas=1.3.3
+  - numpy=1.20.3
+  - scipy=1.6.3
+  - pyproj=3.1.0
+  - zarr=2.10.0
+  - dask=2021.9.0
   - gcsfs=0.8.0
+  - pyviz::geoviews=1.9.1
+  - holoviews=1.14.5
+  - hvplot=0.7.3
+  - jupyterlab
+  - jupyter_contrib_nbextensions
+  - pip
   - pip: 
-    - jupyter
-    - jupyter-book
+    - jupyter-book==0.11.3 
     - gsutil
     - ghp-import
-    - hvplot
-    - geoviews

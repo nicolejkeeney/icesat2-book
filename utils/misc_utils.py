@@ -79,7 +79,7 @@ def restrictRegionally(dataset, regionKeyList):
     return regionalDataset
 
 
-def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all"): 
+def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all", suffix="_smoothed"): 
     """ Perform 2D interpolation over geographic coordinates for all ICESat-2 sea ice variables with geographic coordinates in xr.Dataset
     As of 06/02/2021, xarray does not have a 2D interpolation function so this function is built on scipy.interpolate.griddata (https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html)
     This function assumes that the dataset has physical coordinates (i.e. lat,lon) as coordinates but logical coordinates (i.e. (x,y)) as dimensions (http://xarray.pydata.org/en/stable/examples/multidimensional-coords.html)
@@ -89,9 +89,10 @@ def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all"):
         cdr_da (xr.DataArray): NSIDC sea ice concentration. Must contain the same time variable as is2_ds
         method (str,optional): interpolation method (default to "linear", choose from {‘linear’, ‘nearest’, ‘cubic’})
         interp_va (srt or list, optional): variables to interpolate (default to "all", variables with geographic coordinates)
+        suffix (str, optional): suffix to add to end of data variable name to indicate that the variable has been interpolated (default to "smoothed")
     
     Returns: 
-        ds_interp (xr.Dataset): dataset with interpolated variables
+        ds_interp_sorted (xr.Dataset): dataset with interpolated variables, in alphabetical order 
     
     """
  
@@ -106,15 +107,13 @@ def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all"):
             interp_var = vars_2d.copy()
         elif (type(interp_var) == str) and (interp_var in vars_2d): 
             interp_var = list(interp_var)
-        else:
-            raise ValueError("Invalid input for interp_var")
         return interp_var                          
     interp_var_2d = get_2d_vars(is2_ds, interp_var)
-    
+
     # Get geographic coordinates
     lats = is2_ds['latitude'].values
     lons = is2_ds['longitude'].values
-    
+
     # Loop through variables and timesteps and interpolate 
     np_cdr = cdr_da.values
     ds_interp = is2_ds.copy()
@@ -139,11 +138,11 @@ def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all"):
             da_interp = da_interp.where(lats<88, np.nan) # Set pole hole to nan
             da_interp = da_interp.expand_dims("time") # Add time as a dimension. Allows for merging DataArrays 
             var_interp_list.append(da_interp)
-        
-        var_interp = xr.merge(var_interp_list)
-        ds_interp[var] = var_interp[var] # Replace variable with interpolated variable
-    
-    return ds_interp
+
+        var_interp = xr.merge(var_interp_list) # Merge interpolated variables with original dataset 
+        ds_interp[var+suffix] = var_interp[var] # Replace variable with interpolated variable
+        ds_interp_sorted = ds_interp[sorted(ds_interp.data_vars)] # Sort data variables by alphabetical order
+        return ds_interp_sorted 
 
 
 def create_empty_xr_ds(xr_ds, start_date, end_date, freq="MS"):

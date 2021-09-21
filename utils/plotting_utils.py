@@ -485,9 +485,11 @@ def interactive_map(da, y="latitude", x="longitude", colorbar=True, vmin=None, v
     if vmax is None: 
         clim[1] = vmax_auto 
     
+    # Set dynamic to FALSE in order to allow the slider to be interactive in static html files. The plot takes a bit longer to generate this way but the slider is also a lot quicker in-notebook as well. See https://github.com/holoviz/hvplot/issues/108
     interactive_map = da.hvplot.quadmesh(y=y, x=x, 
                                          colorbar=colorbar, clim=tuple(clim), clabel=clabel, cmap=cmap, 
                                          title=title, features=["coastline"],
                                          projection=projection, geo=True, project=True, 
-                                         width=width, height=height, ylim=(lat,max_lat))
+                                         width=width, height=height, ylim=(lat,max_lat), 
+                                         dynamic=False, widget_location='bottom')
     return interactive_map

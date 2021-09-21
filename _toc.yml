@@ -1,11 +1,13 @@
 format: jb-book
 root: home
 parts:
-- caption: NOTEBOOKS
+- caption: INTRO
   chapters:
   - file: is2_intro
-  - file: mapping
-  - file: winter_comparison
+- caption: ANALYSIS & VISUALIZATION
+  chapters: 
+  - file: book_data_descrip
+  - file: sea_ice_thickness
 - caption: DATA WRANGLING 
   chapters:
   - file: data_wrangling
