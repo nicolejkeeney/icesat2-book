@@ -139,10 +139,11 @@ def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all", suffix="_sm
             da_interp = da_interp.expand_dims("time") # Add time as a dimension. Allows for merging DataArrays 
             var_interp_list.append(da_interp)
 
-        var_interp = xr.merge(var_interp_list) # Merge interpolated variables with original dataset 
-        ds_interp[var+suffix] = var_interp[var] # Replace variable with interpolated variable
-        ds_interp_sorted = ds_interp[sorted(ds_interp.data_vars)] # Sort data variables by alphabetical order
-        return ds_interp_sorted 
+        var_interp = xr.merge(var_interp_list) # Merge all timesteps together 
+        ds_interp[var+suffix] = var_interp[var] # Add interpolated variables as data variable original dataset. If suffix = "", the interpolated variable will replace the original variable 
+        
+    ds_interp_sorted = ds_interp[sorted(ds_interp.data_vars)] # Sort data variables by alphabetical order
+    return ds_interp_sorted 
 
 
 def create_empty_xr_ds(xr_ds, start_date, end_date, freq="MS"):
