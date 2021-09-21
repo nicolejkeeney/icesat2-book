@@ -8,6 +8,7 @@ parts:
   chapters: 
   - file: book_data_descrip
   - file: sea_ice_thickness
+  - file: PIOMAS_sea_ice_thickness
 - caption: DATA WRANGLING 
   chapters:
   - file: data_wrangling
