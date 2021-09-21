@@ -115,6 +115,21 @@
    Sea ice thickness
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sea_ice_characteristics.html">
+   Sea ice characteristics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sea_ice_drift.html">
+   Sea ice drift vectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="atmospheric_variables.html">
+   Atmospheric variables
+  </a>
+ </li>
 </ul>
 <p class="caption">
  <span class="caption-text">
@@ -1846,7 +1861,7 @@ if (window.Jupyter !== undefined) {
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">8</span><span class="n">v</span><span class="o">/</span><span class="n">cr06mz0n3bjd5jr12_9v6n200000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_82021</span><span class="o">/</span><span class="mf">4054003170.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">8</span><span class="n">v</span><span class="o">/</span><span class="n">cr06mz0n3bjd5jr12_9v6n200000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_82426</span><span class="o">/</span><span class="mf">4054003170.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Interpolating ICESat-2 data...&quot;</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">cdr_da</span> <span class="o">=</span> <span class="n">book_ds</span><span class="p">[</span><span class="s2">&quot;cdr_seaice_conc_monthly&quot;</span><span class="p">]</span> <span class="c1"># Get CDR data</span>
 <span class="ne">---&gt; </span><span class="mi">20</span>     <span class="n">is2_ds</span> <span class="o">=</span> <span class="n">is2_interp2d</span><span class="p">(</span><span class="n">is2_ds</span><span class="p">,</span> <span class="n">cdr_da</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">interp_var</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
@@ -1861,28 +1876,20 @@ if (window.Jupyter !== undefined) {
 <span class="g g-Whitespace">    </span><span class="mi">130</span>                                   <span class="p">(</span><span class="n">lons</span><span class="p">,</span> <span class="n">lats</span><span class="p">),</span>
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/scipy/interpolate/ndgriddata.py</span> in <span class="ni">griddata</span><span class="nt">(points, values, xi, method, fill_value, rescale)</span>
-<span class="g g-Whitespace">    </span><span class="mi">258</span>         <span class="k">return</span> <span class="n">ip</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">259</span>     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">260</span>         <span class="n">ip</span> <span class="o">=</span> <span class="n">LinearNDInterpolator</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="n">fill_value</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span>         <span class="n">ip</span> <span class="o">=</span> <span class="n">LinearNDInterpolator</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="n">fill_value</span><span class="p">,</span>
 <span class="g g-Whitespace">    </span><span class="mi">261</span>                                   <span class="n">rescale</span><span class="o">=</span><span class="n">rescale</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">262</span>         <span class="k">return</span> <span class="n">ip</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">262</span>         <span class="k">return</span> <span class="n">ip</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">263</span>     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;cubic&#39;</span> <span class="ow">and</span> <span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">264</span>         <span class="n">ip</span> <span class="o">=</span> <span class="n">CloughTocher2DInterpolator</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="n">fill_value</span><span class="p">,</span>
 
-<span class="nn">interpnd.pyx</span> in <span class="ni">scipy.interpolate.interpnd.LinearNDInterpolator.__init__</span><span class="nt">()</span>
+<span class="nn">interpnd.pyx</span> in <span class="ni">scipy.interpolate.interpnd.NDInterpolatorBase.__call__</span><span class="nt">()</span>
 
-<span class="nn">qhull.pyx</span> in <span class="ni">scipy.spatial.qhull.Delaunay.__init__</span><span class="nt">()</span>
-
-<span class="nn">qhull.pyx</span> in <span class="ni">scipy.spatial.qhull._QhullUser.__init__</span><span class="nt">()</span>
-
-<span class="nn">qhull.pyx</span> in <span class="ni">scipy.spatial.qhull.Delaunay._update</span><span class="nt">()</span>
-
-<span class="nn">qhull.pyx</span> in <span class="ni">scipy.spatial.qhull._QhullUser._update</span><span class="nt">()</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/numpy/core/_methods.py</span> in <span class="ni">_amin</span><span class="nt">(a, axis, out, keepdims, initial, where)</span>
-<span class="g g-Whitespace">     </span><span class="mi">39</span>     <span class="k">return</span> <span class="n">umr_maximum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">where</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">40</span> 
-<span class="ne">---&gt; </span><span class="mi">41</span> <span class="k">def</span> <span class="nf">_amin</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">42</span>           <span class="n">initial</span><span class="o">=</span><span class="n">_NoValue</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">43</span>     <span class="k">return</span> <span class="n">umr_minimum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">where</span><span class="p">)</span>
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/numpy/core/_asarray.py</span> in <span class="ni">asarray</span><span class="nt">(a, dtype, order, like)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> 
+<span class="g g-Whitespace">     </span><span class="mi">22</span> 
+<span class="ne">---&gt; </span><span class="mi">23</span> <span class="nd">@set_array_function_like_doc</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="nd">@set_module</span><span class="p">(</span><span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="k">def</span> <span class="nf">asarray</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">like</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>

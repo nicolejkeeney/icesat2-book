@@ -43,7 +43,7 @@ ds_uninterpolated = ds_uninterpolated.drop_vars("projection")
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mMergeError[0m                                Traceback (most recent call last)
-[0;32m/var/folders/8v/cr06mz0n3bjd5jr12_9v6n200000gn/T/ipykernel_81870/369422530.py[0m in [0;36m<module>[0;34m[0m
+[0;32m/var/folders/8v/cr06mz0n3bjd5jr12_9v6n200000gn/T/ipykernel_82265/369422530.py[0m in [0;36m<module>[0;34m[0m
 [1;32m     18[0m [0;34m[0m[0m
 [1;32m     19[0m [0;31m# Combine datasets[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
 [0;32m---> 20[0;31m [0mds_interpolated[0m [0;34m=[0m [0mxr[0m[0;34m.[0m[0mmerge[0m[0;34m([0m[0;34m[[0m[0mds_interpolated[0m[0;34m,[0m [0mbook_ds[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m

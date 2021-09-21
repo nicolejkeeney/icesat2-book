@@ -115,6 +115,21 @@
    Sea ice thickness
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sea_ice_characteristics.html">
+   Sea ice characteristics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sea_ice_drift.html">
+   Sea ice drift vectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="atmospheric_variables.html">
+   Atmospheric variables
+  </a>
+ </li>
 </ul>
 <p class="caption">
  <span class="caption-text">
@@ -1835,7 +1850,7 @@ Attributes:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">8</span><span class="n">v</span><span class="o">/</span><span class="n">cr06mz0n3bjd5jr12_9v6n200000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_81792</span><span class="o">/</span><span class="mf">3560472755.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">8</span><span class="n">v</span><span class="o">/</span><span class="n">cr06mz0n3bjd5jr12_9v6n200000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_82190</span><span class="o">/</span><span class="mf">3560472755.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">40</span> <span class="n">data_pl</span> <span class="o">=</span> <span class="p">(</span><span class="n">pl1</span><span class="o">+</span><span class="n">pl2</span><span class="o">+</span><span class="n">diff_pl</span><span class="p">)</span><span class="o">.</span><span class="n">opts</span><span class="p">(</span><span class="n">hv</span><span class="o">.</span><span class="n">opts</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">shared_axes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">merge_tools</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 <span class="g g-Whitespace">     </span><span class="mi">41</span> <span class="n">hv</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">widget_location</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
 <span class="ne">---&gt; </span><span class="mi">42</span> <span class="n">data_pl</span>
@@ -1939,143 +1954,164 @@ Attributes:
 <span class="g g-Whitespace">    </span><span class="mi">412</span>                     <span class="k">return</span> <span class="n">render_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">comm</span><span class="p">)</span>
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/viewable.py</span> in <span class="ni">_render_model</span><span class="nt">(self, doc, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">453</span>         <span class="k">if</span> <span class="n">comm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">454</span>             <span class="n">comm</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">_comm_manager</span><span class="o">.</span><span class="n">get_server_comm</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">455</span>         <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_root</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">comm</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">456</span> 
 <span class="g g-Whitespace">    </span><span class="mi">457</span>         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">embed</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">458</span>             <span class="n">embed_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">459</span>                         <span class="n">json</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">embed_json</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">460</span>                         <span class="n">json_prefix</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">embed_json_prefix</span><span class="p">,</span>
 
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/viewable.py</span> in <span class="ni">get_root</span><span class="nt">(self, doc, comm, preprocess)</span>
-<span class="g g-Whitespace">    </span><span class="mi">510</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">511</span><span class="s2">         doc = init_doc(doc)</span>
-<span class="ne">--&gt; </span><span class="mi">512</span><span class="s2">         root = self._get_model(doc, comm=comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">513</span><span class="s2">         if preprocess:</span>
-<span class="g g-Whitespace">    </span><span class="mi">514</span><span class="s2">             self._preprocess(root)</span>
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/io/embed.py</span> in <span class="ni">embed_state</span><span class="nt">(panel, model, doc, max_states, max_opts, json, json_prefix, save_path, load_path, progress, states)</span>
+<span class="g g-Whitespace">    </span><span class="mi">331</span>                 <span class="k">with</span> <span class="n">always_changed</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">safe_embed</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">332</span>                     <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">ws</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">333</span>                         <span class="n">w</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">k</span>
+<span class="g g-Whitespace">    </span><span class="mi">334</span>             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">335</span>                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
 
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/layout/base.py</span> in <span class="ni">_get_model</span><span class="nt">(self, doc, root, parent, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">120</span><span class="s2">         if root is None:</span>
-<span class="g g-Whitespace">    </span><span class="mi">121</span><span class="s2">             root = model</span>
-<span class="ne">--&gt; </span><span class="mi">122</span><span class="s2">         objects = self._get_objects(model, [], doc, root, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">123</span><span class="s2">         props = dict(self._init_params(), objects=objects)</span>
-<span class="g g-Whitespace">    </span><span class="mi">124</span><span class="s2">         model.update(**self._process_param_change(props))</span>
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/param/parameterized.py</span> in <span class="ni">_f</span><span class="nt">(self, obj, val)</span>
+<span class="g g-Whitespace">    </span><span class="mi">316</span>             <span class="n">instance_param</span><span class="o">.</span><span class="fm">__set__</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">317</span>             <span class="k">return</span>
+<span class="ne">--&gt; </span><span class="mi">318</span>         <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">319</span>     <span class="k">return</span> <span class="n">_f</span>
+<span class="g g-Whitespace">    </span><span class="mi">320</span> 
 
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/layout/base.py</span> in <span class="ni">_get_objects</span><span class="nt">(self, model, old_objects, doc, root, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">110</span><span class="s2">             else:</span>
-<span class="g g-Whitespace">    </span><span class="mi">111</span><span class="s2">                 try:</span>
-<span class="ne">--&gt; </span><span class="mi">112</span><span class="s2">                     child = pane._get_model(doc, root, model, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">113</span><span class="s2">                 except RerenderError:</span>
-<span class="g g-Whitespace">    </span><span class="mi">114</span><span class="s2">                     return self._get_objects(model, current_objects[:i], doc, root, comm)</span>
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/param/parameterized.py</span> in <span class="ni">__set__</span><span class="nt">(self, obj, val)</span>
+<span class="g g-Whitespace">    </span><span class="mi">982</span>                       <span class="n">old</span><span class="o">=</span><span class="n">_old</span><span class="p">,</span> <span class="n">new</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">983</span>         <span class="k">for</span> <span class="n">watcher</span> <span class="ow">in</span> <span class="n">watchers</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">984</span>             <span class="n">obj</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">_call_watcher</span><span class="p">(</span><span class="n">watcher</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">985</span>         <span class="k">if</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">_BATCH_WATCH</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">986</span>             <span class="n">obj</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">_batch_call_watchers</span><span class="p">()</span>
 
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/layout/base.py</span> in <span class="ni">_get_model</span><span class="nt">(self, doc, root, parent, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">120</span><span class="s2">         if root is None:</span>
-<span class="g g-Whitespace">    </span><span class="mi">121</span><span class="s2">             root = model</span>
-<span class="ne">--&gt; </span><span class="mi">122</span><span class="s2">         objects = self._get_objects(model, [], doc, root, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">123</span><span class="s2">         props = dict(self._init_params(), objects=objects)</span>
-<span class="g g-Whitespace">    </span><span class="mi">124</span><span class="s2">         model.update(**self._process_param_change(props))</span>
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/param/parameterized.py</span> in <span class="ni">_call_watcher</span><span class="nt">(self_, watcher, event)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1643</span>             <span class="n">event</span> <span class="o">=</span> <span class="n">self_</span><span class="o">.</span><span class="n">_update_event_type</span><span class="p">(</span><span class="n">watcher</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">self_</span><span class="o">.</span><span class="n">self_or_cls</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">_TRIGGER</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1644</span>             <span class="k">with</span> <span class="n">batch_watch</span><span class="p">(</span><span class="n">self_</span><span class="o">.</span><span class="n">self_or_cls</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="n">watcher</span><span class="o">.</span><span class="n">queued</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1645</span>                 <span class="n">self_</span><span class="o">.</span><span class="n">_execute_watcher</span><span class="p">(</span><span class="n">watcher</span><span class="p">,</span> <span class="p">(</span><span class="n">event</span><span class="p">,))</span>
+<span class="g g-Whitespace">   </span><span class="mi">1646</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1647</span>     <span class="k">def</span> <span class="nf">_batch_call_watchers</span><span class="p">(</span><span class="n">self_</span><span class="p">):</span>
 
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/layout/base.py</span> in <span class="ni">_get_objects</span><span class="nt">(self, model, old_objects, doc, root, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">110</span><span class="s2">             else:</span>
-<span class="g g-Whitespace">    </span><span class="mi">111</span><span class="s2">                 try:</span>
-<span class="ne">--&gt; </span><span class="mi">112</span><span class="s2">                     child = pane._get_model(doc, root, model, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">113</span><span class="s2">                 except RerenderError:</span>
-<span class="g g-Whitespace">    </span><span class="mi">114</span><span class="s2">                     return self._get_objects(model, current_objects[:i], doc, root, comm)</span>
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/param/parameterized.py</span> in <span class="ni">_execute_watcher</span><span class="nt">(self, watcher, events)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1625</span>             <span class="n">async_executor</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">watcher</span><span class="o">.</span><span class="n">fn</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">1626</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1627</span>             <span class="n">watcher</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1628</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1629</span>     <span class="k">def</span> <span class="nf">_call_watcher</span><span class="p">(</span><span class="n">self_</span><span class="p">,</span> <span class="n">watcher</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/layout/base.py</span> in <span class="ni">_get_model</span><span class="nt">(self, doc, root, parent, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">120</span><span class="s2">         if root is None:</span>
-<span class="g g-Whitespace">    </span><span class="mi">121</span><span class="s2">             root = model</span>
-<span class="ne">--&gt; </span><span class="mi">122</span><span class="s2">         objects = self._get_objects(model, [], doc, root, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">123</span><span class="s2">         props = dict(self._init_params(), objects=objects)</span>
-<span class="g g-Whitespace">    </span><span class="mi">124</span><span class="s2">         model.update(**self._process_param_change(props))</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/layout/base.py</span> in <span class="ni">_get_objects</span><span class="nt">(self, model, old_objects, doc, root, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">110</span><span class="s2">             else:</span>
-<span class="g g-Whitespace">    </span><span class="mi">111</span><span class="s2">                 try:</span>
-<span class="ne">--&gt; </span><span class="mi">112</span><span class="s2">                     child = pane._get_model(doc, root, model, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">113</span><span class="s2">                 except RerenderError:</span>
-<span class="g g-Whitespace">    </span><span class="mi">114</span><span class="s2">                     return self._get_objects(model, current_objects[:i], doc, root, comm)</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/pane/holoviews.py</span> in <span class="ni">_get_model</span><span class="nt">(self, doc, root, parent, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">261</span><span class="s2">                   if p in Layoutable.param and p != &#39;name&#39;}</span>
-<span class="g g-Whitespace">    </span><span class="mi">262</span><span class="s2">         child_pane = self._panes.get(backend, Pane)(state, **kwargs)</span>
-<span class="ne">--&gt; </span><span class="mi">263</span><span class="s2">         self._update_plot(plot, child_pane)</span>
-<span class="g g-Whitespace">    </span><span class="mi">264</span><span class="s2">         model = child_pane._get_model(doc, root, parent, comm)</span>
-<span class="g g-Whitespace">    </span><span class="mi">265</span><span class="s2">         if ref in self._plots:</span>
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/pane/holoviews.py</span> in <span class="ni">_widget_callback</span><span class="nt">(self, event)</span>
+<span class="g g-Whitespace">    </span><span class="mi">215</span>     <span class="k">def</span> <span class="nf">_widget_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">216</span>         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">pane</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plots</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="ne">--&gt; </span><span class="mi">217</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_update_plot</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">pane</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">218</span> 
+<span class="g g-Whitespace">    </span><span class="mi">219</span>     <span class="c1">#----------------------------------------------------------------</span>
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/panel/pane/holoviews.py</span> in <span class="ni">_update_plot</span><span class="nt">(self, plot, pane)</span>
-<span class="g g-Whitespace">    </span><span class="mi">197</span><span class="s2">             if plot.comm or state._unblocked(plot.document):</span>
-<span class="g g-Whitespace">    </span><span class="mi">198</span><span class="s2">                 with unlocked():</span>
-<span class="ne">--&gt; </span><span class="mi">199</span><span class="s2">                     plot.update(key)</span>
-<span class="g g-Whitespace">    </span><span class="mi">200</span><span class="s2">                 if plot.comm and &#39;embedded&#39; not in plot.root.tags:</span>
-<span class="g g-Whitespace">    </span><span class="mi">201</span><span class="s2">                     plot.push()</span>
+<span class="g g-Whitespace">    </span><span class="mi">197</span>             <span class="k">if</span> <span class="n">plot</span><span class="o">.</span><span class="n">comm</span> <span class="ow">or</span> <span class="n">state</span><span class="o">.</span><span class="n">_unblocked</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">document</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">198</span>                 <span class="k">with</span> <span class="n">unlocked</span><span class="p">():</span>
+<span class="ne">--&gt; </span><span class="mi">199</span>                     <span class="n">plot</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">200</span>                 <span class="k">if</span> <span class="n">plot</span><span class="o">.</span><span class="n">comm</span> <span class="ow">and</span> <span class="s1">&#39;embedded&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">201</span>                     <span class="n">plot</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/holoviews/plotting/plot.py</span> in <span class="ni">update</span><span class="nt">(self, key)</span>
-<span class="g g-Whitespace">    </span><span class="mi">981</span><span class="s2">         if len(self) == 1 and ((key == 0) or (key == self.keys[0])) and not self.drawn:</span>
-<span class="g g-Whitespace">    </span><span class="mi">982</span><span class="s2">             return self.initialize_plot()</span>
-<span class="ne">--&gt; </span><span class="mi">983</span><span class="s2">         item = self.__getitem__(key)</span>
-<span class="g g-Whitespace">    </span><span class="mi">984</span><span class="s2">         self.traverse(lambda x: setattr(x, &#39;_updated&#39;, True))</span>
-<span class="g g-Whitespace">    </span><span class="mi">985</span><span class="s2">         return item</span>
+<span class="g g-Whitespace">    </span><span class="mi">981</span>         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="p">((</span><span class="n">key</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">drawn</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">982</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize_plot</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">983</span>         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">984</span>         <span class="bp">self</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;_updated&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">985</span>         <span class="k">return</span> <span class="n">item</span>
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/holoviews/plotting/plot.py</span> in <span class="ni">__getitem__</span><span class="nt">(self, frame)</span>
-<span class="g g-Whitespace">    </span><span class="mi">444</span><span class="s2">         if not isinstance(frame, tuple):</span>
-<span class="g g-Whitespace">    </span><span class="mi">445</span><span class="s2">             frame = self.keys[frame]</span>
-<span class="ne">--&gt; </span><span class="mi">446</span><span class="s2">         self.update_frame(frame)</span>
-<span class="g g-Whitespace">    </span><span class="mi">447</span><span class="s2">         return self.state</span>
-<span class="g g-Whitespace">    </span><span class="mi">448</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">444</span>         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">445</span>             <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">frame</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">446</span>         <span class="bp">self</span><span class="o">.</span><span class="n">update_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">447</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+<span class="g g-Whitespace">    </span><span class="mi">448</span> 
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/holoviews/plotting/bokeh/util.py</span> in <span class="ni">wrapper</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">730</span><span class="s2">                 self.document._held_events = self.document._held_events[:-1]</span>
-<span class="g g-Whitespace">    </span><span class="mi">731</span><span class="s2"> </span>
-<span class="ne">--&gt; </span><span class="mi">732</span><span class="s2">         ret = f(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">733</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">734</span><span class="s2">         for source in shared_sources:</span>
+<span class="g g-Whitespace">    </span><span class="mi">730</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">_held_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">_held_events</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">731</span> 
+<span class="ne">--&gt; </span><span class="mi">732</span>         <span class="n">ret</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">733</span> 
+<span class="g g-Whitespace">    </span><span class="mi">734</span>         <span class="k">for</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">shared_sources</span><span class="p">:</span>
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/holoviews/plotting/bokeh/plot.py</span> in <span class="ni">update_frame</span><span class="nt">(self, key, ranges)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1011</span><span class="s2">             subplot = self.subplots.get((r, c), None)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1012</span><span class="s2">             if subplot is not None:</span>
-<span class="ne">-&gt; </span><span class="mi">1013</span><span class="s2">                 subplot.update_frame(key, ranges)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1014</span><span class="s2">         title = self._get_title_div(key)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1015</span><span class="s2">         if title:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1011</span>             <span class="n">subplot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplots</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1012</span>             <span class="k">if</span> <span class="n">subplot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1013</span>                 <span class="n">subplot</span><span class="o">.</span><span class="n">update_frame</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1014</span>         <span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_title_div</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1015</span>         <span class="k">if</span> <span class="n">title</span><span class="p">:</span>
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/holoviews/plotting/bokeh/plot.py</span> in <span class="ni">update_frame</span><span class="nt">(self, key, ranges)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1062</span><span class="s2">             subplot = self.subplots.get(pos)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1063</span><span class="s2">             if subplot is not None:</span>
-<span class="ne">-&gt; </span><span class="mi">1064</span><span class="s2">                 plot = subplot.update_frame(key, ranges)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1065</span><span class="s2">         return plot</span>
+<span class="g g-Whitespace">   </span><span class="mi">1062</span>             <span class="n">subplot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplots</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1063</span>             <span class="k">if</span> <span class="n">subplot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1064</span>                 <span class="n">plot</span> <span class="o">=</span> <span class="n">subplot</span><span class="o">.</span><span class="n">update_frame</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1065</span>         <span class="k">return</span> <span class="n">plot</span>
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/holoviews/plotting/bokeh/element.py</span> in <span class="ni">update_frame</span><span class="nt">(self, key, ranges, element)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2452</span><span class="s2">                     not subplot in self.dynamic_subplots):</span>
-<span class="g g-Whitespace">   </span><span class="mi">2453</span><span class="s2">                     continue</span>
-<span class="ne">-&gt; </span><span class="mi">2454</span><span class="s2">             subplot.update_frame(key, ranges, element=el)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2455</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">2456</span><span class="s2">         if not self.batched and isinstance(self.hmap, DynamicMap) and items:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2452</span>                     <span class="ow">not</span> <span class="n">subplot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamic_subplots</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">2453</span>                     <span class="k">continue</span>
+<span class="ne">-&gt; </span><span class="mi">2454</span>             <span class="n">subplot</span><span class="o">.</span><span class="n">update_frame</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">element</span><span class="o">=</span><span class="n">el</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2455</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2456</span>         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">batched</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hmap</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">)</span> <span class="ow">and</span> <span class="n">items</span><span class="p">:</span>
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/holoviews/plotting/bokeh/element.py</span> in <span class="ni">update_frame</span><span class="nt">(self, key, ranges, plot, element)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1541</span><span class="s2">             self._update_hover(element)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1542</span><span class="s2"> </span>
-<span class="ne">-&gt; </span><span class="mi">1543</span><span class="s2">         self._update_glyphs(element, ranges, self.style[self.cyclic_index])</span>
-<span class="g g-Whitespace">   </span><span class="mi">1544</span><span class="s2">         self._execute_hooks(element)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1545</span><span class="s2"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">1541</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_update_hover</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1542</span> 
+<span class="ne">-&gt; </span><span class="mi">1543</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_update_glyphs</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cyclic_index</span><span class="p">])</span>
+<span class="g g-Whitespace">   </span><span class="mi">1544</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_execute_hooks</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1545</span> 
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/holoviews/plotting/bokeh/element.py</span> in <span class="ni">_update_glyphs</span><span class="nt">(self, element, ranges, style)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1448</span><span class="s2">             data, mapping, style = self.get_batched_data(element, ranges)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1449</span><span class="s2">         else:</span>
-<span class="ne">-&gt; </span><span class="mi">1450</span><span class="s2">             data, mapping, style = self.get_data(element, ranges, style)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1451</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1452</span><span class="s2">         # Include old data if source static</span>
+<span class="g g-Whitespace">   </span><span class="mi">1448</span>             <span class="n">data</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_batched_data</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1449</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1450</span>             <span class="n">data</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1451</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1452</span>         <span class="c1"># Include old data if source static</span>
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/geoviews/plotting/bokeh/plot.py</span> in <span class="ni">get_data</span><span class="nt">(self, element, ranges, style)</span>
-<span class="g g-Whitespace">    </span><span class="mi">171</span><span class="s2">         if self._project_operation and self.geographic:</span>
-<span class="g g-Whitespace">    </span><span class="mi">172</span><span class="s2">             element = self._project_operation(element, projection=self.projection)</span>
-<span class="ne">--&gt; </span><span class="mi">173</span><span class="s2">         return super(GeoPlot, self).get_data(element, ranges, style)</span>
-<span class="g g-Whitespace">    </span><span class="mi">174</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">175</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">171</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_project_operation</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">geographic</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">172</span>             <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_project_operation</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">projection</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">173</span>         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">GeoPlot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">174</span> 
+<span class="g g-Whitespace">    </span><span class="mi">175</span> 
 
 <span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/holoviews/plotting/bokeh/raster.py</span> in <span class="ni">get_data</span><span class="nt">(self, element, ranges, style)</span>
-<span class="g g-Whitespace">    </span><span class="mi">261</span><span class="s2">             xc, yc = [], []</span>
-<span class="g g-Whitespace">    </span><span class="mi">262</span><span class="s2">             for xs, ys, zval in zip(X, Y, zvals):</span>
-<span class="ne">--&gt; </span><span class="mi">263</span><span class="s2">                 xs, ys = xs[:-1], ys[:-1]</span>
-<span class="g g-Whitespace">    </span><span class="mi">264</span><span class="s2">                 if isfinite(zval) and all(isfinite(xs)) and all(isfinite(ys)):</span>
-<span class="g g-Whitespace">    </span><span class="mi">265</span><span class="s2">                     XS.append(list(xs))</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span>             <span class="k">for</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zval</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">zvals</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">263</span>                 <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ys</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">264</span>                 <span class="k">if</span> <span class="n">isfinite</span><span class="p">(</span><span class="n">zval</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">isfinite</span><span class="p">(</span><span class="n">xs</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">isfinite</span><span class="p">(</span><span class="n">ys</span><span class="p">)):</span>
+<span class="g g-Whitespace">    </span><span class="mi">265</span>                     <span class="n">XS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">xs</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">266</span>                     <span class="n">YS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">ys</span><span class="p">))</span>
+
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/holoviews/core/util.py</span> in <span class="ni">isfinite</span><span class="nt">(val)</span>
+<span class="g g-Whitespace">    </span><span class="mi">909</span>         <span class="k">return</span> <span class="kc">True</span>
+<span class="g g-Whitespace">    </span><span class="mi">910</span>     <span class="n">finite</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">911</span>     <span class="k">if</span> <span class="n">pd</span> <span class="ow">and</span> <span class="n">pandas_version</span> <span class="o">&gt;=</span> <span class="s1">&#39;1.0.0&#39;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">912</span>         <span class="k">if</span> <span class="n">finite</span> <span class="ow">is</span> <span class="n">pd</span><span class="o">.</span><span class="n">NA</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">913</span>             <span class="k">return</span> <span class="kc">False</span>
+
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/distutils/version.py</span> in <span class="ni">__ge__</span><span class="nt">(self, other)</span>
+<span class="g g-Whitespace">     </span><span class="mi">68</span> 
+<span class="g g-Whitespace">     </span><span class="mi">69</span>     <span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">70</span>         <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmp</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">71</span>         <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">72</span>             <span class="k">return</span> <span class="n">c</span>
+
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/distutils/version.py</span> in <span class="ni">_cmp</span><span class="nt">(self, other)</span>
+<span class="g g-Whitespace">    </span><span class="mi">331</span>     <span class="k">def</span> <span class="nf">_cmp</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">332</span>         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">333</span>             <span class="n">other</span> <span class="o">=</span> <span class="n">LooseVersion</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">334</span> 
+<span class="g g-Whitespace">    </span><span class="mi">335</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
+
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/distutils/version.py</span> in <span class="ni">__init__</span><span class="nt">(self, vstring)</span>
+<span class="g g-Whitespace">    </span><span class="mi">302</span>     <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vstring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">303</span>         <span class="k">if</span> <span class="n">vstring</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">304</span>             <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">vstring</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">305</span> 
+<span class="g g-Whitespace">    </span><span class="mi">306</span> 
+
+<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/distutils/version.py</span> in <span class="ni">parse</span><span class="nt">(self, vstring)</span>
+<span class="g g-Whitespace">    </span><span class="mi">310</span>         <span class="c1"># use by __str__</span>
+<span class="g g-Whitespace">    </span><span class="mi">311</span>         <span class="bp">self</span><span class="o">.</span><span class="n">vstring</span> <span class="o">=</span> <span class="n">vstring</span>
+<span class="nn">--&gt; 312         components = [x for x</span> in <span class="ni">self.component_re.split</span><span class="nt">(vstring)</span>
+<span class="g g-Whitespace">    </span><span class="mi">313</span>                               <span class="k">if</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">!=</span> <span class="s1">&#39;.&#39;</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">314</span>         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>

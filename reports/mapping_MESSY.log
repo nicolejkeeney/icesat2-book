@@ -46,7 +46,7 @@ ds = ds.drop_vars("projection")
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mMergeError[0m                                Traceback (most recent call last)
-[0;32m/var/folders/8v/cr06mz0n3bjd5jr12_9v6n200000gn/T/ipykernel_81959/4236713622.py[0m in [0;36m<module>[0;34m[0m
+[0;32m/var/folders/8v/cr06mz0n3bjd5jr12_9v6n200000gn/T/ipykernel_82359/4236713622.py[0m in [0;36m<module>[0;34m[0m
 [1;32m     22[0m [0;34m[0m[0m
 [1;32m     23[0m [0;31m# Combine datasets[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
 [0;32m---> 24[0;31m [0mds[0m [0;34m=[0m [0mxr[0m[0;34m.[0m[0mmerge[0m[0;34m([0m[0;34m[[0m[0mis2_ds[0m[0;34m,[0m [0mbook_ds[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m

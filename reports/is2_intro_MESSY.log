@@ -23,7 +23,7 @@ print(regions)
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mAttributeError[0m                            Traceback (most recent call last)
-[0;32m/var/folders/8v/cr06mz0n3bjd5jr12_9v6n200000gn/T/ipykernel_81929/1017187880.py[0m in [0;36m<module>[0;34m[0m
+[0;32m/var/folders/8v/cr06mz0n3bjd5jr12_9v6n200000gn/T/ipykernel_82323/1017187880.py[0m in [0;36m<module>[0;34m[0m
 [0;32m----> 1[0;31m [0mregions[0m [0;34m=[0m [0mpd[0m[0;34m.[0m[0mDataFrame[0m[0;34m([0m[0;34m{[0m[0;34m"labels"[0m[0;34m:[0m[0mds[0m[0;34m.[0m[0mregion_mask[0m[0;34m.[0m[0mattrs[0m[0;34m[[0m[0;34m"labels"[0m[0;34m][0m[0;34m}[0m[0;34m,[0m [0mindex[0m[0;34m=[0m[0mds[0m[0;34m.[0m[0mregion_mask[0m[0;34m.[0m[0mattrs[0m[0;34m[[0m[0;34m"keys"[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [0m[1;32m      2[0m [0mprint[0m[0;34m([0m[0mregions[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
