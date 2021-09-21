@@ -6,8 +6,10 @@ parts:
   - file: is2_intro
 - caption: ANALYSIS & VISUALIZATION
   chapters: 
-  - file: book_data_descrip
   - file: sea_ice_thickness
+  - file: sea_ice_characteristics 
+  - file: sea_ice_drift
+  - file: atmospheric_variables 
 - caption: DATA WRANGLING 
   chapters:
   - file: data_wrangling
