@@ -118,6 +118,11 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="pio_vs_is2.html">
+   Model vs. satellite sea ice thickness
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="sea_ice_characteristics.html">
    Sea ice characteristics
   </a>
@@ -944,14 +949,14 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">8</span><span class="n">v</span><span class="o">/</span><span class="n">cr06mz0n3bjd5jr12_9v6n200000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_87226</span><span class="o">/</span><span class="mf">2547277114.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">8</span><span class="n">v</span><span class="o">/</span><span class="n">cr06mz0n3bjd5jr12_9v6n200000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_35550</span><span class="o">/</span><span class="mf">2547277114.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">10</span> 
 <span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="c1">#regrid data</span>
 <span class="ne">---&gt; </span><span class="mi">12</span> <span class="n">cdr_regridded</span> <span class="o">=</span> <span class="n">regridToICESat2</span><span class="p">(</span><span class="n">cdr_da</span><span class="p">,</span> <span class="n">xptsCDR</span><span class="p">,</span> <span class="n">yptsCDR</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">cdr_regridded</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">cdr_regridded</span><span class="p">,</span> 
 <span class="g g-Whitespace">     </span><span class="mi">14</span>                              <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">],</span>
 
-<span class="nn">/var/folders/8v/cr06mz0n3bjd5jr12_9v6n200000gn/T/ipykernel_87226/416546319.py</span> in <span class="ni">regridToICESat2</span><span class="nt">(dataArrayNEW, xptsNEW, yptsNEW, xptsIS2, yptsIS2)</span>
+<span class="nn">/var/folders/8v/cr06mz0n3bjd5jr12_9v6n200000gn/T/ipykernel_35550/416546319.py</span> in <span class="ni">regridToICESat2</span><span class="nt">(dataArrayNEW, xptsNEW, yptsNEW, xptsIS2, yptsIS2)</span>
 <span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">gridded</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">)):</span>
 <span class="ne">---&gt; </span><span class="mi">17</span>         <span class="n">monthlyGridded</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">griddata</span><span class="p">((</span><span class="n">xptsNEW</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span><span class="n">yptsNEW</span><span class="o">.</span><span class="n">flatten</span><span class="p">()),</span> <span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="p">(</span><span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
