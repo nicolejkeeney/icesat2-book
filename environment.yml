@@ -19,6 +19,7 @@ dependencies:
   - pyviz::geoviews=1.9.1
   - holoviews=1.14.5
   - hvplot=0.7.3
+  - astropy=4.3.1
   - jupyterlab
   - jupyter_contrib_nbextensions
   - pip
