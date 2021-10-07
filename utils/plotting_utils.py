@@ -86,7 +86,7 @@ def compute_gridcell_winter_means(da, years=None, start_month="Sep", end_month="
     return merged 
 
 
-def staticArcticMaps(da, title="", cmap="viridis", col_wrap=3, vmin=None, vmax=None): 
+def staticArcticMaps(da, title="", cmap="viridis", col_wrap=3, vmin=None, vmax=None, figsize=(8,6)): 
     """ Show data on a basemap of the Arctic. Can be one month or multiple months of data. 
     Creates an xarray facet grid. For more info, see: http://xarray.pydata.org/en/stable/user-guide/plotting.html
     
@@ -96,6 +96,7 @@ def staticArcticMaps(da, title="", cmap="viridis", col_wrap=3, vmin=None, vmax=N
         col_wrap (int, optional): number of columns of plots to display (default to 3, or None if time dimension has only one value)
         vmin (float, optional): minimum on colorbar (default to 1st percentile)
         vmax (float, optional): maximum on colorbar (default to 99th percentile)
+        figsize (tuple, optional): size of figure (default to (8,6))
     
     Returns:
         Figure displayed in notebook 
@@ -121,6 +122,7 @@ def staticArcticMaps(da, title="", cmap="viridis", col_wrap=3, vmin=None, vmax=N
     im = da.plot(x="longitude", y="latitude", col_wrap=col_wrap, col=col, transform=ccrs.PlateCarree(), cmap=cmap, zorder=8, 
                  cbar_kwargs={'pad':0.02,'shrink': 0.8,'extend':'both'},
                  vmin=vmin, vmax=vmax, 
+                 figsize=figsize,
                  subplot_kws={'projection':ccrs.NorthPolarStereo(central_longitude=-45)})
     
     # Iterate through axes and add features 

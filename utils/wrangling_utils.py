@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # +
-""" misc_utils.py
+""" wrangling_utils.py
 
     Utility functions for simple data wrangling, including restricting data to certain regions and interpolating data
 
@@ -79,7 +79,7 @@ def restrictRegionally(dataset, regionKeyList):
     return regionalDataset
 
 
-def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all", suffix="_smoothed"): 
+def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all", suffix="_smoothed", pole_hole_lat=88.25): 
     """ Perform 2D interpolation over geographic coordinates for all ICESat-2 sea ice variables with geographic coordinates in xr.Dataset
     As of 06/02/2021, xarray does not have a 2D interpolation function so this function is built on scipy.interpolate.griddata (https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html)
     This function assumes that the dataset has physical coordinates (i.e. lat,lon) as coordinates but logical coordinates (i.e. (x,y)) as dimensions (http://xarray.pydata.org/en/stable/examples/multidimensional-coords.html)
@@ -90,6 +90,7 @@ def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all", suffix="_sm
         method (str,optional): interpolation method (default to "linear", choose from {‘linear’, ‘nearest’, ‘cubic’})
         interp_va (srt or list, optional): variables to interpolate (default to "all", variables with geographic coordinates)
         suffix (str, optional): suffix to add to end of data variable name to indicate that the variable has been interpolated (default to "smoothed")
+        pole_hole_lat (float, optional): latitude defining pole hole (default to 88.25); set to 90 to keep pole hole 
     
     Returns: 
         ds_interp_sorted (xr.Dataset): dataset with interpolated variables, in alphabetical order 
@@ -135,7 +136,7 @@ def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all", suffix="_sm
                                      coords=da.coords,
                                      attrs={**da.attrs,'interpolation':'interpolated from original variable using ' + method + ' interpolation'},
                                      name=da.name)
-            da_interp = da_interp.where(lats<88, np.nan) # Set pole hole to nan
+            da_interp = da_interp.where(lats<=pole_hole_lat, np.nan) # Set pole hole to nan
             da_interp = da_interp.expand_dims("time") # Add time as a dimension. Allows for merging DataArrays 
             var_interp_list.append(da_interp)
 

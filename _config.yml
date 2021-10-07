@@ -18,8 +18,10 @@ html:
   favicon                   : "figs/logo.png"
   google_analytics_id       : "UA-177768395-1"
 
+
 execute:
   allow_errors              : false
+  timeout                   : 500
   exclude_patterns:
     - 'data_wrangling'
     - 'README.md'
