@@ -1,7 +1,7 @@
 # +
 """ read_data_utils.py 
 
-    Functions to read data from the google storage bucket associated with the Jupyter book
+Helper functions for reading ICESat2 data from a local drive and the book netcdf file from the google storage bucket
 
 """
 

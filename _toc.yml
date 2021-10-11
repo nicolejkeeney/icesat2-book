@@ -14,7 +14,8 @@ parts:
 - caption: DATA WRANGLING 
   chapters:
   - file: data_wrangling
-- caption: HELPER FUNCTIONS
+- caption: Helper functions
   chapters: 
   - file: utils/markdown_rendering/read_data_utils
-  - file: utils/markdown_rendering/misc_utils
+  - file: utils/markdown_rendering/wrangling_utils
+  - file: utils/markdown_rendering/plotting_utils
