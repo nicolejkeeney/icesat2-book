@@ -8,6 +8,9 @@
 # build files for jupyter book
 _build/
 
+# Big files 
+interp_test.ipynb
+
 # ICESat-2 data 
 IS2SITMOGR4/
 
