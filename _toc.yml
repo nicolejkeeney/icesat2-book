@@ -13,6 +13,7 @@ parts:
   - file: atmospheric_variables 
 - caption: DATA WRANGLING 
   chapters:
+  - file: interp_demo
   - file: data_wrangling
 - caption: Helper functions
   chapters: 
