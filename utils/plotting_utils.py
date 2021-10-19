@@ -95,16 +95,18 @@ def compute_gridcell_winter_means(da, years=None, start_month="Sep", end_month="
     return merged 
 
 
-def staticArcticMaps(da, title="", cmap="viridis", col_wrap=3, vmin=None, vmax=None): 
+def staticArcticMaps(da, title=None, cmap="viridis", col=None, col_wrap=3, vmin=None, vmax=None, min_lat=50): 
     """ Show data on a basemap of the Arctic. Can be one month or multiple months of data. 
     Creates an xarray facet grid. For more info, see: http://xarray.pydata.org/en/stable/user-guide/plotting.html
     
     Args: 
         da (xr DataArray): data to plot
         cmap (str, optional): colormap to use (default to viridis)
+        col (str, optional): coordinate to use for creating facet plot (default to "time")
         col_wrap (int, optional): number of columns of plots to display (default to 3, or None if time dimension has only one value)
         vmin (float, optional): minimum on colorbar (default to 1st percentile)
         vmax (float, optional): maximum on colorbar (default to 99th percentile)
+        min_lat (float, optional): minimum latitude to set extent of plot (default to 50 deg lat)
     
     Returns:
         Figure displayed in notebook 
@@ -119,14 +121,20 @@ def staticArcticMaps(da, title="", cmap="viridis", col_wrap=3, vmin=None, vmax=N
     vmin = vmin if vmin is not None else vmin_data # Set to smallest value of the two 
     vmax = vmax if vmax is not None else vmax_data # Set to largest value of the two 
     
-    # Assign time coordinate if it doesn't exist
-    try: 
-        da.time
-    except AttributeError: 
-        da = da.assign_coords({"time":"unknown"})
+    # All of this col and col_wrap maddness is to try and make this function as generalizable as possibl 
+    # This allows the function to work for DataArrays with multiple coordinates, different coordinates besides time, etc! 
+    if col is None: 
+        try: # Assign time coordinate if it doesn't exist
+            da.time 
+        except AttributeError: 
+            da = da.assign_coords({"time":"unknown"})
+            col = "time"
+    col = col if sum(da[col].shape) > 1 else None
+    if col is not None: 
+        if sum(da[col].shape)<=1: 
+            col_wrap = None
     
-    col_wrap = col_wrap if sum(da.time.shape) >1 else None
-    col = "time" if sum(da.time.shape) >1 else None
+    # Plot
     im = da.plot(x="longitude", y="latitude", col_wrap=col_wrap, col=col, transform=ccrs.PlateCarree(), cmap=cmap, zorder=8, 
                  cbar_kwargs={'pad':0.02,'shrink': 0.8,'extend':'both'},
                  vmin=vmin, vmax=vmax, 
@@ -141,10 +149,19 @@ def staticArcticMaps(da, title="", cmap="viridis", col_wrap=3, vmin=None, vmax=N
         ax.add_feature(cfeature.LAND, color ='0.95', zorder = 5)    # Land
         ax.add_feature(cfeature.LAKES, color = 'grey', zorder = 5)  # Lakes
         ax.gridlines(draw_labels=False, linewidth=0.25, color='gray', alpha=0.7, linestyle='--', zorder=6) # Gridlines
-        ax.set_extent([-179, 179, 50, 90], crs=ccrs.PlateCarree()) # Set extent to zoom in on Arctic
-       
-    plt.suptitle(title, fontsize=13, horizontalalignment="center", x=0.45, y=1.06, fontweight='medium')
-    plt.show()
+        ax.set_extent([-179, 179, min_lat, 90], crs=ccrs.PlateCarree()) # Set extent to zoom in on Arctic
+    
+    # Get figure
+    fig = plt.gcf()
+    
+    # Set title 
+    if (sum(ax_iter.shape) == 0) and (title is not None): 
+        ax.set_title(title, fontsize=13, horizontalalignment="center", x=0.45, y=1.06, fontweight='medium')
+    elif title is not None:
+        fig.suptitle(title, fontsize=13, horizontalalignment="center", x=0.45, y=1.06, fontweight='medium')
+    plt.close() # Close so it doesnt automatically display in notebook 
+    
+    return fig
 
 
 def interactiveArcticMaps(da, clabel=None, cmap="viridis", colorbar=True, vmin=None, vmax=None, title="", ylim=(60,90), frame_width=250, slider=True, cols=3): 

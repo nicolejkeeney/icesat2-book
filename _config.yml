@@ -21,7 +21,7 @@ html:
 
 execute:
   allow_errors              : false
-  timeout                   : 500
+  timeout                   : 1000
   exclude_patterns:
     - 'data_wrangling'
     - 'README.md'
