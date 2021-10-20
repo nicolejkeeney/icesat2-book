@@ -124,11 +124,11 @@ def staticArcticMaps(da, title=None, cmap="viridis", col=None, col_wrap=3, vmin=
     # All of this col and col_wrap maddness is to try and make this function as generalizable as possibl 
     # This allows the function to work for DataArrays with multiple coordinates, different coordinates besides time, etc! 
     if col is None: 
+        col = "time"
         try: # Assign time coordinate if it doesn't exist
-            da.time 
+            da["time"]
         except AttributeError: 
-            da = da.assign_coords({"time":"unknown"})
-            col = "time"
+            da = da.assign_coords({col:"unknown"})
     col = col if sum(da[col].shape) > 1 else None
     if col is not None: 
         if sum(da[col].shape)<=1: 
