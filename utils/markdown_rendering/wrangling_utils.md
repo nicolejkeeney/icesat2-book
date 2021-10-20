@@ -14,6 +14,9 @@ import pandas as pd
 import numpy as np 
 import numpy.ma as ma 
 from scipy.interpolate import griddata
+from scipy.spatial import KDTree
+from astropy.convolution import convolve
+from astropy.convolution import Gaussian2DKernel
 ```
 
 
@@ -84,72 +87,87 @@ def restrictRegionally(dataset, regionKeyList):
 
 
 ```
-def is2_interp2d(is2_ds, cdr_da, method="nearest", interp_var="all", suffix="_smoothed", pole_hole_lat=88.25): 
+def is2_interp2d(is2_ds, cdr_da, method="linear", interp_var=["ice_thickness","freeboard"], suffix="_smoothed", polehole_lat=88.25, x_stddev=0.5, distance_m=50000): 
     """ Perform 2D interpolation over geographic coordinates for all ICESat-2 sea ice variables with geographic coordinates in xr.Dataset
     As of 06/02/2021, xarray does not have a 2D interpolation function so this function is built on scipy.interpolate.griddata (https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html)
-    This function assumes that the dataset has physical coordinates (i.e. lat,lon) as coordinates but logical coordinates (i.e. (x,y)) as dimensions (http://xarray.pydata.org/en/stable/examples/multidimensional-coords.html)
     
     Args: 
         is2_ds (xr.Dataset): ICESat-2 dataset containing variables to interpolate
         cdr_da (xr.DataArray): NSIDC sea ice concentration. Must contain the same time variable as is2_ds
         method (str,optional): interpolation method (default to "linear", choose from {‘linear’, ‘nearest’, ‘cubic’})
-        interp_va (srt or list, optional): variables to interpolate (default to "all", variables with geographic coordinates)
+        interp_var (srt or list, optional): variables to interpolate (default to ["ice_thickness","freeboard"])
         suffix (str, optional): suffix to add to end of data variable name to indicate that the variable has been interpolated (default to "smoothed")
-        pole_hole_lat (float, optional): latitude defining pole hole (default to 88.25); set to 90 to keep pole hole 
-    
+        polehole_lat (float, optional): latitude defining pole hole (default to 88.25); set to 90 to keep pole hole 
+        x_stddev (float, optional): standard deviation to use for gauassian smoothing (default to 0.5)
+        distance_m (float, optional): distance in meters to use for KD tree (default to 50000 meters (50km))
+        
     Returns: 
         ds_interp_sorted (xr.Dataset): dataset with interpolated variables, in alphabetical order 
     
     """
- 
-    # Get 2d variables in dataset, ensure that user input was valid and raise errors if not
-    def get_2d_vars(is2_ds, interp_var): 
-        """ Get 2d variables in dataset for interpolation 
-        """
-        vars_2d = [var for var in is2_ds.data_vars if set(['latitude','longitude']).issubset(list(is2_ds[var].coords))]
-        if len(vars_2d) == 0: 
-            raise ValueError("The input dataset does not contain geographic coordinates that can be read. See function documentation for more information.")
-        if interp_var == "all": 
-            interp_var = vars_2d.copy()
-        elif (type(interp_var) == str) and (interp_var in vars_2d): 
-            interp_var = list(interp_var)
-        return interp_var                          
-    interp_var_2d = get_2d_vars(is2_ds, interp_var)
+    if type(interp_var) == str: 
+        interp_var = [interp_var]
 
     # Get geographic coordinates
+    xgrid = is2_ds['xgrid'].values
+    ygrid = is2_ds['ygrid'].values
     lats = is2_ds['latitude'].values
-    lons = is2_ds['longitude'].values
 
     # Loop through variables and timesteps and interpolate 
-    np_cdr = cdr_da.values
     ds_interp = is2_ds.copy()
-    for var in interp_var_2d: 
+    for var in interp_var: 
         var_interp_list = []
-        da_var = is2_ds[var]
-        for timestep in is2_ds.time.values: 
-            da = da_var.sel(time=timestep) 
-            np_cdr = cdr_da.sel(time=timestep).values
-            np_da = da.values
-            np_da = ma.masked_where((np.isnan(np_da)) & (np_cdr > 0.15) & (np_cdr < 1.01), np_da)
-            np_interp = griddata((lons[~np_da.mask], lats[~np_da.mask]), # Interpolate
-                                  np_da[~np_da.mask].flatten(),
-                                  (lons, lats), 
-                                  fill_value=np.nan,
-                                  method=method)
-            da_interp = xr.DataArray(data=np_interp, # convert numpy array --> xr.DataArray
-                                     dims=da.dims, 
-                                     coords=da.coords,
-                                     attrs={**da.attrs,'interpolation':'interpolated from original variable using ' + method + ' interpolation'},
-                                     name=da.name)
-            da_interp = da_interp.where(lats<=pole_hole_lat, np.nan) # Set pole hole to nan
+        try: 
+            da_var = is2_ds[var].copy()
+        except: 
+            print(var+" not found in data variables.\nskipping")
+            pass 
+        for timestep in is2_ds.time.values:
+            # Convert xr.DataArray --> numpy array 
+            is2_np = da_var.sel(time=timestep).values 
+            cdr_np = cdr_da.sel(time=timestep).values
+           
+            # Interpolate
+            is2_np[np.where(cdr_np<0.15)] = 0 # Set 15% conc or less to 0 thickness
+            np_interpolated = griddata((xgrid[(np.isfinite(is2_np))], 
+                                        ygrid[(np.isfinite(is2_np))]), 
+                                        is2_np[(np.isfinite(is2_np))].flatten(),
+                                        (xgrid, ygrid), 
+                                        fill_value=np.nan,
+                                        method=method)
+            
+            # Gaussian smoothing
+            kernel = Gaussian2DKernel(x_stddev=x_stddev)
+            np_interpolated_gauss = convolve(np_interpolated, kernel)
+
+            # KDTree: remove distances > 50km 
+            xS = xgrid[np.where((np.isfinite(is2_np)))]
+            yS = ygrid[np.where((np.isfinite(is2_np)))]
+            grid_points = np.c_[xgrid.ravel(), ygrid.ravel()]
+            tree = KDTree(np.c_[xS, yS])
+            dist, _ = tree.query(grid_points, k=1)
+            dist = dist.reshape(xgrid.shape)
+            is2_kdtree = np_interpolated_gauss.copy()
+            is2_kdtree[np.where((dist>distance_m)&(lats<polehole_lat))] = np.nan # Set any values > distance_m from the next grid cell to 0. Ignore pole hole
+            
+            # Remove where cdr data meets certain conditions 
+            is2_kdtree[~(np.isfinite(cdr_np))] = np.nan # Remove thickness data where cdr data is nan 
+            is2_kdtree[np.where(cdr_np<0.5)] = np.nan # Remove thickness data where cdr data < 50% concentration
+
+            # Convert numpy array --> xr.DataArray
+            da_interp = xr.DataArray(data=is2_kdtree, 
+                                     dims=da_var.sel(time=timestep).dims, 
+                                     coords=da_var.sel(time=timestep).coords,
+                                     attrs={**da_var.sel(time=timestep).attrs, 'interpolation_description': 'data has been smoothed using the following method: '+method+' interpolation, gaussian smoothing using a standard deviation of '+str(x_stddev)+', and using a KDTree to remove cells > '+str(distance_m)+' meters from nearest cell with data'},
+                                     name=da_var.name)
             da_interp = da_interp.expand_dims("time") # Add time as a dimension. Allows for merging DataArrays 
             var_interp_list.append(da_interp)
-
+        
         var_interp = xr.merge(var_interp_list) # Merge all timesteps together 
         ds_interp[var+suffix] = var_interp[var] # Add interpolated variables as data variable original dataset. If suffix = "", the interpolated variable will replace the original variable 
-        
+
     ds_interp_sorted = ds_interp[sorted(ds_interp.data_vars)] # Sort data variables by alphabetical order
-    return ds_interp_sorted 
+    return ds_interp_sorted  
 ```
 
 

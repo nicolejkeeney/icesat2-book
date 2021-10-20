@@ -20,8 +20,8 @@ dependencies:
   - holoviews=1.14.5
   - hvplot=0.7.3
   - astropy=4.3.1
-  - jupyterlab
-  - jupyter_contrib_nbextensions
+  - jupyterlab=3.1.12
+  - jupyter_contrib_nbextensions=0.5.1
   - pip
   - pip: 
     - jupyter-book==0.11.3 

@@ -11,11 +11,11 @@ parts:
   - file: sea_ice_characteristics 
   - file: sea_ice_drift
   - file: atmospheric_variables 
-- caption: DATA WRANGLING 
+- caption: DATA WRANGLING & INTERPOLATION
   chapters:
-  - file: interp_demo
   - file: data_wrangling
-- caption: Helper functions
+  - file: interp_demo
+- caption: HELPER FUNCTIONS
   chapters: 
   - file: utils/markdown_rendering/read_data_utils
   - file: utils/markdown_rendering/wrangling_utils
