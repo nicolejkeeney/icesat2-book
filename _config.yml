@@ -20,13 +20,11 @@ html:
 
 
 execute:
+  execute_notebooks         : force
   allow_errors              : false
   timeout                   : 1000
-  exclude_patterns:
-    - 'data_wrangling'
-    - 'README.md'
-    - 'LICENSE'
-    - 'delete/*'
+  only_build_toc_files      : true
+  exclude_patterns          : ['data_wrangling', 'README.md', 'LICENSE', 'delete/*']
 
 
 launch_buttons: 
