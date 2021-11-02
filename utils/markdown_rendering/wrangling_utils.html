@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Functions for data wrangling &#8212; ICESat-2 Sea Ice Thickness Data Analysis and Visualization</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../_static/logo.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Functions for plotting and mapping" href="plotting_utils.html" />
+    <link rel="prev" title="Functions for reading data" href="read_data_utils.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ICESat-2 Sea Ice Thickness Data Analysis and Visualization</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../home.html">
+   ICESat-2 Sea Ice Thickness Data Analysis and Visualization
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  INTRO
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../is2_intro.html">
+   Intro to the ATLAS/ICESat-2 Monthly Gridded Sea Ice Thickness Dataset
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  ANALYSIS &amp; VISUALIZATION
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sea_ice_thickness.html">
+   Sea ice thickness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pio_vs_is2.html">
+   Model vs. satellite sea ice thickness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sea_ice_characteristics.html">
+   Sea ice characteristics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sea_ice_drift.html">
+   Sea ice drift vectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../atmospheric_variables.html">
+   Atmospheric variables
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  DATA WRANGLING &amp; INTERPOLATION
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../data_wrangling.html">
+   Data wrangling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../interp_demo.html">
+   ICESat-2 interpolation workflow
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  HELPER FUNCTIONS
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="read_data_utils.html">
+   Functions for reading data
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Functions for data wrangling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="plotting_utils.html">
+   Functions for plotting and mapping
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/utils/markdown_rendering/wrangling_utils.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/nicolejkeeney/icesat2-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/nicolejkeeney/icesat2-book/issues/new?title=Issue%20on%20page%20%2Futils/markdown_rendering/wrangling_utils.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/nicolejkeeney/icesat2-book/edit/master/utils/markdown_rendering/wrangling_utils.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="functions-for-data-wrangling">
+<h1>Functions for data wrangling<a class="headerlink" href="#functions-for-data-wrangling" title="Permalink to this headline">¶</a></h1>
+<p>This is a markdown rendering of the <code class="docutils literal notranslate"><span class="pre">wrangling_utils</span></code> module used in the notebooks. It is provided here for user reference. The code can be viewed and downloaded from the github repository.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; wrangling_utils.py</span>
+
+<span class="sd">    Utility functions for simple data wrangling, including restricting data to certain regions and interpolating data</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span> 
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="k">as</span> <span class="nn">ma</span> 
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">griddata</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">KDTree</span>
+<span class="kn">from</span> <span class="nn">astropy.convolution</span> <span class="kn">import</span> <span class="n">convolve</span>
+<span class="kn">from</span> <span class="nn">astropy.convolution</span> <span class="kn">import</span> <span class="n">Gaussian2DKernel</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">restrictRegionally</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">regionKeyList</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot;Restrict dataset to input regions.</span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        dataset (xr Dataset): dataset generated by Load_IS2 notebook</span>
+<span class="sd">        regionKeyList (list): list of region keys to restrict data to </span>
+<span class="sd">        </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        regionalDataset (xr Dataset): dataset with restricted data to input regions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># If the user imputs a DataArray, convert to Dataset </span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">==</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span> 
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">to_dataset</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">checkKeys</span><span class="p">(</span><span class="n">regionKeyList</span><span class="p">,</span> <span class="n">regionTbl</span><span class="p">):</span> 
+        <span class="sd">&quot;&quot;&quot;Check that regionKeyList was defined correctly</span>
+
+<span class="sd">        Raises: </span>
+<span class="sd">            ValueError if regionKeyList was not defined correctly </span>
+<span class="sd">            warning if all data was removed from the dataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">regionKeyList</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span> <span class="c1">#raise a ValueError if regionKeyList is not a list </span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;regionKeyList needs to be a list. </span><span class="se">\n</span><span class="s1">For example, if you want to restrict data to the Beaufort Sea, define regionKeyList = [13]&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">regionKeyList</span><span class="p">:</span> 
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">regionTbl</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]):</span> 
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Region key &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; does not exist in region mask. </span><span class="se">\n</span><span class="s1"> Redefine regionKeyList with key numbers from table&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">regionKeyList</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;You removed all the data from the dataset. Are you sure you wanted to do this? </span><span class="se">\n</span><span class="s1"> If not, make sure the list regionKeyList is not empty and try again. </span><span class="se">\n</span><span class="s1"> If you intended to keep data from all regions, set regionKeyList = list(tbl[</span><span class="se">\&quot;</span><span class="s1">key</span><span class="se">\&quot;</span><span class="s1">])&#39;</span><span class="p">)</span>
+ 
+    <span class="c1">#create a table of keys and labels</span>
+    <span class="n">regionMask</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">region_mask</span><span class="o">.</span><span class="n">attrs</span>
+    <span class="n">regionTbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">regionMask</span><span class="p">[</span><span class="s1">&#39;keys&#39;</span><span class="p">],</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">regionMask</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]})</span>
+    
+    <span class="c1">#call function to check if regionKeyList was defined correctly</span>
+    <span class="n">checkKeys</span><span class="p">(</span><span class="n">regionKeyList</span><span class="p">,</span> <span class="n">regionTbl</span><span class="p">)</span>
+    
+    <span class="c1">#filter elements from the ice thickness DataArray where the region is the desired region</span>
+    <span class="n">keysToRemove</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">regionTbl</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">regionKeyList</span><span class="p">]</span>
+    <span class="n">regionalDataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data_vars</span><span class="p">:</span> 
+        <span class="n">regionalVar</span> <span class="o">=</span> <span class="n">regionalDataset</span><span class="p">[</span><span class="n">var</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keysToRemove</span><span class="p">:</span> 
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">regionalVar</span> <span class="o">=</span> <span class="n">regionalVar</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">regionalVar</span><span class="p">[</span><span class="s1">&#39;region_mask&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">key</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span> 
+                <span class="k">pass</span>
+        <span class="n">regionalDataset</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">regionalVar</span>
+    
+    <span class="c1">#add new attributes describing changes made to the dataset</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">regionTbl</span><span class="p">[</span><span class="n">regionTbl</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">regionKeyList</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">regionTbl</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]):</span> 
+        <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">regionKeyList</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">15</span><span class="p">]):</span> <span class="c1">#convert to sets so unordered lists are compared</span>
+            <span class="n">regionalDataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Inner Arctic&#39;</span>
+        <span class="k">else</span><span class="p">:</span>    
+            <span class="n">regionalDataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">labels</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Regions selected: &#39;</span> <span class="o">+</span> <span class="n">regionalDataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">regionalDataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;regions with data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;All&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Regions selected: All </span><span class="se">\n</span><span class="s1">No regions will be removed&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">regionalDataset</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is2_interp2d</span><span class="p">(</span><span class="n">is2_ds</span><span class="p">,</span> <span class="n">cdr_da</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="n">interp_var</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ice_thickness&quot;</span><span class="p">,</span><span class="s2">&quot;freeboard&quot;</span><span class="p">],</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;_smoothed&quot;</span><span class="p">,</span> <span class="n">polehole_lat</span><span class="o">=</span><span class="mf">88.25</span><span class="p">,</span> <span class="n">x_stddev</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">distance_m</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot; Perform 2D interpolation over geographic coordinates for all ICESat-2 sea ice variables with geographic coordinates in xr.Dataset</span>
+<span class="sd">    As of 06/02/2021, xarray does not have a 2D interpolation function so this function is built on scipy.interpolate.griddata (https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html)</span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        is2_ds (xr.Dataset): ICESat-2 dataset containing variables to interpolate</span>
+<span class="sd">        cdr_da (xr.DataArray): NSIDC sea ice concentration. Must contain the same time variable as is2_ds</span>
+<span class="sd">        method (str,optional): interpolation method (default to &quot;linear&quot;, choose from {‘linear’, ‘nearest’, ‘cubic’})</span>
+<span class="sd">        interp_var (srt or list, optional): variables to interpolate (default to [&quot;ice_thickness&quot;,&quot;freeboard&quot;])</span>
+<span class="sd">        suffix (str, optional): suffix to add to end of data variable name to indicate that the variable has been interpolated (default to &quot;smoothed&quot;)</span>
+<span class="sd">        polehole_lat (float, optional): latitude defining pole hole (default to 88.25); set to 90 to keep pole hole </span>
+<span class="sd">        x_stddev (float, optional): standard deviation to use for gauassian smoothing (default to 0.5)</span>
+<span class="sd">        distance_m (float, optional): distance in meters to use for KD tree (default to 50000 meters (50km))</span>
+<span class="sd">        </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        ds_interp_sorted (xr.Dataset): dataset with interpolated variables, in alphabetical order </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">interp_var</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span> 
+        <span class="n">interp_var</span> <span class="o">=</span> <span class="p">[</span><span class="n">interp_var</span><span class="p">]</span>
+
+    <span class="c1"># Get geographic coordinates</span>
+    <span class="n">xgrid</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="p">[</span><span class="s1">&#39;xgrid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">ygrid</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="p">[</span><span class="s1">&#39;ygrid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">lats</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="c1"># Loop through variables and timesteps and interpolate </span>
+    <span class="n">ds_interp</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">interp_var</span><span class="p">:</span> 
+        <span class="n">var_interp_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span> 
+            <span class="n">da_var</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span> 
+            <span class="nb">print</span><span class="p">(</span><span class="n">var</span><span class="o">+</span><span class="s2">&quot; not found in data variables.</span><span class="se">\n</span><span class="s2">skipping&quot;</span><span class="p">)</span>
+            <span class="k">pass</span> 
+        <span class="k">for</span> <span class="n">timestep</span> <span class="ow">in</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+            <span class="c1"># Convert xr.DataArray --&gt; numpy array </span>
+            <span class="n">is2_np</span> <span class="o">=</span> <span class="n">da_var</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">timestep</span><span class="p">)</span><span class="o">.</span><span class="n">values</span> 
+            <span class="n">cdr_np</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">timestep</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+           
+            <span class="c1"># Interpolate</span>
+            <span class="n">is2_np</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cdr_np</span><span class="o">&lt;</span><span class="mf">0.15</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Set 15% conc or less to 0 thickness</span>
+            <span class="n">np_interpolated</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">((</span><span class="n">xgrid</span><span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">is2_np</span><span class="p">))],</span> 
+                                        <span class="n">ygrid</span><span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">is2_np</span><span class="p">))]),</span> 
+                                        <span class="n">is2_np</span><span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">is2_np</span><span class="p">))]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+                                        <span class="p">(</span><span class="n">xgrid</span><span class="p">,</span> <span class="n">ygrid</span><span class="p">),</span> 
+                                        <span class="n">fill_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                                        <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+            
+            <span class="c1"># Gaussian smoothing</span>
+            <span class="n">kernel</span> <span class="o">=</span> <span class="n">Gaussian2DKernel</span><span class="p">(</span><span class="n">x_stddev</span><span class="o">=</span><span class="n">x_stddev</span><span class="p">)</span>
+            <span class="n">np_interpolated_gauss</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">np_interpolated</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+
+            <span class="c1"># KDTree: remove distances &gt; 50km </span>
+            <span class="n">xS</span> <span class="o">=</span> <span class="n">xgrid</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">is2_np</span><span class="p">)))]</span>
+            <span class="n">yS</span> <span class="o">=</span> <span class="n">ygrid</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">is2_np</span><span class="p">)))]</span>
+            <span class="n">grid_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xgrid</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">ygrid</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">KDTree</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xS</span><span class="p">,</span> <span class="n">yS</span><span class="p">])</span>
+            <span class="n">dist</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">grid_points</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xgrid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">is2_kdtree</span> <span class="o">=</span> <span class="n">np_interpolated_gauss</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">is2_kdtree</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">dist</span><span class="o">&gt;</span><span class="n">distance_m</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">lats</span><span class="o">&lt;</span><span class="n">polehole_lat</span><span class="p">))]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="c1"># Set any values &gt; distance_m from the next grid cell to 0. Ignore pole hole</span>
+            
+            <span class="c1"># Remove where cdr data meets certain conditions </span>
+            <span class="n">is2_kdtree</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">cdr_np</span><span class="p">))]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="c1"># Remove thickness data where cdr data is nan </span>
+            <span class="n">is2_kdtree</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cdr_np</span><span class="o">&lt;</span><span class="mf">0.5</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="c1"># Remove thickness data where cdr data &lt; 50% concentration</span>
+
+            <span class="c1"># Convert numpy array --&gt; xr.DataArray</span>
+            <span class="n">da_interp</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">is2_kdtree</span><span class="p">,</span> 
+                                     <span class="n">dims</span><span class="o">=</span><span class="n">da_var</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">timestep</span><span class="p">)</span><span class="o">.</span><span class="n">dims</span><span class="p">,</span> 
+                                     <span class="n">coords</span><span class="o">=</span><span class="n">da_var</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">timestep</span><span class="p">)</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span>
+                                     <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">da_var</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">timestep</span><span class="p">)</span><span class="o">.</span><span class="n">attrs</span><span class="p">,</span> <span class="s1">&#39;interpolation_description&#39;</span><span class="p">:</span> <span class="s1">&#39;data has been smoothed using the following method: &#39;</span><span class="o">+</span><span class="n">method</span><span class="o">+</span><span class="s1">&#39; interpolation, gaussian smoothing using a standard deviation of &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x_stddev</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;, and using a KDTree to remove cells &gt; &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">distance_m</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; meters from nearest cell with data&#39;</span><span class="p">},</span>
+                                     <span class="n">name</span><span class="o">=</span><span class="n">da_var</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">da_interp</span> <span class="o">=</span> <span class="n">da_interp</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span> <span class="c1"># Add time as a dimension. Allows for merging DataArrays </span>
+            <span class="n">var_interp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">da_interp</span><span class="p">)</span>
+        
+        <span class="n">var_interp</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">var_interp_list</span><span class="p">)</span> <span class="c1"># Merge all timesteps together </span>
+        <span class="n">ds_interp</span><span class="p">[</span><span class="n">var</span><span class="o">+</span><span class="n">suffix</span><span class="p">]</span> <span class="o">=</span> <span class="n">var_interp</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="c1"># Add interpolated variables as data variable original dataset. If suffix = &quot;&quot;, the interpolated variable will replace the original variable </span>
+
+    <span class="n">ds_interp_sorted</span> <span class="o">=</span> <span class="n">ds_interp</span><span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">ds_interp</span><span class="o">.</span><span class="n">data_vars</span><span class="p">)]</span> <span class="c1"># Sort data variables by alphabetical order</span>
+    <span class="k">return</span> <span class="n">ds_interp_sorted</span>  
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_empty_xr_ds</span><span class="p">(</span><span class="n">xr_ds</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Create an empty xarray dataset for the date range defined by start date --&gt; end date</span>
+<span class="sd">    </span>
+<span class="sd">        Args: </span>
+<span class="sd">            xr_ds (xr.Dataset, xr.DataArray): dataset to model dimensions off of </span>
+<span class="sd">            start_date (str): date for which to start time dimension (i.e &quot;2021-01&quot;)</span>
+<span class="sd">            end_date (str): date for which to end time dimension (default to &quot;2021-04-01&quot;)</span>
+<span class="sd">            freq (str, optional): freqency to do sampling (default to month start, &quot;MS&quot;)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns: </span>
+<span class="sd">            empty_xr_ds (xr.Dataset): empty dataset with time dimension set to the datetime range define by start date -&gt; end date </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">xr_ds</span><span class="p">)</span> <span class="o">==</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span> 
+        <span class="n">xr_ds</span> <span class="o">=</span> <span class="n">xr_ds</span><span class="o">.</span><span class="n">to_dataset</span><span class="p">()</span>
+
+    <span class="n">months</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">)</span> <span class="c1"># date range with month start frequency </span>
+    <span class="n">xr_ds_nan</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">data_vars</span><span class="o">=</span><span class="n">xr_ds</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">xr_ds</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span><span class="o">.</span><span class="n">data_vars</span><span class="p">)</span> <span class="c1"># xr_ds, but with all variables set to nan </span>
+    <span class="n">xr_ds_nan_one_timestep</span> <span class="o">=</span> <span class="n">xr_ds_nan</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Just grab one timestep</span>
+    <span class="n">empty_xr_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">xr_ds_nan_one_timestep</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">months</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span> <span class="c1"># Make a xr.Dataset with desired number of empty months</span>
+    <span class="n">empty_xr_ds</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">months</span> <span class="c1"># Reassign time dimension to desired date range </span>
+    <span class="k">return</span> <span class="n">empty_xr_ds</span>
+</pre></div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./utils/markdown_rendering"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="read_data_utils.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Functions for reading data</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="plotting_utils.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Functions for plotting and mapping</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Nicole Keeney<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-177768395-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </body>
+</html>

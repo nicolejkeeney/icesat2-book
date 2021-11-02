@@ -1,0 +1,691 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Functions for plotting and mapping &#8212; ICESat-2 Sea Ice Thickness Data Analysis and Visualization</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../_static/logo.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Functions for data wrangling" href="wrangling_utils.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ICESat-2 Sea Ice Thickness Data Analysis and Visualization</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../home.html">
+   ICESat-2 Sea Ice Thickness Data Analysis and Visualization
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  INTRO
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../is2_intro.html">
+   Intro to the ATLAS/ICESat-2 Monthly Gridded Sea Ice Thickness Dataset
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  ANALYSIS &amp; VISUALIZATION
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sea_ice_thickness.html">
+   Sea ice thickness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pio_vs_is2.html">
+   Model vs. satellite sea ice thickness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sea_ice_characteristics.html">
+   Sea ice characteristics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sea_ice_drift.html">
+   Sea ice drift vectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../atmospheric_variables.html">
+   Atmospheric variables
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  DATA WRANGLING &amp; INTERPOLATION
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../data_wrangling.html">
+   Data wrangling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../interp_demo.html">
+   ICESat-2 interpolation workflow
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  HELPER FUNCTIONS
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="read_data_utils.html">
+   Functions for reading data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="wrangling_utils.html">
+   Functions for data wrangling
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Functions for plotting and mapping
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/utils/markdown_rendering/plotting_utils.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/nicolejkeeney/icesat2-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/nicolejkeeney/icesat2-book/issues/new?title=Issue%20on%20page%20%2Futils/markdown_rendering/plotting_utils.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/nicolejkeeney/icesat2-book/edit/master/utils/markdown_rendering/plotting_utils.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="functions-for-plotting-and-mapping">
+<h1>Functions for plotting and mapping<a class="headerlink" href="#functions-for-plotting-and-mapping" title="Permalink to this headline">¶</a></h1>
+<p>This is a markdown rendering of the <code class="docutils literal notranslate"><span class="pre">plotting_utils</span></code> module used in the notebooks. It is provided here for user reference. The code can be viewed and downloaded from the github repository.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; plotting_utils.py </span>
+
+<span class="sd">Helper functions for generating maps and plots </span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
+<span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">wrap</span>
+<span class="kn">import</span> <span class="nn">hvplot.xarray</span>
+<span class="kn">import</span> <span class="nn">holoviews</span> <span class="k">as</span> <span class="nn">hv</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
+<span class="kn">from</span> <span class="nn">cartopy.mpl.geoaxes</span> <span class="kn">import</span> <span class="n">GeoAxes</span>
+<span class="n">GeoAxes</span><span class="o">.</span><span class="n">_pcolormesh_patched</span> <span class="o">=</span> <span class="n">Axes</span><span class="o">.</span><span class="n">pcolormesh</span> <span class="c1"># Helps avoid some weird issues with the polar projection </span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_winter_data</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">year_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start_month</span><span class="o">=</span><span class="s2">&quot;Sep&quot;</span><span class="p">,</span> <span class="n">end_month</span><span class="o">=</span><span class="s2">&quot;Apr&quot;</span><span class="p">,</span> <span class="n">force_complete_season</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Select data for winter seasons corresponding to the input time range </span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        da (xr.Dataset or xr.DataArray): data to restrict by time; must contain &quot;time&quot; as a coordinate </span>
+<span class="sd">        year_start (str, optional): year to start time range; if you want Sep 2019 - Apr 2020, set year=&quot;2019&quot; (default to the first year in the dataset)</span>
+<span class="sd">        start_month (str, optional): first month in winter (default to September)</span>
+<span class="sd">        end_month (str, optional): second month in winter; this is the following calender year after start_month (default to April)</span>
+<span class="sd">        force_complete_season (bool, optional): require that winter season returns data if and only if all months have data? i.e. if Sep and Oct have no data, return nothing even if Nov-Apr have data? (default to False) </span>
+<span class="sd">        </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        da_winter (xr.Dataset or xr.DataArray): da restricted to winter seasons </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">year_start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No start year specified. Getting winter data for first year in the dataset&quot;</span><span class="p">)</span>
+        <span class="n">year_start</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+    
+    <span class="n">start_timestep</span> <span class="o">=</span> <span class="n">start_month</span><span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">year_start</span><span class="p">)</span> <span class="c1"># mon year </span>
+    <span class="n">end_timestep</span> <span class="o">=</span> <span class="n">end_month</span><span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">year_start</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># mon year</span>
+    <span class="n">winter</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start_timestep</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end_timestep</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;MS&quot;</span><span class="p">)</span> <span class="c1"># pandas date range defining winter season</span>
+    <span class="n">months_in_da</span> <span class="o">=</span> <span class="p">[</span><span class="n">mon</span> <span class="k">for</span> <span class="n">mon</span> <span class="ow">in</span> <span class="n">winter</span> <span class="k">if</span> <span class="n">mon</span> <span class="ow">in</span> <span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">]</span> <span class="c1"># Just grab months if they correspond to a time coordinate in da</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">months_in_da</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> 
+        <span class="k">if</span> <span class="p">(</span><span class="n">force_complete_season</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">all</span><span class="p">([</span><span class="n">mon</span> <span class="ow">in</span> <span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span> <span class="k">for</span> <span class="n">mon</span> <span class="ow">in</span> <span class="n">winter</span><span class="p">])</span><span class="o">==</span><span class="kc">False</span><span class="p">):</span> 
+            <span class="n">da_winter</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="n">da_winter</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">months_in_da</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: No winter season found for &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">year_start</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">year_start</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;. Returning None.&quot;</span><span class="p">)</span>
+        <span class="n">da_winter</span> <span class="o">=</span> <span class="kc">None</span>
+        
+    <span class="k">return</span> <span class="n">da_winter</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_gridcell_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">years</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start_month</span><span class="o">=</span><span class="s2">&quot;Sep&quot;</span><span class="p">,</span> <span class="n">end_month</span><span class="o">=</span><span class="s2">&quot;Apr&quot;</span><span class="p">,</span> <span class="n">force_complete_season</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot; Compute winter means over the time dimension. Useful for plotting as the grid is maintained. </span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        da (xr.Dataset or xr.DataArray): data to restrict by time; must contain &quot;time&quot; as a coordinate </span>
+<span class="sd">        years (list of str): years over which to compute mean (default to unique years in the dataset)</span>
+<span class="sd">        year_start (str, optional): year to start time range; if you want Sep 2019 - Apr 2020, set year=&quot;2019&quot; (default to the first year in the dataset)</span>
+<span class="sd">        start_month (str, optional): first month in winter (default to September)</span>
+<span class="sd">        end_month (str, optional): second month in winter; this is the following calender year after start_month (default to April)</span>
+<span class="sd">        force_complete_season (bool, optional): require that winter season returns data if and only if all months have data? i.e. if Sep and Oct have no data, return nothing even if Nov-Apr have data? (default to False) </span>
+<span class="sd">    </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        merged (xr.DataArray): DataArray with winter means as a time coordinate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">years</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+        <span class="n">years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y&quot;</span><span class="p">))</span> <span class="c1"># Unique years in the dataset </span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No years specified. Using &quot;</span><span class="o">+</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">years</span><span class="p">))</span>
+
+    <span class="n">winter_means</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">years</span><span class="p">:</span> <span class="c1"># Loop through each year and grab the winter months, compute winter mean, and append to list </span>
+        <span class="n">da_winter_i</span> <span class="o">=</span> <span class="n">get_winter_data</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">year_start</span><span class="o">=</span><span class="n">year</span><span class="p">,</span> <span class="n">start_month</span><span class="o">=</span><span class="n">start_month</span><span class="p">,</span> <span class="n">end_month</span><span class="o">=</span><span class="n">end_month</span><span class="p">,</span> <span class="n">force_complete_season</span><span class="o">=</span><span class="n">force_complete_season</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">da_winter_i</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+            <span class="k">continue</span>
+        <span class="n">da_mean_i</span> <span class="o">=</span> <span class="n">da_winter_i</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">keep_attrs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Comput mean over time dimension</span>
+
+        <span class="c1"># Assign time coordinate </span>
+        <span class="n">time_arr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da_winter_i</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">da_mean_i</span> <span class="o">=</span> <span class="n">da_mean_i</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">({</span><span class="s2">&quot;time&quot;</span><span class="p">:</span><span class="n">time_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b %Y&quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; - &quot;</span><span class="o">+</span><span class="n">time_arr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b %Y&quot;</span><span class="p">)})</span>
+        <span class="n">da_mean_i</span> <span class="o">=</span> <span class="n">da_mean_i</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+
+        <span class="n">winter_means</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">da_mean_i</span><span class="p">)</span>
+
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">winter_means</span><span class="p">)</span> <span class="c1"># Combine each winter mean Dataset into a single Dataset, with the time period maintained as a coordinate</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">merged</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">merged</span><span class="o">.</span><span class="n">data_vars</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="c1"># Convert to DataArray</span>
+    <span class="n">merged</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Time period over which mean was computed&quot;</span> <span class="c1"># Add descriptive attribute </span>
+    <span class="k">return</span> <span class="n">merged</span> 
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">staticArcticMaps</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot; Show data on a basemap of the Arctic. Can be one month or multiple months of data. </span>
+<span class="sd">    Creates an xarray facet grid. For more info, see: http://xarray.pydata.org/en/stable/user-guide/plotting.html</span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        da (xr DataArray): data to plot</span>
+<span class="sd">        cmap (str, optional): colormap to use (default to viridis)</span>
+<span class="sd">        col_wrap (int, optional): number of columns of plots to display (default to 3, or None if time dimension has only one value)</span>
+<span class="sd">        vmin (float, optional): minimum on colorbar (default to 1st percentile)</span>
+<span class="sd">        vmax (float, optional): maximum on colorbar (default to 99th percentile)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Figure displayed in notebook </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="c1"># Compute min and max for plotting</span>
+    <span class="k">def</span> <span class="nf">compute_vmin_vmax</span><span class="p">(</span><span class="n">da</span><span class="p">):</span> 
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span>
+    <span class="n">vmin_data</span><span class="p">,</span> <span class="n">vmax_data</span> <span class="o">=</span> <span class="n">compute_vmin_vmax</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+    <span class="n">vmin</span> <span class="o">=</span> <span class="n">vmin</span> <span class="k">if</span> <span class="n">vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">vmin_data</span> <span class="c1"># Set to smallest value of the two </span>
+    <span class="n">vmax</span> <span class="o">=</span> <span class="n">vmax</span> <span class="k">if</span> <span class="n">vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">vmax_data</span> <span class="c1"># Set to largest value of the two </span>
+    
+    <span class="c1"># Assign time coordinate if it doesn&#39;t exist</span>
+    <span class="k">try</span><span class="p">:</span> 
+        <span class="n">da</span><span class="o">.</span><span class="n">time</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span> 
+        <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">({</span><span class="s2">&quot;time&quot;</span><span class="p">:</span><span class="s2">&quot;unknown&quot;</span><span class="p">})</span>
+    
+    <span class="n">col_wrap</span> <span class="o">=</span> <span class="n">col_wrap</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">1</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="s2">&quot;time&quot;</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">1</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="n">col_wrap</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+                 <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;pad&#39;</span><span class="p">:</span><span class="mf">0.02</span><span class="p">,</span><span class="s1">&#39;shrink&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span><span class="s1">&#39;extend&#39;</span><span class="p">:</span><span class="s1">&#39;both&#39;</span><span class="p">},</span>
+                 <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> 
+                 <span class="n">subplot_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;projection&#39;</span><span class="p">:</span><span class="n">ccrs</span><span class="o">.</span><span class="n">NorthPolarStereo</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=-</span><span class="mi">45</span><span class="p">)})</span>
+    
+    <span class="c1"># Iterate through axes and add features </span>
+    <span class="n">ax_iter</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">axes</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ax_iter</span><span class="p">)</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span> <span class="c1"># If the data is just a single month, ax.iter returns an axis object. We need to iterate through a list or array</span>
+        <span class="n">ax_iter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ax_iter</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">ax_iter</span><span class="o">.</span><span class="n">flatten</span><span class="p">():</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="c1"># Coastlines</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">LAND</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;0.95&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>    <span class="c1"># Land</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">LAKES</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># Lakes</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span> <span class="c1"># Gridlines</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="o">-</span><span class="mi">179</span><span class="p">,</span> <span class="mi">179</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span> <span class="c1"># Set extent to zoom in on Arctic</span>
+       
+    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.45</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.06</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;medium&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">interactiveArcticMaps</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">90</span><span class="p">),</span> <span class="n">frame_width</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">slider</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot; Generative one or more interactive maps </span>
+<span class="sd">    Using the argument &quot;slide&quot;, the user can set whether each map should be displayed together, or displayed in the form of a slider </span>
+<span class="sd">    To show each map together (no slider), set slider=False</span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        da (xr.Dataset or xr.DataArray): data to restrict by time; must contain &quot;time&quot; as a coordinate </span>
+<span class="sd">        clabel (str, optional): colorbar label (default to &quot;long_name&quot; and &quot;units&quot; if given in attributes of da)</span>
+<span class="sd">        cmap (str, optional): matplotlib colormap to use (default to &quot;viridis&quot;)</span>
+<span class="sd">        colorbar (bool, optional): show colorbar? (default to True)</span>
+<span class="sd">        vmin (float, optional): minimum on colorbar (default to 1st percentile)</span>
+<span class="sd">        vmax (float, optional): maximum on colorbar (default to 99th percentile)</span>
+<span class="sd">        title (str, optional): main title to give plot (default to no title)</span>
+<span class="sd">        ylim (tuple, optional): limits of yaxis in the form min latitude, max latitude (default to (60,90))</span>
+<span class="sd">        frame_width (int, optional): width of frame. sets figure size of each map (default to 250)</span>
+<span class="sd">        slider (bool, optional): if da has more than one time coordinate, display maps with a slider? (default to True)</span>
+<span class="sd">        cols (int, optional): how many columns to show before wrapping, if da has more than one time coordinate (default to 3)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        pl (Holoviews map)</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Compute min and max for plotting</span>
+    <span class="k">def</span> <span class="nf">compute_vmin_vmax</span><span class="p">(</span><span class="n">da</span><span class="p">):</span> 
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span>
+    <span class="n">vmin_data</span><span class="p">,</span> <span class="n">vmax_data</span> <span class="o">=</span> <span class="n">compute_vmin_vmax</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+    <span class="n">vmin</span> <span class="o">=</span> <span class="n">vmin</span> <span class="k">if</span> <span class="n">vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">vmin_data</span> <span class="c1"># Set to smallest value of the two </span>
+    <span class="n">vmax</span> <span class="o">=</span> <span class="n">vmax</span> <span class="k">if</span> <span class="n">vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">vmax_data</span> <span class="c1"># Set to largest value of the two </span>
+    
+    <span class="c1">#https://hvplot.holoviz.org/user_guide/Subplots.html</span>
+    <span class="n">subplots</span><span class="o">=</span><span class="kc">False</span>
+    <span class="n">shared_axes</span><span class="o">=</span><span class="kc">False</span>
+    <span class="n">show_title</span><span class="o">=</span><span class="kc">True</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;time&quot;</span> <span class="ow">in</span> <span class="n">da</span><span class="o">.</span><span class="n">coords</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">da</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span> 
+            <span class="n">subplots</span><span class="o">=</span><span class="kc">True</span>
+            <span class="n">shared_axes</span><span class="o">=</span><span class="kc">True</span>
+            <span class="k">if</span> <span class="n">slider</span><span class="o">==</span><span class="kc">True</span> <span class="ow">and</span> <span class="n">title</span><span class="o">==</span><span class="s2">&quot;&quot;</span><span class="p">:</span> 
+                <span class="n">show_title</span><span class="o">=</span><span class="kc">False</span> <span class="c1"># We don&#39;t want to remove the title for the slider plots since it removes the time from the title </span>
+        
+    <span class="k">if</span> <span class="n">clabel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;long_name&quot;</span> <span class="ow">in</span> <span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">):</span> <span class="c1"># Add a logical colorbar label </span>
+        <span class="n">clabel</span><span class="o">=</span><span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;long_name&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;units&quot;</span> <span class="ow">in</span> <span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span> 
+            <span class="n">clabel</span><span class="o">+=</span><span class="s2">&quot; (&quot;</span><span class="o">+</span><span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;)&quot;</span>
+        
+    <span class="n">pl</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">hvplot</span><span class="o">.</span><span class="n">quadmesh</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span>
+                            <span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">NorthPolarStereo</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=-</span><span class="mi">45</span><span class="p">),</span> 
+                            <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;coastline&quot;</span><span class="p">],</span> <span class="c1"># Add coastlines </span>
+                            <span class="n">colorbar</span><span class="o">=</span><span class="n">colorbar</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span><span class="n">vmax</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="n">clabel</span><span class="p">,</span> <span class="c1"># Colorbar settings </span>
+                            <span class="n">project</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">,</span> <span class="n">frame_width</span><span class="o">=</span><span class="n">frame_width</span><span class="p">,</span>
+                            <span class="n">subplots</span><span class="o">=</span><span class="n">subplots</span><span class="p">,</span> <span class="n">shared_axes</span><span class="o">=</span><span class="n">shared_axes</span><span class="p">,</span>
+                            <span class="n">dynamic</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="n">slider</span><span class="o">==</span><span class="kc">False</span><span class="p">:</span> <span class="c1"># Set number of columns </span>
+        <span class="n">pl</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">layout</span><span class="p">()</span><span class="o">.</span><span class="n">cols</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">show_title</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span> 
+        <span class="n">pl</span><span class="o">.</span><span class="n">opts</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span> <span class="c1"># Add title</span>
+    <span class="k">return</span> <span class="n">pl</span> 
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">interactive_winter_mean_maps</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">years</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end_year</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start_month</span><span class="o">=</span><span class="s2">&quot;Sep&quot;</span><span class="p">,</span> <span class="n">end_month</span><span class="o">=</span><span class="s2">&quot;Apr&quot;</span><span class="p">,</span> <span class="n">force_complete_season</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">90</span><span class="p">),</span> <span class="n">frame_width</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">slider</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot; Generate interactive maps of winter mean data </span>
+<span class="sd">    Note: this function builds off the functions get_winter_data and interactiveArcticMaps.</span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        da (xr.Dataset or xr.DataArray): data to restrict by time; must contain &quot;time&quot; as a coordinate </span>
+<span class="sd">        years (list of str): years over which to compute mean (default to unique years in the dataset)</span>
+<span class="sd">        start_month (str, optional): first month in winter (default to September)</span>
+<span class="sd">        end_month (str, optional): second month in winter; this is the following calender year after start_month (default to April)</span>
+<span class="sd">        force_complete_season (bool, optional): require that winter season returns data if and only if all months have data? i.e. if Sep and Oct have no data, return nothing even if Nov-Apr have data? (default to False) </span>
+<span class="sd">        clabel (str, optional): colorbar label (default to &quot;long_name&quot; and &quot;units&quot; if given in attributes of da)</span>
+<span class="sd">        cmap (str, optional): matplotlib colormap to use (default to &quot;viridis&quot;)</span>
+<span class="sd">        colorbar (bool, optional): show colorbar? (default to True)</span>
+<span class="sd">        vmin (float, optional): minimum on colorbar (default to 0)</span>
+<span class="sd">        vmax (float, optional): maximum on colorbar (default to 4)</span>
+<span class="sd">        title (str, optional): main title to give plot (default to no title)</span>
+<span class="sd">        ylim (tuple, optional): limits of yaxis in the form min latitude, max latitude (default to (60,90))</span>
+<span class="sd">        frame_width (int, optional): width of frame. sets figure size of each map (default to 250)</span>
+<span class="sd">        slider (bool, optional): if da has more than one time coordinate, display maps with a slider? (default to True)</span>
+<span class="sd">        cols (int, optional): how many columns to show before wrapping, if da has more than one time coordinate (default to 3)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        pl_means (Holoviews map)</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">winter_means_da</span> <span class="o">=</span> <span class="n">compute_gridcell_winter_means</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">years</span><span class="o">=</span><span class="n">years</span><span class="p">,</span> <span class="n">start_month</span><span class="o">=</span><span class="n">start_month</span><span class="p">,</span> <span class="n">end_month</span><span class="o">=</span><span class="n">end_month</span><span class="p">,</span> <span class="n">force_complete_season</span><span class="o">=</span><span class="n">force_complete_season</span><span class="p">)</span>
+
+    <span class="n">pl_means</span> <span class="o">=</span> <span class="n">interactiveArcticMaps</span><span class="p">(</span><span class="n">winter_means_da</span><span class="p">,</span> 
+                                    <span class="n">clabel</span><span class="o">=</span><span class="n">clabel</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="n">colorbar</span><span class="p">,</span> 
+                                    <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> 
+                                    <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">,</span> <span class="n">frame_width</span><span class="o">=</span><span class="n">frame_width</span><span class="p">,</span> <span class="n">slider</span><span class="o">=</span><span class="n">slider</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">pl_means</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">static_winter_comparison_lineplot</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">years</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Winter comparison&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">start_month</span><span class="o">=</span><span class="s2">&quot;Sep&quot;</span><span class="p">,</span> <span class="n">end_month</span><span class="o">=</span><span class="s2">&quot;Apr&quot;</span><span class="p">,</span> <span class="n">force_complete_season</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot; Make a lineplot with markers comparing monthly mean data across winter seasons </span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        da (xr.DataArray): data to plot and compute mean for; must contain &quot;time&quot; as a coordinate </span>
+<span class="sd">        years (list of str): list of years for which to plot data. 2020 would correspond to the winter season defined by start month 2020 - end month 2021 (default to all unique years in da)</span>
+<span class="sd">        title (str, optional): title to give plot (default to &quot;Winter comparison&quot;) </span>
+<span class="sd">        figsize (tuple, optional): figure size to display in notebook (default to (5,3))</span>
+<span class="sd">        start_month (str, optional): first month in winter (default to September)</span>
+<span class="sd">        end_month (str, optional): second month in winter; this is the following calender year after start_month (default to April)</span>
+<span class="sd">        force_complete_season (bool, optional): require that winter season returns data if and only if all months have data? i.e. if Sep and Oct have no data, return nothing even if Nov-Apr have data? (default to False) </span>
+<span class="sd">        </span>
+<span class="sd">       Returns: </span>
+<span class="sd">           Figure displayed in notebook</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">years</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+        <span class="n">years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y&quot;</span><span class="p">))</span> <span class="c1"># Unique years in the dataset </span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No years specified. Using &quot;</span><span class="o">+</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">years</span><span class="p">))</span>
+    
+    <span class="c1"># Set up plot </span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="s2">&quot;Sep&quot;</span><span class="p">,</span><span class="s2">&quot;Oct&quot;</span><span class="p">,</span><span class="s2">&quot;Nov&quot;</span><span class="p">,</span><span class="s2">&quot;Dec&quot;</span><span class="p">,</span><span class="s2">&quot;Jan&quot;</span><span class="p">,</span><span class="s2">&quot;Feb&quot;</span><span class="p">,</span><span class="s2">&quot;Mar&quot;</span><span class="p">,</span><span class="s2">&quot;Apr&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="c1"># Set x axis using winter months </span>
+    <span class="n">gridlines</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span> <span class="c1"># Add gridlines </span>
+
+    <span class="n">fmt</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mo-.&#39;</span><span class="p">,</span><span class="s1">&#39;cs-&#39;</span><span class="p">,</span><span class="s1">&#39;yv--&#39;</span><span class="p">,</span><span class="s1">&#39;b*-.&#39;</span><span class="p">,</span><span class="s1">&#39;r.-&#39;</span><span class="p">,</span><span class="s1">&#39;gD--&#39;</span><span class="p">,</span><span class="s1">&#39;k2-.&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">year</span><span class="p">,</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">fmt</span><span class="o">*</span><span class="mi">100</span><span class="p">):</span> 
+        <span class="n">winter_da</span> <span class="o">=</span> <span class="n">get_winter_data</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">year_start</span><span class="o">=</span><span class="n">year</span><span class="p">,</span> <span class="n">start_month</span><span class="o">=</span><span class="n">start_month</span><span class="p">,</span> <span class="n">end_month</span><span class="o">=</span><span class="n">end_month</span><span class="p">,</span> <span class="n">force_complete_season</span><span class="o">=</span><span class="n">force_complete_season</span><span class="p">)</span> <span class="c1"># Get data from that winter </span>
+        <span class="k">if</span> <span class="n">winter_da</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># In case the user inputs a year that doesn&#39;t have data, skip this loop iteration to avoid appending None</span>
+            <span class="k">continue</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">winter_da</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="n">keep_attrs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b&quot;</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">year</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s2">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">year</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])[</span><span class="mi">2</span><span class="p">:])</span>
+
+    <span class="c1"># Add legend, title, and axis labels, and display plot in notebook </span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;long_name&quot;</span> <span class="ow">in</span> <span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span> 
+        <span class="n">ylabel</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;long_name&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;units&quot;</span> <span class="ow">in</span> <span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span> 
+            <span class="n">ylabel</span><span class="o">+=</span><span class="s2">&quot; (&quot;</span><span class="o">+</span><span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;)&quot;</span>
+        <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">ylabel</span><span class="p">,</span> <span class="mi">35</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">interactive_winter_comparison_lineplot</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">years</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Winter comparison&quot;</span><span class="p">,</span> <span class="n">frame_width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">frame_height</span><span class="o">=</span><span class="mi">350</span><span class="p">,</span> <span class="n">start_month</span><span class="o">=</span><span class="s2">&quot;Sep&quot;</span><span class="p">,</span> <span class="n">end_month</span><span class="o">=</span><span class="s2">&quot;Apr&quot;</span><span class="p">,</span> <span class="n">force_complete_season</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Make a bokeh lineplot with markers comparing monthly mean data across winter seasons </span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        da (xr.DataArray): data to plot and compute mean for; must contain &quot;time&quot; as a coordinate </span>
+<span class="sd">        years (list of str): list of years for which to plot data. 2020 would correspond to the winter season defined by start month 2020 - end month 2021 (default to all unique years in da)</span>
+<span class="sd">        title (str, optional): title to give plot (default to &quot;Winter comparison&quot;) </span>
+<span class="sd">        frame_width (int, optional): width of figure (default to 600) </span>
+<span class="sd">        frame_height (int, optional): height of figure (default to 350) </span>
+<span class="sd">        start_month (str, optional): first month in winter (default to September)</span>
+<span class="sd">        end_month (str, optional): second month in winter; this is the following calender year after start_month (default to April)</span>
+<span class="sd">        force_complete_season (bool, optional): require that winter season returns data if and only if all months have data? i.e. if Sep and Oct have no data, return nothing even if Nov-Apr have data? (default to False) </span>
+<span class="sd">        </span>
+<span class="sd">       Returns: </span>
+<span class="sd">           pl (bokeh lineplot) </span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">years</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+        <span class="n">years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y&quot;</span><span class="p">))</span> <span class="c1"># Unique years in the dataset </span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No years specified. Using &quot;</span><span class="o">+</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">years</span><span class="p">))</span>
+    
+    <span class="n">winter_means_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">years</span><span class="p">:</span>
+        <span class="n">winter_da</span> <span class="o">=</span> <span class="n">get_winter_data</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">year_start</span><span class="o">=</span><span class="n">year</span><span class="p">,</span> <span class="n">start_month</span><span class="o">=</span><span class="n">start_month</span><span class="p">,</span> <span class="n">end_month</span><span class="o">=</span><span class="n">end_month</span><span class="p">,</span> <span class="n">force_complete_season</span><span class="o">=</span><span class="n">force_complete_season</span><span class="p">)</span> <span class="c1"># Get data from that winter </span>
+        <span class="k">if</span> <span class="n">winter_da</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># In case the user inputs a year that doesn&#39;t have data, skip this loop iteration to avoid appending None</span>
+            <span class="k">continue</span>
+        <span class="n">winter_means_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">winter_da</span><span class="p">)</span>
+            
+    <span class="c1"># Sort by longest --&gt; shortest. This avoids weird issues with x axis trying to be in time order </span>
+    <span class="n">winter_means_list_sorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">winter_means_list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="n">l</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Combine plots and display</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">da_sorted</span> <span class="ow">in</span> <span class="n">winter_means_list_sorted</span><span class="p">:</span> 
+        <span class="n">winter_mean</span> <span class="o">=</span> <span class="n">da_sorted</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">],</span> <span class="n">keep_attrs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Compute mean </span>
+        <span class="n">winter_mean</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da_sorted</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b&quot;</span><span class="p">)</span> <span class="c1"># Reassign the time coordinate to be just the months (Nov, Dec, ect). This allows you to easily overlay the plots on top of each other, since they share an axis</span>
+        <span class="n">time_str</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da_sorted</span><span class="o">.</span><span class="n">time</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y&quot;</span><span class="p">)</span> <span class="c1"># Get time coordinate as string value</span>
+
+        <span class="n">pl</span> <span class="o">=</span> <span class="n">winter_mean</span><span class="o">.</span><span class="n">hvplot</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Winter &quot;</span><span class="o">+</span><span class="n">time_str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;-&quot;</span><span class="o">+</span><span class="n">time_str</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">frame_width</span><span class="o">=</span><span class="n">frame_width</span><span class="p">,</span> <span class="n">frame_height</span><span class="o">=</span><span class="n">frame_height</span><span class="p">)</span> <span class="o">*</span> <span class="n">winter_mean</span><span class="o">.</span><span class="n">hvplot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span> <span class="c1"># Overlay scatter plot to add markers</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">pl_tot</span> <span class="o">=</span> <span class="n">pl</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="n">pl_tot</span> <span class="o">*=</span> <span class="n">pl</span> 
+        <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+        
+    <span class="n">winters_all</span> <span class="o">=</span> <span class="n">pl_tot</span><span class="o">.</span><span class="n">opts</span><span class="p">(</span><span class="n">hv</span><span class="o">.</span><span class="n">opts</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">shared_axes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">merge_tools</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="c1"># Combine lineplots into a single figure </span>
+    <span class="n">winters_all</span><span class="o">.</span><span class="n">opts</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span> <span class="c1"># Add a title </span>
+    <span class="k">return</span> <span class="n">winters_all</span>
+</pre></div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./utils/markdown_rendering"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="wrangling_utils.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Functions for data wrangling</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Nicole Keeney<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-177768395-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </body>
+</html>

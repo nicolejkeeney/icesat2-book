@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -140,13 +140,18 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  DATA WRANGLING
+  DATA WRANGLING &amp; INTERPOLATION
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="data_wrangling.html">
    Data wrangling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="interp_demo.html">
+   ICESat-2 interpolation workflow
   </a>
  </li>
 </ul>
@@ -158,12 +163,17 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="utils/markdown_rendering/read_data_utils.html">
-   Reading data from Google Cloud
+   Functions for reading data
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="utils/markdown_rendering/misc_utils.html">
-   Miscellaneous helper functions
+  <a class="reference internal" href="utils/markdown_rendering/wrangling_utils.html">
+   Functions for data wrangling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="utils/markdown_rendering/plotting_utils.html">
+   Functions for plotting and mapping
   </a>
  </li>
 </ul>
@@ -288,8 +298,8 @@
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#winter-snow-depth-maps">
-   2) Winter snow depth maps
+  <a class="reference internal nav-link" href="#simple-sea-ice-thickness-maps">
+   2) Simple sea ice thickness maps
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -349,7 +359,7 @@
     The netcdf files for each month are then read in as an xr.Dataset object
     
     Args: 
-        data_dir (str, optional): name of data directory containing ICESat-2 data (default to &quot;IS2SITMOGR4&quot;, the name of the directory in the bucket)
+        data_dir (str, optional): name of data directory containing ICESat-2 data (default to &quot;IS2SITMOGR4/v002&quot;, the name of the directory in the bucket)
         bucket_name (str, optional): name of google storage bucket (default to &quot;sea-ice-thickness-data&quot;)
     Returns: 
         is2_ds (xr.Dataset): data 
@@ -376,22 +386,25 @@ Coordinates:
     xgrid              (y, x) float32 -3.838e+06 -3.812e+06 ... 3.738e+06
     ygrid              (y, x) float32 5.838e+06 5.838e+06 ... -5.338e+06
 Dimensions without coordinates: y, x
-Data variables:
+Data variables: (12/14)
     projection         (time) float64 -2.147e+09 -2.147e+09 ... -2.147e+09
     ice_thickness      (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     ice_thickness_unc  (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     num_segments       (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     mean_day_of_month  (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     snow_depth         (time, y, x) float32 nan nan nan nan ... nan nan nan nan
-    snow_density       (time, y, x) float32 nan nan nan nan ... nan nan nan nan
-    freeboard          (time, y, x) float32 nan nan nan nan ... nan nan nan nan
+    ...                 ...
     ice_type           (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     ice_density        (time, y, x) float32 nan nan nan nan ... nan nan nan nan
+    ice_thickness_int  (time, y, x) float32 nan nan nan nan ... nan nan nan nan
+    freeboard_int      (time, y, x) float32 nan nan nan nan ... nan nan nan nan
+    snow_depth_int     (time, y, x) float32 nan nan nan nan ... nan nan nan nan
+    sea_ice_conc       (time, y, x) float32 0.0 0.0 0.0 0.0 ... 0.0 0.0 0.0 0.0
 Attributes:
     contact:      Alek Petty (alek.a.petty@nasa.gov)
-    description:  Gridded Feb 2020 Arctic sea ice thickness and ancillary dat...
+    description:  Gridded Jan 2020 Arctic sea ice thickness and ancillary dat...
     reference:    Data doi: 10.5067/CV6JEXEE31HF. Original methodology descri...
-    history:      Created 22/04/21
+    history:      Created 01/11/21
 </pre></div>
 </div>
 </div>
@@ -419,19 +432,19 @@ Attributes:
 </div>
 </div>
 </div>
-<div class="section" id="winter-snow-depth-maps">
-<h1>2) Winter snow depth maps<a class="headerlink" href="#winter-snow-depth-maps" title="Permalink to this headline">¶</a></h1>
-<p>Using the function arguments <code class="docutils literal notranslate"><span class="pre">col</span></code> and <code class="docutils literal notranslate"><span class="pre">col_wrap</span></code>, we can modify the code for plotting one month of data to plot several months of data. Below, we’ll plot snow depth data for Nov 2020 - Apr 2021.</p>
+<div class="section" id="simple-sea-ice-thickness-maps">
+<h1>2) Simple sea ice thickness maps<a class="headerlink" href="#simple-sea-ice-thickness-maps" title="Permalink to this headline">¶</a></h1>
+<p>Using the function arguments <code class="docutils literal notranslate"><span class="pre">col</span></code> and <code class="docutils literal notranslate"><span class="pre">col_wrap</span></code>, we can modify the code for plotting one month of data to plot several months of data. Below, we’ll plot sea ice thickness for Nov 2020 - Apr 2021.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_date</span> <span class="o">=</span> <span class="s2">&quot;Nov 2020&quot;</span>
 <span class="n">end_date</span> <span class="o">=</span> <span class="s2">&quot;Apr 2021&quot;</span>
-<span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;snow_depth&quot;</span> <span class="c1"># Variable to use </span>
+<span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;ice_thickness&quot;</span> <span class="c1"># Variable to use </span>
 <span class="n">data_one_winter</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">))</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">data_one_winter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="c1"># Horizontal coordinates </span>
                          <span class="n">col</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="c1"># Coordinate to use for facet grid </span>
                          <span class="n">col_wrap</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="c1"># Number of columns to use </span>
-                         <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="c1"># Min and max on the colorbar </span>
+                         <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="c1"># Min and max on the colorbar </span>
                          <span class="n">subplot_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;projection&#39;</span><span class="p">:</span><span class="n">ccrs</span><span class="o">.</span><span class="n">NorthPolarStereo</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=-</span><span class="mi">45</span><span class="p">)},</span> <span class="c1"># Set the projection </span>
                          <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
 <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">:</span> <span class="c1"># Add coastlines</span>
@@ -451,7 +464,7 @@ Attributes:
 <p>Maybe we want to know how the mean has changed over time. Below, we’ll compute the mean monthly sea ice freeboard for Sep 2020 - Apr 2021, and display the information in a simple lineplot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;ice_thickness&quot;</span> <span class="c1"># Variable to use </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;freeboard&quot;</span> <span class="c1"># Variable to use </span>
 <span class="n">start_date</span> <span class="o">=</span> <span class="s2">&quot;Sep 2020&quot;</span>
 <span class="n">end_date</span> <span class="o">=</span> <span class="s2">&quot;Apr 2021&quot;</span>
 <span class="n">winter2020_21</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">))</span> <span class="c1"># Grab data for Sep 2020 - Apr 2021</span>

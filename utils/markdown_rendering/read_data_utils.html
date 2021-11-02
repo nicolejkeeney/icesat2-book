@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reading data from Google Cloud &#8212; ICESat-2 Sea Ice Thickness Data Analysis and Visualization</title>
+    <title>Functions for reading data &#8212; ICESat-2 Sea Ice Thickness Data Analysis and Visualization</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
@@ -52,8 +52,8 @@
     <link rel="shortcut icon" href="../../_static/logo.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Miscellaneous helper functions" href="misc_utils.html" />
-    <link rel="prev" title="Data wrangling" href="../../data_wrangling.html" />
+    <link rel="next" title="Functions for data wrangling" href="wrangling_utils.html" />
+    <link rel="prev" title="ICESat-2 interpolation workflow" href="../../interp_demo.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -140,13 +140,18 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  DATA WRANGLING
+  DATA WRANGLING &amp; INTERPOLATION
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../../data_wrangling.html">
    Data wrangling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../interp_demo.html">
+   ICESat-2 interpolation workflow
   </a>
  </li>
 </ul>
@@ -158,12 +163,17 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Reading data from Google Cloud
+   Functions for reading data
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="misc_utils.html">
-   Miscellaneous helper functions
+  <a class="reference internal" href="wrangling_utils.html">
+   Functions for data wrangling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="plotting_utils.html">
+   Functions for plotting and mapping
   </a>
  </li>
 </ul>
@@ -258,12 +268,12 @@
         
               <div>
                 
-  <div class="section" id="reading-data-from-google-cloud">
-<h1>Reading data from Google Cloud<a class="headerlink" href="#reading-data-from-google-cloud" title="Permalink to this headline">¶</a></h1>
-<p>This is a markdown rendering of the read_data_utils module used in the notebooks. It is provided here for user reference. The <code class="docutils literal notranslate"><span class="pre">read_data_utils.py</span></code> module can be viewed and downloaded from the github repository.</p>
+  <div class="section" id="functions-for-reading-data">
+<h1>Functions for reading data<a class="headerlink" href="#functions-for-reading-data" title="Permalink to this headline">¶</a></h1>
+<p>This is a markdown rendering of the <code class="docutils literal notranslate"><span class="pre">read_data_utils</span></code> module used in the notebooks. It is provided here for user reference. The code can be viewed and downloaded from the github repository.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; read_data_utils.py </span>
 
-<span class="sd">    Functions to read data from the google storage bucket associated with the Jupyter book</span>
+<span class="sd">Helper functions for reading ICESat2 data from a local drive and the book netcdf file from the google storage bucket</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -294,44 +304,40 @@
             <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;gsutil -m -o &#39;GSUtil:parallel_process_count=1&#39; cp gs://&quot;</span><span class="o">+</span><span class="n">bucket_name</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">data_dir</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">file</span><span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span><span class="n">data_dir</span><span class="p">)</span> <span class="c1"># Make sure theres a space before the final segment, idicating the download directory ./ (i.e. &quot; download dir&quot;)</span>
 
     <span class="c1"># Read in files for each month as a single xr.Dataset</span>
-    <span class="c1"># Need to create a preprocessing function to call before merging because dimensions and coordinates are not set</span>
-    <span class="c1"># This allows each DataArray for each month to be merged into one xr.Dataset</span>
-    <span class="k">def</span> <span class="nf">xr_set_coords_and_dims</span><span class="p">(</span><span class="n">da_monthly</span><span class="p">):</span>
-        <span class="n">da_monthly</span> <span class="o">=</span> <span class="n">da_monthly</span><span class="o">.</span><span class="n">set_coords</span><span class="p">([</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span><span class="s2">&quot;xgrid&quot;</span><span class="p">,</span><span class="s2">&quot;ygrid&quot;</span><span class="p">])</span> <span class="c1"># Set data variables as coordinates</span>
-        <span class="n">da_monthly</span> <span class="o">=</span> <span class="n">da_monthly</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span> <span class="c1"># Set month as a dimension </span>
-        <span class="k">return</span> <span class="n">da_monthly</span>
-    
     <span class="n">filenames</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
-    <span class="n">is2_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">([</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">filename</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">],</span> <span class="c1"># Filepath, including data directory in path</span>
-                               <span class="n">concat_dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">],</span> 
-                               <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">,</span> 
-                               <span class="n">preprocess</span><span class="o">=</span><span class="n">xr_set_coords_and_dims</span><span class="p">)</span>
-    <span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;IS2SITMOGR4_01_&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_004_001.nc&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">]</span> <span class="c1"># Get time from filenames</span>
-    <span class="n">is2_ds</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">({</span><span class="s2">&quot;time&quot;</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%Y%m&quot;</span><span class="p">)})</span> <span class="c1"># Add time as coordinate</span>
+    <span class="n">datasets_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span> 
+        <span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span>
+        <span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="o">.</span><span class="n">set_coords</span><span class="p">([</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span><span class="s2">&quot;xgrid&quot;</span><span class="p">,</span><span class="s2">&quot;ygrid&quot;</span><span class="p">])</span> <span class="c1"># Set data variables as coordinates</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;IS2SITMOGR4_01_&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_004_001.nc&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># Get time from filename </span>
+        <span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">({</span><span class="s2">&quot;time&quot;</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%Y%m&quot;</span><span class="p">)})</span> <span class="c1"># Add time as coordinate</span>
+        <span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span> <span class="c1"># Set month as a dimension </span>
+        <span class="n">datasets_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ds_monthly</span><span class="p">)</span>
+
+    <span class="n">is2_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">datasets_list</span><span class="p">)</span>
+    <span class="n">is2_ds</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">is2_ds</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_book_data</span><span class="p">(</span><span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;icesat2-book-data.nc&quot;</span><span class="p">):</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_book_data</span><span class="p">():</span> 
     <span class="sd">&quot;&quot;&quot; Read in data for ICESat2 jupyter book. </span>
 <span class="sd">    If the file does not already exist on the user&#39;s local drive, it is downloaded from the books google storage bucket (https://console.cloud.google.com/storage/browser/is2-pso-seaice)</span>
 <span class="sd">    The netcdf file is then read in as an xr.Dataset object </span>
 <span class="sd">    </span>
 <span class="sd">    Args: </span>
-<span class="sd">        filepath (str, optional): name of file to read in (default to &quot;icesat2-book-data.nc&quot;, the name of the file in the bucket)</span>
+<span class="sd">        None</span>
 <span class="sd">    Returns: </span>
 <span class="sd">        book_ds (xr.Dataset): data </span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">exists_locally</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="c1"># Check if file exists on local drive</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;icesat2-book-data.nc&quot;</span>
+    <span class="n">exists_locally</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="c1"># Check if file exists on local drive</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">exists_locally</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span> <span class="c1"># Download data </span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading jupyter book data from the google storage bucket...&quot;</span><span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;gsutil -m cp gs://is2-pso-seaice/&quot;</span> <span class="o">+</span> <span class="n">filepath</span> <span class="o">+</span> <span class="s2">&quot; ./&quot;</span><span class="p">)</span> <span class="c1"># Make sure theres a space before the final ./ (i.e. &quot; ./&quot;)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;gsutil -m cp gs://sea-ice-thickness-data/icesat2-book-data/&quot;</span><span class="o">+</span><span class="n">filename</span><span class="o">+</span><span class="s2">&quot; ./&quot;</span><span class="p">)</span> <span class="c1"># Make sure theres a space before the final ./ (i.e. &quot; ./&quot;)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Download complete&quot;</span><span class="p">)</span>
 
-    <span class="n">book_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="n">book_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">book_ds</span>
 </pre></div>
 </div>
@@ -367,19 +373,19 @@
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="../../data_wrangling.html" title="previous page">
+        <a class="left-prev" href="../../interp_demo.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Data wrangling</p>
+                <p class="prevnext-title">ICESat-2 interpolation workflow</p>
             </div>
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="misc_utils.html" title="next page">
+        <a class="right-next" href="wrangling_utils.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Miscellaneous helper functions</p>
+                <p class="prevnext-title">Functions for data wrangling</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

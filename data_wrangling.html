@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -52,7 +52,7 @@
     <link rel="shortcut icon" href="_static/logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Reading data from Google Cloud" href="utils/markdown_rendering/read_data_utils.html" />
+    <link rel="next" title="ICESat-2 interpolation workflow" href="interp_demo.html" />
     <link rel="prev" title="Atmospheric variables" href="atmospheric_variables.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -140,13 +140,18 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  DATA WRANGLING
+  DATA WRANGLING &amp; INTERPOLATION
  </span>
 </p>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Data wrangling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="interp_demo.html">
+   ICESat-2 interpolation workflow
   </a>
  </li>
 </ul>
@@ -158,12 +163,17 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="utils/markdown_rendering/read_data_utils.html">
-   Reading data from Google Cloud
+   Functions for reading data
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="utils/markdown_rendering/misc_utils.html">
-   Miscellaneous helper functions
+  <a class="reference internal" href="utils/markdown_rendering/wrangling_utils.html">
+   Functions for data wrangling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="utils/markdown_rendering/plotting_utils.html">
+   Functions for plotting and mapping
   </a>
  </li>
 </ul>
@@ -403,13 +413,8 @@
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#interpolate-icesat-2-variables">
-   4) Interpolate ICESat-2 variables
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#compile-and-save-final-dataset">
-   5) Compile and save final dataset
+   4) Compile and save final dataset
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -528,8 +533,8 @@
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">utils.read_data_utils</span> <span class="kn">import</span> <span class="n">read_is2_data</span> <span class="c1"># This allows us to read the ICESAT2 data directly from the google storage bucket</span>
-<span class="kn">from</span> <span class="nn">utils.misc_utils</span> <span class="kn">import</span> <span class="n">create_empty_xr_ds</span> <span class="c1"># Allows you to fill in empty data to overcome data coverage issues </span>
-<span class="kn">from</span> <span class="nn">utils.misc_utils</span> <span class="kn">import</span> <span class="n">is2_interp2d</span> <span class="c1"># Interpolate ICESat2 variables using CDR data </span>
+<span class="kn">from</span> <span class="nn">utils.wrangling_utils</span> <span class="kn">import</span> <span class="n">create_empty_xr_ds</span> <span class="c1"># Allows you to fill in empty data to overcome data coverage issues </span>
+<span class="kn">from</span> <span class="nn">utils.wrangling_utils</span> <span class="kn">import</span> <span class="n">is2_interp2d</span> <span class="c1"># Interpolate ICESat2 variables using CDR data </span>
 
 <span class="c1"># Ignore warnings in the notebook to improve display</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -585,10 +590,9 @@
 </div>
 <div class="section" id="icesat-2-gridded-monthly-means">
 <h2>ICESat-2 gridded monthly means<a class="headerlink" href="#icesat-2-gridded-monthly-means" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
+<div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is2_ds</span> <span class="o">=</span> <span class="n">read_is2_data</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;IS2SITMOGR4&quot;</span><span class="p">)</span>
-<span class="n">is2_ds</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;xgrid&quot;</span><span class="p">,</span><span class="s2">&quot;ygrid&quot;</span><span class="p">])</span> <span class="c1"># Drop unneeded coords </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is2_ds</span> <span class="o">=</span> <span class="n">read_is2_data</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -657,7 +661,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/data_wrangling_18_0.png" src="_images/data_wrangling_18_0.png" />
+<img alt="_images/data_wrangling_17_0.png" src="_images/data_wrangling_17_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -672,7 +676,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/data_wrangling_19_0.png" src="_images/data_wrangling_19_0.png" />
+<img alt="_images/data_wrangling_18_0.png" src="_images/data_wrangling_18_0.png" />
 </div>
 </div>
 </div>
@@ -946,111 +950,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">8</span><span class="n">v</span><span class="o">/</span><span class="n">cr06mz0n3bjd5jr12_9v6n200000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_35550</span><span class="o">/</span><span class="mf">2547277114.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> 
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="c1">#regrid data</span>
-<span class="ne">---&gt; </span><span class="mi">12</span> <span class="n">cdr_regridded</span> <span class="o">=</span> <span class="n">regridToICESat2</span><span class="p">(</span><span class="n">cdr_da</span><span class="p">,</span> <span class="n">xptsCDR</span><span class="p">,</span> <span class="n">yptsCDR</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">cdr_regridded</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">cdr_regridded</span><span class="p">,</span> 
-<span class="g g-Whitespace">     </span><span class="mi">14</span>                              <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">],</span>
-
-<span class="nn">/var/folders/8v/cr06mz0n3bjd5jr12_9v6n200000gn/T/ipykernel_35550/416546319.py</span> in <span class="ni">regridToICESat2</span><span class="nt">(dataArrayNEW, xptsNEW, yptsNEW, xptsIS2, yptsIS2)</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">gridded</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">)):</span>
-<span class="ne">---&gt; </span><span class="mi">17</span>         <span class="n">monthlyGridded</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">griddata</span><span class="p">((</span><span class="n">xptsNEW</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span><span class="n">yptsNEW</span><span class="o">.</span><span class="n">flatten</span><span class="p">()),</span> <span class="n">dataArrayNEW</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="p">(</span><span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span>         <span class="n">gridded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">monthlyGridded</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">gridded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gridded</span><span class="p">)</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/xarray/core/dataarray.py</span> in <span class="ni">values</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">649</span>         <span class="nb">type</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">support</span> <span class="n">coercion</span> <span class="n">like</span> <span class="n">this</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">cupy</span><span class="p">)</span><span class="o">.</span>
-<span class="g g-Whitespace">    </span><span class="mi">650</span>         <span class="sd">&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">651</span><span class="sd">         return self.variable.values</span>
-<span class="g g-Whitespace">    </span><span class="mi">652</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">653</span><span class="sd">     @values.setter</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/xarray/core/variable.py</span> in <span class="ni">values</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">515</span><span class="sd">     def values(self):</span>
-<span class="g g-Whitespace">    </span><span class="mi">516</span><span class="sd">         &quot;&quot;&quot;</span><span class="n">The</span> <span class="n">variable</span><span class="s1">&#39;s data as a numpy.ndarray&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">517</span>         <span class="k">return</span> <span class="n">_as_array_or_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">518</span> 
-<span class="g g-Whitespace">    </span><span class="mi">519</span>     <span class="nd">@values</span><span class="o">.</span><span class="n">setter</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/xarray/core/variable.py</span> in <span class="ni">_as_array_or_item</span><span class="nt">(data)</span>
-<span class="g g-Whitespace">    </span><span class="mi">257</span>     <span class="n">TODO</span><span class="p">:</span> <span class="n">remove</span> <span class="n">this</span> <span class="p">(</span><span class="n">replace</span> <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span> <span class="n">once</span> <span class="n">these</span> <span class="n">issues</span> <span class="n">are</span> <span class="n">fixed</span>
-<span class="g g-Whitespace">    </span><span class="mi">258</span>     <span class="sd">&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">259</span><span class="sd">     data = np.asarray(data)</span>
-<span class="g g-Whitespace">    </span><span class="mi">260</span><span class="sd">     if data.ndim == 0:</span>
-<span class="g g-Whitespace">    </span><span class="mi">261</span><span class="sd">         if data.dtype.kind == &quot;M&quot;:</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/numpy/core/_asarray.py</span> in <span class="ni">asarray</span><span class="nt">(a, dtype, order, like)</span>
-<span class="g g-Whitespace">    </span><span class="mi">100</span><span class="sd">         return _asarray_with_like(a, dtype=dtype, order=order, like=like)</span>
-<span class="g g-Whitespace">    </span><span class="mi">101</span><span class="sd"> </span>
-<span class="ne">--&gt; </span><span class="mi">102</span><span class="sd">     return array(a, dtype, copy=False, order=order)</span>
-<span class="g g-Whitespace">    </span><span class="mi">103</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">104</span><span class="sd"> </span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/dask/array/core.py</span> in <span class="ni">__array__</span><span class="nt">(self, dtype, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1486</span><span class="sd"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1487</span><span class="sd">     def __array__(self, dtype=None, **kwargs):</span>
-<span class="ne">-&gt; </span><span class="mi">1488</span><span class="sd">         x = self.compute()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1489</span><span class="sd">         if dtype and x.dtype != dtype:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1490</span><span class="sd">             x = x.astype(dtype)</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/dask/base.py</span> in <span class="ni">compute</span><span class="nt">(self, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">284</span><span class="sd">         dask.base.compute</span>
-<span class="g g-Whitespace">    </span><span class="mi">285</span><span class="sd">         &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">286</span>         <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">traverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">287</span>         <span class="k">return</span> <span class="n">result</span>
-<span class="g g-Whitespace">    </span><span class="mi">288</span> 
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/dask/base.py</span> in <span class="ni">compute</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">566</span>         <span class="n">postcomputes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">__dask_postcompute__</span><span class="p">())</span>
-<span class="g g-Whitespace">    </span><span class="mi">567</span> 
-<span class="ne">--&gt; </span><span class="mi">568</span>     <span class="n">results</span> <span class="o">=</span> <span class="n">schedule</span><span class="p">(</span><span class="n">dsk</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="nn">    569     return repack([f(r, *a) for r, (f, a)</span> in <span class="ni">zip</span><span class="nt">(results, postcomputes)])</span>
-<span class="g g-Whitespace">    </span><span class="mi">570</span> 
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/dask/threaded.py</span> in <span class="ni">get</span><span class="nt">(dsk, result, cache, num_workers, pool, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">77</span>             <span class="n">pool</span> <span class="o">=</span> <span class="n">MultiprocessingPoolExecutor</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">78</span> 
-<span class="ne">---&gt; </span><span class="mi">79</span>     <span class="n">results</span> <span class="o">=</span> <span class="n">get_async</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">80</span>         <span class="n">pool</span><span class="o">.</span><span class="n">submit</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">81</span>         <span class="n">pool</span><span class="o">.</span><span class="n">_max_workers</span><span class="p">,</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/dask/local.py</span> in <span class="ni">get_async</span><span class="nt">(submit, num_workers, dsk, result, cache, get_id, rerun_exceptions_locally, pack_exception, raise_exception, callbacks, dumps, loads, chunksize, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">504</span>             <span class="k">while</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;waiting&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;ready&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;running&quot;</span><span class="p">]:</span>
-<span class="g g-Whitespace">    </span><span class="mi">505</span>                 <span class="n">fire_tasks</span><span class="p">(</span><span class="n">chunksize</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">506</span>                 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">res_info</span><span class="p">,</span> <span class="n">failed</span> <span class="ow">in</span> <span class="n">queue_get</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">():</span>
-<span class="g g-Whitespace">    </span><span class="mi">507</span>                     <span class="k">if</span> <span class="n">failed</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">508</span>                         <span class="n">exc</span><span class="p">,</span> <span class="n">tb</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">res_info</span><span class="p">)</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/dask/local.py</span> in <span class="ni">queue_get</span><span class="nt">(q)</span>
-<span class="g g-Whitespace">    </span><span class="mi">132</span> 
-<span class="g g-Whitespace">    </span><span class="mi">133</span>     <span class="k">def</span> <span class="nf">queue_get</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">134</span>         <span class="k">return</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">135</span> 
-<span class="g g-Whitespace">    </span><span class="mi">136</span> 
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/queue.py</span> in <span class="ni">get</span><span class="nt">(self, block, timeout)</span>
-<span class="g g-Whitespace">    </span><span class="mi">168</span>             <span class="k">elif</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">169</span>                 <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qsize</span><span class="p">():</span>
-<span class="ne">--&gt; </span><span class="mi">170</span>                     <span class="bp">self</span><span class="o">.</span><span class="n">not_empty</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">171</span>             <span class="k">elif</span> <span class="n">timeout</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">172</span>                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;timeout&#39; must be a non-negative number&quot;</span><span class="p">)</span>
-
-<span class="nn">~/opt/anaconda3/envs/icesat2_book/lib/python3.8/threading.py</span> in <span class="ni">wait</span><span class="nt">(self, timeout)</span>
-<span class="g g-Whitespace">    </span><span class="mi">300</span>         <span class="k">try</span><span class="p">:</span>    <span class="c1"># restore state no matter what (e.g., KeyboardInterrupt)</span>
-<span class="g g-Whitespace">    </span><span class="mi">301</span>             <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">302</span>                 <span class="n">waiter</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">303</span>                 <span class="n">gotit</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="g g-Whitespace">    </span><span class="mi">304</span>             <span class="k">else</span><span class="p">:</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 <div class="section" id="id2">
@@ -1129,28 +1028,14 @@
 </div>
 </div>
 </div>
-<div class="section" id="interpolate-icesat-2-variables">
-<h1>4) Interpolate ICESat-2 variables<a class="headerlink" href="#interpolate-icesat-2-variables" title="Permalink to this headline">¶</a></h1>
-<p>Here, we’ll interpolate some ICESat-2 variables using linear interpolation or a simple nearest neighbor interpolation function. Because ICESat-2 doesn’t provide full monthly coverage, interpolating fills missing grid cells with a best guess based on surrounding data. This helps avoid sampling biases when performing time series analyses, with the cavaet that this interpolation method is subjective. <br><br>
-In order to define the interpolation bounds (so that we don’t try and interpolate over land, or other areas where there wouldn’t be sea ice!), we use the NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration dataset to infer the location of the sea ice. By setting <code class="docutils literal notranslate"><span class="pre">interpolation=True</span></code>, the code calls an interpolation function that is defined in the <code class="docutils literal notranslate"><span class="pre">misc_utils.py</span></code> module.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is2_ds_interp</span> <span class="o">=</span> <span class="n">is2_interp2d</span><span class="p">(</span><span class="n">is2_ds</span><span class="p">,</span> <span class="n">cdr_da</span><span class="p">,</span> 
-                             <span class="n">method</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="c1"># Interpolation method</span>
-                             <span class="n">interp_var</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ice_thickness&quot;</span><span class="p">,</span><span class="s2">&quot;snow_depth&quot;</span><span class="p">,</span><span class="s2">&quot;snow_density&quot;</span><span class="p">,</span><span class="s2">&quot;freeboard&quot;</span><span class="p">,</span><span class="s2">&quot;ice_type&quot;</span><span class="p">,</span><span class="s2">&quot;ice_density&quot;</span><span class="p">])</span> <span class="c1"># Variables to interpolate</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
 <div class="section" id="compile-and-save-final-dataset">
-<h1>5) Compile and save final dataset<a class="headerlink" href="#compile-and-save-final-dataset" title="Permalink to this headline">¶</a></h1>
+<h1>4) Compile and save final dataset<a class="headerlink" href="#compile-and-save-final-dataset" title="Permalink to this headline">¶</a></h1>
 <p>Now that all the data is on the same grid, we can use xarray to merge all the datasets. We’ll also add the region mask as a coordinate.</p>
 <div class="section" id="combine-datasets">
 <h2>Combine datasets<a class="headerlink" href="#combine-datasets" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">is2_ds_interp</span><span class="p">,</span> <span class="n">cdr_regridded</span><span class="p">,</span> <span class="n">pio_regridded</span><span class="p">,</span> <span class="n">ERA5_regridded</span><span class="p">,</span> <span class="n">drifts_regridded</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">is2_ds</span><span class="p">,</span> <span class="n">cdr_regridded</span><span class="p">,</span> <span class="n">pio_regridded</span><span class="p">,</span> <span class="n">ERA5_regridded</span><span class="p">,</span> <span class="n">drifts_regridded</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1177,15 +1062,17 @@ Coordinates:
   * time                     (time) datetime64[ns] 2018-11-01 ... 2021-04-01
     longitude                (y, x) float32 168.3 168.1 168.0 ... -10.18 -9.999
     latitude                 (y, x) float32 31.1 31.2 31.3 ... 34.68 34.58 34.47
+    xgrid                    (y, x) float32 -3.838e+06 -3.812e+06 ... 3.738e+06
+    ygrid                    (y, x) float32 5.838e+06 5.838e+06 ... -5.338e+06
     region_mask              (y, x) uint8 1 1 1 1 1 1 1 1 1 ... 1 1 1 1 1 1 1 1
 Dimensions without coordinates: y, x
-Data variables: (12/18)
-    freeboard                (time, y, x) float32 nan nan nan ... nan nan nan
-    ice_density              (time, y, x) float32 nan nan nan ... nan nan nan
+Data variables: (12/21)
+    projection               (time) float64 -2.147e+09 -2.147e+09 ... -2.147e+09
     ice_thickness            (time, y, x) float32 nan nan nan ... nan nan nan
-    ice_thickness_smoothed   (time, y, x) float64 nan nan nan ... nan nan nan
     ice_thickness_unc        (time, y, x) float32 nan nan nan ... nan nan nan
-    ice_type                 (time, y, x) float32 nan nan nan ... nan nan nan
+    num_segments             (time, y, x) float32 nan nan nan ... nan nan nan
+    mean_day_of_month        (time, y, x) float32 nan nan nan ... nan nan nan
+    snow_depth               (time, y, x) float32 nan nan nan ... nan nan nan
     ...                       ...
     piomas_ice_thickness     (time, y, x) float32 0.0 0.0 0.0 ... 0.0 0.0 0.0
     t2m                      (time, y, x) float32 nan 11.68 ... 7.272 7.321
@@ -1196,7 +1083,7 @@ Data variables: (12/18)
 Attributes:
     description:    Data used in ICESat-2 jupyter book
     note:           See individual data variables for references
-    creation date:  2021-09-20
+    creation date:  2021-11-02
 </pre></div>
 </div>
 </div>
@@ -1208,13 +1095,30 @@ Attributes:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;icesat2-book-data.nc&#39;</span>
-<span class="n">final_ds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;NETCDF4&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39; saved to directory &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">localDirectory</span><span class="p">)</span>
+<span class="n">save_file</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">save_file</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span> 
+        <span class="n">final_ds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;NETCDF4&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39; saved to directory &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+    <span class="k">except</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot save file because file by same name already exists&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span> 
+        <span class="n">final_ds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">localDirectory</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;NETCDF4&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File &#39;</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39; saved to directory &quot;&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">localDirectory</span> <span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot save file because file by same name already exists&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span> 
+    <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-data.nc&quot; saved to directory &quot;../icesat2-book-data/&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/code/icesat2-book&quot;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-data.nc&quot; saved to directory &quot;../icesat2-book-data/
 </pre></div>
 </div>
 </div>
@@ -1261,10 +1165,10 @@ Attributes:
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="utils/markdown_rendering/read_data_utils.html" title="next page">
+        <a class="right-next" href="interp_demo.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Reading data from Google Cloud</p>
+                <p class="prevnext-title">ICESat-2 interpolation workflow</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
