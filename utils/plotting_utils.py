@@ -170,7 +170,7 @@ def interactiveArcticMaps(da, clabel=None, cmap="viridis", colorbar=True, vmin=N
     To show each map together (no slider), set slider=False
     
     Args: 
-        da (xr.Dataset or xr.DataArray): data to restrict by time; must contain "time" as a coordinate 
+        da (xr.Dataset or xr.DataArray): data 
         clabel (str, optional): colorbar label (default to "long_name" and "units" if given in attributes of da)
         cmap (str, optional): matplotlib colormap to use (default to "viridis")
         colorbar (bool, optional): show colorbar? (default to True)
@@ -231,7 +231,7 @@ def interactive_winter_mean_maps(da, years=None, end_year=None, start_month="Sep
     Note: this function builds off the functions get_winter_data and interactiveArcticMaps.
     
     Args: 
-        da (xr.Dataset or xr.DataArray): data to restrict by time; must contain "time" as a coordinate 
+        da (xr.Dataset or xr.DataArray): data; must contain "time" coordinate
         years (list of str): years over which to compute mean (default to unique years in the dataset)
         start_month (str, optional): first month in winter (default to September)
         end_month (str, optional): second month in winter; this is the following calender year after start_month (default to April)
@@ -314,7 +314,7 @@ def interactive_winter_comparison_lineplot(da, years=None, title="Winter compari
     """ Make a bokeh lineplot with markers comparing monthly mean data across winter seasons 
     
     Args: 
-        da (xr.DataArray): data to plot and compute mean for; must contain "time" as a coordinate 
+        da (xr.DataArray): data; must contain "time" coordinate
         years (list of str): list of years for which to plot data. 2020 would correspond to the winter season defined by start month 2020 - end month 2021 (default to all unique years in da)
         title (str, optional): title to give plot (default to "Winter comparison") 
         frame_width (int, optional): width of figure (default to 600) 
