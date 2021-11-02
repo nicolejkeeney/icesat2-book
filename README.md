@@ -65,7 +65,3 @@ jb build icesat2-book
 ```
 ghp-import -n -p -f _build/html
 ```
-
-```python
-
-```
