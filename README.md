@@ -1,12 +1,5 @@
 ICESat-2 Sea Ice Thickness Data Analysis and Visualization
 =============================================
-**Nicole Keeney (Primary author)**
-nicolejkeeney@gmail.com
-GitHub: nicolejkeeney
-
-**Alek Petty (Supervisor, ICESat-2 sea ice data lead)**
-alek.a.petty@nasa.gov
-GitHub: akpetty
 
 # Introduction
 
@@ -33,9 +26,17 @@ If you find any typos or errors in the code or have any suggestions for the book
 All of the notebooks in this notebook utilize [xarray](http://xarray.pydata.org/en/stable/), a python package built for working with multi-dimensional data like the monthly gridded sea ice data. Xarray is especially useful for time series data and allows for easily plotting data on map projections via compatability with the python packages cartopy and hvplot. 
 
 
+# Contact 
+**Nicole Keeney (Primary author)**
+<br>nicolejkeeney@gmail.com
+<br>GitHub: nicolejkeeney
 
-# Repository details: building the book
-## 1) Activating the environment 
+**Alek Petty (Supervisor, ICESat-2 sea ice data lead)**
+<br>alek.a.petty@nasa.gov
+<br>GitHub: akpetty
+
+
+# Activating the conda environment 
 This book has an associated conda environment stored in the file environment.yml. This file can be downloaded and used to set up the environment on your local computer so that you have all the required dependencies needed to run the notebooks. You'll need anaconda and python installed on your computer first. The environment file is also required by Binder in order to set up the computational environment for running the notebooks in the book interactively. <br><br> 
 To create the environment, run the following in the command line: 
 ```
@@ -46,7 +47,7 @@ To activate the environment, run the following in the command line:
 conda activate icesat2_book
 ```
 
-## 2) Updating the Jupyter Book
+# Updating the Jupyter Book
 Simple instructions for how to construct/update this book are pasted below for the author's benefit, but don't go into detail on any of the steps. For a more detailed description on Jupyter Books and how to build one of your own, see their page: https://jupyterbook.org/intro.html. <br>
 1. Activate virtual environment associated with book
 2. Update github repository with any changes 
