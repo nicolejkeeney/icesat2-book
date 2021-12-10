@@ -24,8 +24,17 @@ def read_is2_data(data_dir="IS2SITMOGR4/v002", bucket_name="sea-ice-thickness-da
         is2_ds (xr.Dataset): data 
     
     """
-    ls_bucket = os.popen("gsutil ls gs://"+bucket_name+"/" + data_dir + "/**.nc ").read() # List everything in the bucket 
-    netcdf_in_bucket = [file.split("gs://"+bucket_name+"/"+data_dir+"/")[1] for file in ls_bucket.split("\n") if file.endswith(".nc")] # Grab the netcdf files from the list 
+    if data_dir.endswith("/"): # Remove slash
+        data_dir = data_dir[:-1]
+    
+    path = bucket_name+"/" + data_dir
+    ls_bucket = os.popen("gsutil ls gs://"+path + "/**.nc ").read() # List everything in the bucket 
+    netcdf_in_bucket = [file.split("gs://"+path+"/")[1] for file in ls_bucket.split("\n") if file.endswith(".nc")] # Grab the netcdf files from the list 
+    
+    # Raise error if no files found
+    if len(netcdf_in_bucket) == 0: 
+        raise ValueError("No netcdf files with extension .nc found at path "+path)
+    
     if (os.getcwd()+"/"+data_dir) not in [path for path, subdirs, files in os.walk(os.getcwd())]:  # Check if directory data_dir exists on local drive 
         os.makedirs(data_dir) # Download if it doesn't already exist
         print("Created directory "+data_dir)

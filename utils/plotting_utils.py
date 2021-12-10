@@ -298,11 +298,20 @@ def static_winter_comparison_lineplot(da, da_unc=None, years=None, figsize=(5,3)
         years = np.unique(pd.to_datetime(da.time.values).strftime("%Y")) # Unique years in the dataset 
         print("No years specified. Using "+", ".join(years))
     
+    # Set up x-axis 
+    # This avoids having a set x-axis of winter months between Sep-Apr, even if there's no data for Sep, Oct etc 
+    yr = 2000 
+    if end_month not in ["Oct","Nov","Dec"]: 
+        yr_end = yr+1
+    else: 
+        yr_end = yr
+    xaxis_months = pd.date_range(start_month+"-"+str(yr), end_month+"-"+str(yr_end), freq="M").strftime("%b")
+    
     # Set up plot 
     fig, ax = plt.subplots(figsize=figsize)
-    ax.plot(["Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr"], np.empty((8,1))*np.nan, color=None, label=None) # Set x axis using winter months 
-    
+    ax.plot(xaxis_months, np.empty((len(xaxis_months),1))*np.nan, color=None, label=None) # Set x axis using winter months 
     gridlines = plt.grid(b = True, linestyle = '-', alpha = 0.2) # Add gridlines 
+
 
     fmts = ['mo-','cs-','yv-','b*-.','r.-','gD--','k2-.']
     for year, fmt in zip(years, fmts*100): 

@@ -1,12 +1,14 @@
 ICESat-2 Sea Ice Thickness Data Analysis and Visualization
 =============================================
-**Nicole Keeney (Primary author)**
-nicolejkeeney@gmail.com
-GitHub: nicolejkeeney
+
+# Contact 
+**Nicole Keeney (Primary author)**<br>
+<br>nicolejkeeney@gmail.com<br>
+<br>GitHub: nicolejkeeney<br>
 
 **Alek Petty (Supervisor, ICESat-2 sea ice data lead)**
-alek.a.petty@nasa.gov
-GitHub: akpetty
+<br>alek.a.petty@nasa.gov<br>
+<br>GitHub: akpetty<br>
 
 # Introduction
 
@@ -15,7 +17,7 @@ NASA's Ice, Cloud, and Land Elevation Satellite-2 (ICESat-2) is a new satellite 
 Since its launch in 2018, ICESat-2 has collected and released data over three (at the time of writing) winter seasons across the entire Arctic Ocean, which we describe and analyze within this Jupyter Book. <br><br> For more information on ICESat-2, see the project homepage: [https://icesat-2.gsfc.nasa.gov/](https://icesat-2.gsfc.nasa.gov/).
 
 # Jupyter Book description
-[Jupyter Books](https://jupyterbook.org/intro.html) provide a novel means of compiling Jupyter Notebooks into one convenient and well-indexed location. Here, jupyter notebooks are used to provide a visual demonstration of our efforts to analyze the monthly gridded ICESat-2 winter Arctic sea ice data (freeboard and thickness), along with other relevant datasets to help us understand recent winter Arctic sea ice growth.<br><br>We've also set up the book so that users can easily run the code without needing to download anything-- even python-- by using a hosting service called Binder. To run a notebook (chapter pages in the book) in Binder, just click the **Binder** tab under the rocket ship icon at the top of each notebook. This option is configured for all notebooks except the modules in the Helper Functions section and the data wrangling notebook. 
+[Jupyter Books](https://jupyterbook.org/intro.html) provide a novel means of compiling Jupyter Notebooks into one convenient and well-indexed location. Here, jupyter notebooks are used to provide a visual demonstration of our efforts to analyze the monthly gridded ICESat-2 winter Arctic sea ice data (freeboard and thickness), along with other relevant datasets to help us understand recent winter Arctic sea ice growth.<br><br>We've also set up the book so that users can easily run the code without needing to download anything by using a hosting service called Binder. To run a notebook (chapter pages in the book) in Binder, just click the **Binder** tab under the rocket ship icon at the top of each notebook. This option is configured for all notebooks except the modules in the Helper Functions section and the data wrangling notebook. 
 
 # Accessing the data 
 
@@ -25,8 +27,9 @@ The gridded ICESat-2 winter Arctic sea ice thickness data is available at the NS
 If you find any typos or errors in the code or have any suggestions for the book, feel free to open an issue, which you can find by mousing over the GitHub icon at the top of each page. If you are familiar with GitHub, you can also fork the book's repository and suggest an edit that way. 
  - 9/4/2020: Version 1
  - 11/18/2020: Updated with version 2 ICESat-2 data product for [AGU Fall 2020 poster highlighting the book](https://agu.confex.com/agu/fm20/meetingapp.cgi/Paper/684153). 
- - 6/14/2021: Updated for the publication of Petty et al. (2021) with final ICESat-2 data product and cleaner notebooks. Transitioned from Google Colab interactivity to Binder. 
+ - 6/14/2021: Transitioned from Google Colab interactivity to Binder. 
  - 10/25/2021: Added interactive plotting using hvplot. Improved interpolation/smoothing method for ICESat-2 data and added notebook to demonstrate steps. 
+ - 12/10/2021: Updated notebooks to reflect new data variables in ICESat-2 data v2 
 
 
 # A note on xarray 
