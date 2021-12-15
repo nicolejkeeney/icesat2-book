@@ -24,8 +24,9 @@ execute:
   allow_errors              : false
   timeout                   : 1000
   only_build_toc_files      : true
-  exclude_patterns          : ['data_wrangling', 'README.md', 'LICENSE', 'delete/*']
-
+  exclude_patterns:
+    - 'data_wrangling.ipynb'
+    - 'delete/*'
 
 launch_buttons: 
   binderhub_url: "https://mybinder.org"
