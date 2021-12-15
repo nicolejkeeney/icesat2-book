@@ -2,7 +2,7 @@
 ICESat-2 Sea Ice Thickness Data Analysis and Visualization
 =============================================
 
-![ICESat-2 maps](figs/README_mean_maps.png "ICESat-2 mean winter sea ice thickness")
+![ICESat-2 maps](figs/maps_thickness_winter.png "ICESat-2 mean winter sea ice thickness")
 
 
 # Contact 
