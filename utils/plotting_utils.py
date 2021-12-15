@@ -1,6 +1,3 @@
-# # Functions for plotting and mapping
-# This is a markdown rendering of the `plotting_utils` module used in the notebooks. It is provided here for user reference, and may not reflect any changes to the code after 12/15/2021. The code can be viewed and downloaded from the github repository.
-
 # +
 """ plotting_utils.py 
 

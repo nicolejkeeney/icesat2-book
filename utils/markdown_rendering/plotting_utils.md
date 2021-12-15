@@ -1,3 +1,7 @@
+# Functions for plotting and mapping
+This is a markdown rendering of the `plotting_utils` module used in the notebooks. It is provided here for user reference, and may not reflect any changes to the code after 12/15/2021. The code can be viewed and downloaded from the github repository.
+
+
 ```
 """ plotting_utils.py 
 
@@ -174,7 +178,7 @@ def staticArcticMaps(da, title=None, out_str="out", cmap="viridis", col=None, co
     
     # save figure
     if savefig:
-        plt.savefig('./figs/maps_'+out_str+'.png', dpi=300, facecolor="white")
+        plt.savefig('./figs/maps_'+out_str+'.png', dpi=400, facecolor="white", bbox_inches='tight')
 
     plt.close() # Close so it doesnt automatically display in notebook 
     return fig
@@ -289,7 +293,7 @@ def staticArcticMaps_overlayDrifts(da, drifts_x, drifts_y, alpha=1, vector_val=0
     
     # save figure
     if savefig:
-        plt.savefig('./figs/maps_'+out_str+'.png', dpi=300, facecolor="white")
+        plt.savefig('./figs/maps_'+out_str+'.png', dpi=400, facecolor="white", bbox_inches='tight')
         
     plt.close() # Close so it doesnt automatically display in notebook 
     return fig
@@ -394,7 +398,7 @@ def interactive_winter_mean_maps(da, years=None, end_year=None, start_month="Sep
                                     clabel=clabel, cmap=cmap, colorbar=colorbar, 
                                     vmin=vmin, vmax=vmax, title=title, 
                                     ylim=ylim, frame_width=frame_width, slider=slider, cols=cols)
-    
+    hv.output(widget_location="bottom")
     return pl_means
 ```
 
@@ -482,7 +486,7 @@ def static_winter_comparison_lineplot(da, da_unc=None, years=None, figsize=(5,3)
     # save figure
     if savefig:
         plt.savefig('./figs/'+da.attrs["long_name"]+start_month+end_month+str(years[0])+'-'+str(years[-1])+region_str+'.pdf', 
-                    dpi=300, facecolor="white")
+                    dpi=300, facecolor="white", bbox_inches='tight')
 
     plt.show()
 ```
