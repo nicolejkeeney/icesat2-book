@@ -7,6 +7,7 @@ Helper functions for generating maps and plots
 
 import xarray as xr
 import numpy as np 
+import numpy.ma as ma
 import pandas as pd
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
@@ -169,8 +170,121 @@ def staticArcticMaps(da, title=None, out_str="out", cmap="viridis", col=None, co
     
     # save figure
     if savefig:
-        plt.savefig('./figs/maps_'+out_str+'.png', dpi=300)
+        plt.savefig('./figs/maps_'+out_str+'.png', dpi=300, facecolor="white")
 
+    plt.close() # Close so it doesnt automatically display in notebook 
+    return fig
+
+
+def staticArcticMaps_overlayDrifts(da, drifts_x, drifts_y, alpha=1, vector_val=0.1, scale_vec=0.5, res=6, units_vec=r'm s$^{-1}$', title=None, out_str="out", cmap="viridis", col=None, col_wrap=3, vmin=None, vmax=None, set_cbarlabel = '', min_lat=50, savefig=True, figsize=(6,6)): 
+    """ Show data on a basemap of the Arctic. Can be one month or multiple months of data. Overlay drift vectors on top 
+    Creates an xarray facet grid. For more info, see: http://xarray.pydata.org/en/stable/user-guide/plotting.html
+    
+    Args: 
+        da (xr DataArray): data to plot
+        drifts_x (xr.DataArray): sea ice drifts along-x component of the ice motion
+        drifts_y (xr.DataArray): sea ice drifts along-y component of the ice motion
+        alpha (float 0-1, optional): Set this variable if you want da to have a reduced opacity (default to 1)
+        res (int, optional): resolution of vectors (default to 6; plot 1 out of every 6 vectors)
+        title (str, optional): title string for plot
+        out_str (str, optional): output string when saving
+        cmap (str, optional): colormap to use (default to viridis)
+        col (str, optional): coordinate to use for creating facet plot (default to "time")
+        col_wrap (int, optional): number of columns of plots to display (default to 3, or None if time dimension has only one value)
+        vmin (float, optional): minimum on colorbar (default to 1st percentile)
+        vmax (float, optional): maximum on colorbar (default to 99th percentile)
+        min_lat (float, optional): minimum latitude to set extent of plot (default to 50 deg lat)
+        set_cbarlabel (str, optional): set colorbar label
+        savefig (bool): output figure
+    
+    Returns:
+        Figure displayed in notebook 
+    
+    """ 
+    
+    # Check that drifts and da have the same time coordinates 
+    for drift in [drifts_x,drifts_y]:
+        equality = (da.time.values  == drift.time.values)
+        if type(equality) == np.ndarray:
+            if not all(equality): 
+                raise ValueError("Drifts vectors and input DataArray must have the same time coordinates")
+        elif (equality==False):
+            raise ValueError("Drifts vectors and input DataArray must have the same time coordinates")
+
+    # Compute min and max for plotting
+    def compute_vmin_vmax(da): 
+        vmin = np.nanpercentile(da.values, 1)
+        vmax = np.nanpercentile(da.values, 99)
+        return vmin, vmax
+    vmin_data, vmax_data = compute_vmin_vmax(da)
+    vmin = vmin if vmin is not None else vmin_data # Set to smallest value of the two 
+    vmax = vmax if vmax is not None else vmax_data # Set to largest value of the two 
+    
+    # All of this col and col_wrap maddness is to try and make this function as generalizable as possible
+    # This allows the function to work for DataArrays with multiple coordinates, different coordinates besides time, etc! 
+    if col is None: 
+        col = "time"
+        try: # Assign time coordinate if it doesn't exist
+            da["time"]
+        except AttributeError: 
+            da = da.assign_coords({col:"unknown"})
+    col = col if sum(da[col].shape) > 1 else None
+    if col is not None: 
+        if sum(da[col].shape)<=1: 
+            col_wrap = None
+            
+    # Plot
+    if len(set_cbarlabel)==0:
+        set_cbarlabel=da.attrs["long_name"]+' ['+da.attrs["units"]+']'
+
+    im = da.plot(x="longitude", y="latitude", col_wrap=col_wrap, col=col, transform=ccrs.PlateCarree(), cmap=cmap, 
+                 cbar_kwargs={'pad':0.02,'shrink': 0.8,'extend':'both', 'label':set_cbarlabel},
+                 vmin=vmin, vmax=vmax, zorder=2, alpha=alpha, 
+                 subplot_kws={'projection':ccrs.NorthPolarStereo(central_longitude=-45)})
+    
+    # Iterate through axes and add features 
+    ax_iter = im.axes
+    if type(ax_iter) != np.array: # If the data is just a single month, ax.iter returns an axis object. We need to iterate through a list or array
+        ax_iter = np.array(ax_iter)
+    
+    i = 0
+    try: 
+        num_timesteps = len(da.time.values)
+    except: 
+        num_timesteps = 1
+    for ax, i in zip(ax_iter.flatten(), range(num_timesteps)):
+
+            # Add drifts 
+            if num_timesteps == 1: 
+                drifts_xi = drifts_x.copy()
+                drifts_yi = drifts_y.copy()
+            else: 
+                drifts_xi = drifts_x.isel(time=i).copy()
+                drifts_yi = drifts_y.isel(time=i).copy()
+            Q = ax.quiver(drifts_x.xgrid[::res, ::res], drifts_y.ygrid[::res, ::res], 
+                          ma.masked_where(np.isnan(drifts_xi[::res, ::res]), drifts_xi[::res, ::res]),
+                          ma.masked_where(np.isnan(drifts_yi[::res, ::res]), drifts_yi[::res, ::res]) , units='inches', scale=scale_vec, zorder=10)
+            ax.quiverkey(Q, 0.85, 0.88, vector_val, str(vector_val)+' '+units_vec, coordinates='axes', zorder=11)   
+
+            ax.coastlines(linewidth=0.15, color = 'black', zorder = 8) # Coastlines
+            ax.add_feature(cfeature.LAND, color ='0.95', zorder = 5)    # Land
+            ax.add_feature(cfeature.LAKES, color = 'grey', zorder = 5)  # Lakes
+            ax.gridlines(draw_labels=False, linewidth=0.25, color='gray', alpha=0.7, linestyle='--', zorder=6) # Gridlines
+            ax.set_extent([-179, 179, min_lat, 90], crs=ccrs.PlateCarree()) # Set extent to zoom in on Arctic
+        
+    # Get figure
+    fig = plt.gcf()
+    
+    # Set title 
+    if (sum(ax_iter.shape) == 0) and (title is not None): 
+        ax.set_title(title, fontsize=12, horizontalalignment="center", x=0.45, y=1.06, fontweight='medium')
+    elif title is not None:
+        fig.suptitle(title, fontsize=12, horizontalalignment="center", x=0.45, y=1.06, fontweight='medium')
+    
+    # save figure
+    if savefig:
+        plt.savefig('./figs/maps_'+out_str+'.png', dpi=300, facecolor="white")
+        
     plt.close() # Close so it doesnt automatically display in notebook 
     return fig
 
@@ -354,7 +468,8 @@ def static_winter_comparison_lineplot(da, da_unc=None, years=None, figsize=(5,3)
 
     # save figure
     if savefig:
-        plt.savefig('./figs/'+da.attrs["long_name"]+start_month+end_month+str(years[0])+'-'+str(years[-1])+region_str+'.pdf', dpi=300)
+        plt.savefig('./figs/'+da.attrs["long_name"]+start_month+end_month+str(years[0])+'-'+str(years[-1])+region_str+'.pdf', 
+                    dpi=300, facecolor="white")
 
     plt.show()
 

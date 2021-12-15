@@ -9,7 +9,6 @@ parts:
   - file: sea_ice_thickness
   - file: pio_vs_is2
   - file: sea_ice_characteristics 
-  - file: sea_ice_drift
   - file: atmospheric_variables 
 - caption: DATA WRANGLING & INTERPOLATION
   chapters:

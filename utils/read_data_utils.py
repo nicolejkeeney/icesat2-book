@@ -1,3 +1,6 @@
+# # Functions for reading data
+# This is a markdown rendering of the `read_data_utils` module used in the notebooks. It is provided here for user reference, and may not reflect any changes to the code after 12/15/2021. The code can be viewed and downloaded from the github repository.
+
 # +
 """ read_data_utils.py 
 

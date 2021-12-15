@@ -1,16 +1,18 @@
 ICESat-2 Sea Ice Thickness Data Analysis and Visualization
 =============================================
 
-**View this repository in our Jupyter Book:** nicolekeeney.com/icesat2-book
+**View this repository in our Jupyter Book:** https://nicolekeeney.com/icesat2-book
+
+![ICESat-2 maps](figs/maps_thickness_winter.png "ICESat-2 mean winter sea ice thickness")
 
 # Contact 
-**Nicole Keeney (Primary author)**
-<br>nicolejkeeney@gmail.com<br>
-<br>GitHub: nicolejkeeney<br>
+**Nicole Keeney (Primary author)**<br>
+nicolejkeeney@gmail.com<br>
+GitHub: nicolejkeeney<br>
 
 **Alek Petty (Supervisor, ICESat-2 sea ice data lead)**<br>
-<br>alek.a.petty@nasa.gov<br>
-<br>GitHub: akpetty<br>
+alek.a.petty@nasa.gov<br>
+GitHub: akpetty<br>
 
 # Introduction
 
@@ -31,9 +33,8 @@ If you find any typos or errors in the code or have any suggestions for the book
  - 11/18/2020: Updated with version 2 ICESat-2 data product for [AGU Fall 2020 poster highlighting the book](https://agu.confex.com/agu/fm20/meetingapp.cgi/Paper/684153). 
  - 6/14/2021: Transitioned from Google Colab interactivity to Binder. 
  - 10/25/2021: Added interactive plotting using hvplot. Improved interpolation/smoothing method for ICESat-2 data and added notebook to demonstrate steps. 
- - 12/10/2021: Updated notebooks to reflect new data variables in ICESat-2 data v2 
-
-
+ - 12/15/2021: Updated notebooks to reflect new data variables in ICESat-2 data v2. Added drift vectors. 
+ 
 # A note on xarray 
 All of the notebooks in this notebook utilize [xarray](http://xarray.pydata.org/en/stable/), a python package built for working with multi-dimensional data like the monthly gridded sea ice data. Xarray is especially useful for time series data and allows for easily plotting data on map projections via compatability with the python packages cartopy and hvplot. 
 
