@@ -1,5 +1,5 @@
-# Functions for reading data 
-This is a markdown rendering of the `read_data_utils` module used in the notebooks. It is provided here for user reference. The code can be viewed and downloaded from the github repository.
+# Functions for reading data
+This is a markdown rendering of the `read_data_utils` module used in the notebooks. It is provided here for user reference, and may not reflect any changes to the code after 12/15/2021. The code can be viewed and downloaded from the github repository.
 
 
 ```
@@ -16,22 +16,31 @@ import pandas as pd
 
 
 ```
-def read_is2_data(data_dir="IS2SITMOGR4", bucket_name="sea-ice-thickness-data"): 
+def read_is2_data(data_dir="IS2SITMOGR4/v002", bucket_name="sea-ice-thickness-data"): 
     """ Read in ATLAS/ICESat-2 Monthly Gridded Sea Ice Freeboard dataset. 
     If the file does not already exist on the user's local drive, it is downloaded from the books google storage bucket (https://console.cloud.google.com/storage/browser/is2-pso-seaice)
     The netcdf files for each month are then read in as an xr.Dataset object
     
     Args: 
-        data_dir (str, optional): name of data directory containing ICESat-2 data (default to "IS2SITMOGR4", the name of the directory in the bucket)
+        data_dir (str, optional): name of data directory containing ICESat-2 data (default to "IS2SITMOGR4/v002", the name of the directory in the bucket)
         bucket_name (str, optional): name of google storage bucket (default to "sea-ice-thickness-data")
     Returns: 
         is2_ds (xr.Dataset): data 
     
     """
-    ls_bucket = os.popen("gsutil ls gs://"+bucket_name+"/" + data_dir + "/**.nc ").read() # List everything in the bucket 
-    netcdf_in_bucket = [file.split("gs://"+bucket_name+"/"+data_dir+"/")[1] for file in ls_bucket.split("\n") if file.endswith(".nc")] # Grab the netcdf files from the list 
-    if data_dir not in os.listdir(os.getcwd()): # Check if directory data_dir exists on local drive 
-        os.mkdir(data_dir) # Download if it doesn't already exist
+    if data_dir.endswith("/"): # Remove slash
+        data_dir = data_dir[:-1]
+    
+    path = bucket_name+"/" + data_dir
+    ls_bucket = os.popen("gsutil ls gs://"+path + "/**.nc ").read() # List everything in the bucket 
+    netcdf_in_bucket = [file.split("gs://"+path+"/")[1] for file in ls_bucket.split("\n") if file.endswith(".nc")] # Grab the netcdf files from the list 
+    
+    # Raise error if no files found
+    if len(netcdf_in_bucket) == 0: 
+        raise ValueError("No netcdf files with extension .nc found at path "+path)
+    
+    if (os.getcwd()+"/"+data_dir) not in [path for path, subdirs, files in os.walk(os.getcwd())]:  # Check if directory data_dir exists on local drive 
+        os.makedirs(data_dir) # Download if it doesn't already exist
         print("Created directory "+data_dir)
     for file in netcdf_in_bucket: # Loop through each file in the bucket, see if it exists in the local drive, download if it doesn't exist
         if file not in os.listdir(data_dir): 
@@ -43,7 +52,7 @@ def read_is2_data(data_dir="IS2SITMOGR4", bucket_name="sea-ice-thickness-data"):
     for file in filenames: 
         ds_monthly = xr.open_dataset(data_dir + "/" + file)
         ds_monthly = ds_monthly.set_coords(["latitude","longitude","xgrid","ygrid"]) # Set data variables as coordinates
-        time = file.split("IS2SITMOGR4_01_")[1].split("_004_001.nc")[0] # Get time from filename 
+        time = file.split("IS2SITMOGR4_01_")[1].split("_")[0] # Get time from filename 
         ds_monthly = ds_monthly.assign_coords({"time":pd.to_datetime(time, format = "%Y%m")}) # Add time as coordinate
         ds_monthly = ds_monthly.expand_dims("time") # Set month as a dimension 
         datasets_list.append(ds_monthly)

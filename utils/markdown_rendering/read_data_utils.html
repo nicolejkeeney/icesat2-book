@@ -52,7 +52,7 @@
     <link rel="shortcut icon" href="../../_static/logo.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Functions for data wrangling" href="wrangling_utils.html" />
+    <link rel="next" title="Functions for plotting and mapping" href="plotting_utils.html" />
     <link rel="prev" title="ICESat-2 interpolation workflow" href="../../interp_demo.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -89,7 +89,8 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../README.html">
+  <a class="reference internal" href="../../home.html">
+   <!-- #region -->
    ICESat-2 Sea Ice Thickness Data Analysis and Visualization
   </a>
  </li>
@@ -128,11 +129,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../sea_ice_drift.html">
-   Sea ice drift vectors
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="../../atmospheric_variables.html">
    Atmospheric variables
   </a>
@@ -164,11 +160,6 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Functions for reading data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="wrangling_utils.html">
-   Functions for data wrangling
   </a>
  </li>
  <li class="toctree-l1">
@@ -270,7 +261,7 @@
                 
   <div class="section" id="functions-for-reading-data">
 <h1>Functions for reading data<a class="headerlink" href="#functions-for-reading-data" title="Permalink to this headline">¶</a></h1>
-<p>This is a markdown rendering of the <code class="docutils literal notranslate"><span class="pre">read_data_utils</span></code> module used in the notebooks. It is provided here for user reference. The code can be viewed and downloaded from the github repository.</p>
+<p>This is a markdown rendering of the <code class="docutils literal notranslate"><span class="pre">read_data_utils</span></code> module used in the notebooks. It is provided here for user reference, and may not reflect any changes to the code after 12/15/2021. The code can be viewed and downloaded from the github repository.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; read_data_utils.py </span>
 
 <span class="sd">Helper functions for reading ICESat2 data from a local drive and the book netcdf file from the google storage bucket</span>
@@ -282,22 +273,31 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_is2_data</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;IS2SITMOGR4&quot;</span><span class="p">,</span> <span class="n">bucket_name</span><span class="o">=</span><span class="s2">&quot;sea-ice-thickness-data&quot;</span><span class="p">):</span> 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_is2_data</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;IS2SITMOGR4/v002&quot;</span><span class="p">,</span> <span class="n">bucket_name</span><span class="o">=</span><span class="s2">&quot;sea-ice-thickness-data&quot;</span><span class="p">):</span> 
     <span class="sd">&quot;&quot;&quot; Read in ATLAS/ICESat-2 Monthly Gridded Sea Ice Freeboard dataset. </span>
 <span class="sd">    If the file does not already exist on the user&#39;s local drive, it is downloaded from the books google storage bucket (https://console.cloud.google.com/storage/browser/is2-pso-seaice)</span>
 <span class="sd">    The netcdf files for each month are then read in as an xr.Dataset object</span>
 <span class="sd">    </span>
 <span class="sd">    Args: </span>
-<span class="sd">        data_dir (str, optional): name of data directory containing ICESat-2 data (default to &quot;IS2SITMOGR4&quot;, the name of the directory in the bucket)</span>
+<span class="sd">        data_dir (str, optional): name of data directory containing ICESat-2 data (default to &quot;IS2SITMOGR4/v002&quot;, the name of the directory in the bucket)</span>
 <span class="sd">        bucket_name (str, optional): name of google storage bucket (default to &quot;sea-ice-thickness-data&quot;)</span>
 <span class="sd">    Returns: </span>
 <span class="sd">        is2_ds (xr.Dataset): data </span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ls_bucket</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">&quot;gsutil ls gs://&quot;</span><span class="o">+</span><span class="n">bucket_name</span><span class="o">+</span><span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">data_dir</span> <span class="o">+</span> <span class="s2">&quot;/**.nc &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c1"># List everything in the bucket </span>
-    <span class="n">netcdf_in_bucket</span> <span class="o">=</span> <span class="p">[</span><span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;gs://&quot;</span><span class="o">+</span><span class="n">bucket_name</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">data_dir</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">ls_bucket</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.nc&quot;</span><span class="p">)]</span> <span class="c1"># Grab the netcdf files from the list </span>
-    <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()):</span> <span class="c1"># Check if directory data_dir exists on local drive </span>
-        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span> <span class="c1"># Download if it doesn&#39;t already exist</span>
+    <span class="k">if</span> <span class="n">data_dir</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span> <span class="c1"># Remove slash</span>
+        <span class="n">data_dir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">path</span> <span class="o">=</span> <span class="n">bucket_name</span><span class="o">+</span><span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">data_dir</span>
+    <span class="n">ls_bucket</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">&quot;gsutil ls gs://&quot;</span><span class="o">+</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/**.nc &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c1"># List everything in the bucket </span>
+    <span class="n">netcdf_in_bucket</span> <span class="o">=</span> <span class="p">[</span><span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;gs://&quot;</span><span class="o">+</span><span class="n">path</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">ls_bucket</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.nc&quot;</span><span class="p">)]</span> <span class="c1"># Grab the netcdf files from the list </span>
+    
+    <span class="c1"># Raise error if no files found</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">netcdf_in_bucket</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No netcdf files with extension .nc found at path &quot;</span><span class="o">+</span><span class="n">path</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">data_dir</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">path</span> <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())]:</span>  <span class="c1"># Check if directory data_dir exists on local drive </span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span> <span class="c1"># Download if it doesn&#39;t already exist</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created directory &quot;</span><span class="o">+</span><span class="n">data_dir</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">netcdf_in_bucket</span><span class="p">:</span> <span class="c1"># Loop through each file in the bucket, see if it exists in the local drive, download if it doesn&#39;t exist</span>
         <span class="k">if</span> <span class="n">file</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">):</span> 
@@ -309,7 +309,7 @@
     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span> 
         <span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span>
         <span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="o">.</span><span class="n">set_coords</span><span class="p">([</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span><span class="s2">&quot;xgrid&quot;</span><span class="p">,</span><span class="s2">&quot;ygrid&quot;</span><span class="p">])</span> <span class="c1"># Set data variables as coordinates</span>
-        <span class="n">time</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;IS2SITMOGR4_01_&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_004_001.nc&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># Get time from filename </span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;IS2SITMOGR4_01_&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># Get time from filename </span>
         <span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">({</span><span class="s2">&quot;time&quot;</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%Y%m&quot;</span><span class="p">)})</span> <span class="c1"># Add time as coordinate</span>
         <span class="n">ds_monthly</span> <span class="o">=</span> <span class="n">ds_monthly</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span> <span class="c1"># Set month as a dimension </span>
         <span class="n">datasets_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ds_monthly</span><span class="p">)</span>
@@ -382,10 +382,10 @@
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="wrangling_utils.html" title="next page">
+        <a class="right-next" href="plotting_utils.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Functions for data wrangling</p>
+                <p class="prevnext-title">Functions for plotting and mapping</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

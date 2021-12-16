@@ -89,7 +89,8 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="README.html">
+  <a class="reference internal" href="home.html">
+   <!-- #region -->
    ICESat-2 Sea Ice Thickness Data Analysis and Visualization
   </a>
  </li>
@@ -128,11 +129,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="sea_ice_drift.html">
-   Sea ice drift vectors
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="atmospheric_variables.html">
    Atmospheric variables
   </a>
@@ -164,11 +160,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="utils/markdown_rendering/read_data_utils.html">
    Functions for reading data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="utils/markdown_rendering/wrangling_utils.html">
-   Functions for data wrangling
   </a>
  </li>
  <li class="toctree-l1">
@@ -303,11 +294,6 @@
       </a>
      </li>
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#nsidc-region-mask-and-coordinate-tools-psn25-v3">
-       NSIDC region mask and coordinate tools (psn25 v3)
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#era5-monthly-averaged-data-on-single-levels">
        ERA5 monthly averaged data on single levels
       </a>
@@ -318,8 +304,8 @@
       </a>
      </li>
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#polar-pathfinder-daily-25-km-ease-grid-sea-ice-motion-vectors">
-       Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors
+      <a class="reference internal nav-link" href="#global-low-resolution-sea-ice-drifts-from-the-european-organization-for-the-exploitation-of-meteorological-satellites-eumetsat-ocean-and-sea-ice-satellite-application-facility-osi-saf">
+       Global Low Resolution Sea Ice Drifts from the European Organization for the Exploitation of Meteorological Satellites (EUMETSAT) Ocean and Sea Ice Satellite Application Facility (OSI SAF)
       </a>
      </li>
     </ul>
@@ -328,12 +314,12 @@
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#import-notebook-dependencies">
-   1) Import notebook dependencies
+   Import notebook dependencies
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#read-in-data">
-   2) Read in data
+   Read in data
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -352,23 +338,6 @@
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#sea-ice-concentration">
-     Sea ice concentration
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#remove-flagged-concentration-data">
-       Remove flagged concentration data
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#nsidc-region-mask-and-coordinate-tools-for-the-arctic">
-     NSIDC region mask and coordinate tools for the Arctic
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#era5-climate-reanalysis">
      ERA5 climate reanalysis
     </a>
@@ -379,52 +348,42 @@
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#nsidc-sea-ice-motion-vectors">
-     NSIDC sea ice motion vectors
+    <a class="reference internal nav-link" href="#osi-saf-sea-ice-drifts">
+     OSI-SAF Sea Ice Drifts
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#regrid-all-datasets-to-icesat-2-grid">
-   3) Regrid all datasets to ICESat-2 grid
+   Regrid all datasets to ICESat-2 grid
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id1">
-     Sea ice concentration
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
      ERA5 climate reanalysis
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
+    <a class="reference internal nav-link" href="#id2">
      PIOMAS sea ice thickness
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#sea-ice-motion-vectors">
-     Sea ice motion vectors
+    <a class="reference internal nav-link" href="#id3">
+     OSI-SAF Sea Ice Drifts
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#compile-and-save-final-dataset">
-   4) Compile and save final dataset
+   Compile and save final dataset
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#combine-datasets">
      Combine datasets
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#add-region-mask-as-a-coordinate-to-the-final-dataset">
-     Add region mask as a coordinate to the final dataset
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
@@ -470,20 +429,7 @@
 <li><p><strong>Variables used</strong>: NOAA/NSIDC sea ice concentration CDR</p></li>
 <li><p><strong>Download link</strong>: <a class="reference external" href="https://nsidc.org/data/g02202">https://nsidc.org/data/g02202</a></p></li>
 <li><p><strong>Reference</strong>: Meier, W. N., F. Fetterer, A. K. Windnagel, and S. Stewart. 2021. NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration, Version 4. Mean monthly aggregated, northern hemisphere. Boulder, Colorado USA. NSIDC: National Snow and Ice Data Center <a class="reference external" href="https://doi.org/10.7265/efmz-2t65">https://doi.org/10.7265/efmz-2t65</a>. 08-21-2021.</p></li>
-<li><p><strong>NOTE</strong>: Only the aggregated monthly dataset has latitude and longitude variables, so make sure you download this file!</p></li>
-</ul>
-</div>
-<div class="section" id="nsidc-region-mask-and-coordinate-tools-psn25-v3">
-<h3>NSIDC region mask and coordinate tools (psn25 v3)<a class="headerlink" href="#nsidc-region-mask-and-coordinate-tools-psn25-v3" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p><strong>Product names</strong>: region_n.msk (region mask); psn25lons_v3.dat &amp; psn25lats_v3.dat (coordinate tool)</p></li>
-<li><p><strong>Download links</strong>:</p>
-<ul>
-<li><p>Region mask: <a class="reference external" href="https://nsidc.org/data/polar-stereo/tools_masks.html#region_masks">https://nsidc.org/data/polar-stereo/tools_masks.html#region_masks</a></p></li>
-<li><p>Coordinate tools: <a class="reference external" href="https://nsidc.org/data/polar-stereo/tools_geo_pixel.html">https://nsidc.org/data/polar-stereo/tools_geo_pixel.html</a></p></li>
-</ul>
-</li>
-<li><p><strong>Reference</strong>: unknown (if you know the reference for this product and would like to contribute it, please suggest an edit)</p></li>
+<li><p><strong>NOTE</strong>: This is provided as a data variable in the ICESat2 monthly gridded product</p></li>
 </ul>
 </div>
 <div class="section" id="era5-monthly-averaged-data-on-single-levels">
@@ -505,12 +451,12 @@
 <li><p><strong>NOTE</strong>: You’ll want to download the heff format data product, not the text file. For some reason, just clicking on the gzipped file to unzip it raises an error on my computer that the archive is empty (which is not true!). You’ll need to unzip the file using the command line; i.e. <code class="docutils literal notranslate"><span class="pre">gzip</span> <span class="pre">-d</span> <span class="pre">file.gz</span></code></p></li>
 </ul>
 </div>
-<div class="section" id="polar-pathfinder-daily-25-km-ease-grid-sea-ice-motion-vectors">
-<h3>Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors<a class="headerlink" href="#polar-pathfinder-daily-25-km-ease-grid-sea-ice-motion-vectors" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="global-low-resolution-sea-ice-drifts-from-the-european-organization-for-the-exploitation-of-meteorological-satellites-eumetsat-ocean-and-sea-ice-satellite-application-facility-osi-saf">
+<h3>Global Low Resolution Sea Ice Drifts from the European Organization for the Exploitation of Meteorological Satellites (EUMETSAT) Ocean and Sea Ice Satellite Application Facility (OSI SAF)<a class="headerlink" href="#global-low-resolution-sea-ice-drifts-from-the-european-organization-for-the-exploitation-of-meteorological-satellites-eumetsat-ocean-and-sea-ice-satellite-application-facility-osi-saf" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p><strong>Product Type</strong>: Ice motion Northern Hemisphere weekly means</p></li>
-<li><p><strong>Download link</strong>: <a class="reference external" href="https://nsidc.org/data/nsidc-0116">https://nsidc.org/data/nsidc-0116</a></p></li>
-<li><p><strong>Reference</strong>: Tschudi, M., W. N. Meier, J. S. Stewart, C. Fowler, and J. Maslanik. 2019. Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors, Version 4. Ice motion Northern Hemisphere weekly means . Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: <a class="reference external" href="https://doi.org/10.5067/INAWUWO7QH7B">https://doi.org/10.5067/INAWUWO7QH7B</a>. 08-16-2021.</p></li>
+<li><p><strong>Product Type</strong>: Global Low Resolution Sea Ice Drift</p></li>
+<li><p><strong>Download link</strong>: <a class="reference external" href="https://osi-saf.eumetsat.int/products/osi-405-c">https://osi-saf.eumetsat.int/products/osi-405-c</a></p></li>
+<li><p><strong>Reference</strong>: Lavergne, T., Eastwood, S., Teffah, Z., Schyberg, H., and Breivik, L.-A.: Sea ice motion from low-resolution satellite sensors: An alternative method and its validation in the Arctic, J. Geophys. Res., 115, C10032, <a class="reference external" href="https://doi.org/10.1029/2009JC005958">https://doi.org/10.1029/2009JC005958</a>, 2010.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -520,7 +466,7 @@
 </div>
 </div>
 <div class="section" id="import-notebook-dependencies">
-<h1>1) Import notebook dependencies<a class="headerlink" href="#import-notebook-dependencies" title="Permalink to this headline">¶</a></h1>
+<h1>Import notebook dependencies<a class="headerlink" href="#import-notebook-dependencies" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -533,8 +479,6 @@
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">utils.read_data_utils</span> <span class="kn">import</span> <span class="n">read_is2_data</span> <span class="c1"># This allows us to read the ICESAT2 data directly from the google storage bucket</span>
-<span class="kn">from</span> <span class="nn">utils.wrangling_utils</span> <span class="kn">import</span> <span class="n">create_empty_xr_ds</span> <span class="c1"># Allows you to fill in empty data to overcome data coverage issues </span>
-<span class="kn">from</span> <span class="nn">utils.wrangling_utils</span> <span class="kn">import</span> <span class="n">is2_interp2d</span> <span class="c1"># Interpolate ICESat2 variables using CDR data </span>
 
 <span class="c1"># Ignore warnings in the notebook to improve display</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -545,15 +489,13 @@
 </div>
 </div>
 <div class="section" id="read-in-data">
-<h1>2) Read in data<a class="headerlink" href="#read-in-data" title="Permalink to this headline">¶</a></h1>
+<h1>Read in data<a class="headerlink" href="#read-in-data" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="define-filepaths">
 <h2>Define filepaths<a class="headerlink" href="#define-filepaths" title="Permalink to this headline">¶</a></h2>
 <p>Define filepaths to data on your local machine</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdr_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>         <span class="c1"># NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration</span>
-<span class="n">regionMask_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>  <span class="c1"># NSIDC region mask and coordinate tools (psn25 v3)</span>
-<span class="n">ERA5_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>        <span class="c1"># ERA5 monthly averaged data on single levels</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERA5_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>        <span class="c1"># ERA5 monthly averaged data on single levels</span>
 <span class="n">PIOMAS_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>      <span class="c1"># PIOMAS mean monthly ice thickness</span>
 <span class="n">drift_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>       <span class="c1"># Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors</span>
 </pre></div>
@@ -573,159 +515,13 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DatetimeIndex([&#39;2018-11-01&#39;, &#39;2018-12-01&#39;, &#39;2019-01-01&#39;, &#39;2019-02-01&#39;,
-               &#39;2019-03-01&#39;, &#39;2019-04-01&#39;, &#39;2019-05-01&#39;, &#39;2019-06-01&#39;,
-               &#39;2019-07-01&#39;, &#39;2019-08-01&#39;, &#39;2019-09-01&#39;, &#39;2019-10-01&#39;,
-               &#39;2019-11-01&#39;, &#39;2019-12-01&#39;, &#39;2020-01-01&#39;, &#39;2020-02-01&#39;,
-               &#39;2020-03-01&#39;, &#39;2020-04-01&#39;, &#39;2020-05-01&#39;, &#39;2020-06-01&#39;,
-               &#39;2020-07-01&#39;, &#39;2020-08-01&#39;, &#39;2020-09-01&#39;, &#39;2020-10-01&#39;,
-               &#39;2020-11-01&#39;, &#39;2020-12-01&#39;, &#39;2021-01-01&#39;, &#39;2021-02-01&#39;,
-               &#39;2021-03-01&#39;, &#39;2021-04-01&#39;],
-              dtype=&#39;datetime64[ns]&#39;, freq=&#39;MS&#39;)
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 <div class="section" id="icesat-2-gridded-monthly-means">
 <h2>ICESat-2 gridded monthly means<a class="headerlink" href="#icesat-2-gridded-monthly-means" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is2_ds</span> <span class="o">=</span> <span class="n">read_is2_data</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="sea-ice-concentration">
-<h2>Sea ice concentration<a class="headerlink" href="#sea-ice-concentration" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_cdr_data</span><span class="p">(</span><span class="n">filepaths</span><span class="p">,</span> <span class="n">varname</span><span class="o">=</span><span class="s2">&quot;cdr_seaice_conc_monthly&quot;</span><span class="p">):</span> 
-    <span class="sd">&quot;&quot;&quot;Reads in CDR data, renames coordinates, and sets lat/lon variables to coordinates</span>
-<span class="sd">    Selects one variable, defined by varname, and returns a DataArray with descriptive attributes for the entire dataset </span>
-<span class="sd">    </span>
-<span class="sd">     Args:</span>
-<span class="sd">         filepaths (list of str): paths to CDR files </span>
-<span class="sd">         varname (str, optional): name of variable to select (default to &quot;cdr_seaice_conc_monthly&quot;, monthly sea ice concentration)</span>
-<span class="sd">         </span>
-<span class="sd">     Returns: </span>
-<span class="sd">         cdr_da (xr.DataArray): data </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">def</span> <span class="nf">xr_rename_coords</span><span class="p">(</span><span class="n">da</span><span class="p">):</span>
-        <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s2">&quot;tdim&quot;</span><span class="p">:</span><span class="s2">&quot;time&quot;</span><span class="p">,</span><span class="s2">&quot;xgrid&quot;</span><span class="p">:</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;ygrid&quot;</span><span class="p">:</span><span class="s2">&quot;y&quot;</span><span class="p">})</span> <span class="c1"># Rename coordinates to match dimensions </span>
-        <span class="k">return</span> <span class="n">da</span>
-    
-    <span class="n">cdr_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="n">filepaths</span><span class="p">,</span> 
-                               <span class="n">concat_dim</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">],</span> 
-                               <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;nested&#39;</span><span class="p">,</span> 
-                               <span class="n">preprocess</span><span class="o">=</span><span class="n">xr_rename_coords</span><span class="p">)</span>
-    <span class="n">cdr_ds</span> <span class="o">=</span> <span class="n">cdr_ds</span><span class="o">.</span><span class="n">set_coords</span><span class="p">([</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span><span class="s2">&quot;longitude&quot;</span><span class="p">])</span> <span class="c1"># Set lat and lon as coordinates </span>
-    <span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_ds</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span> <span class="c1"># Select one variable from Dataset</span>
-    <span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="n">variables</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Sort by time ascending</span>
-
-    <span class="c1"># Add descriptive attributes from main Dataset </span>
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;metadata_link&quot;</span><span class="p">,</span><span class="s2">&quot;contributor_name&quot;</span><span class="p">,</span><span class="s2">&quot;contributor_role&quot;</span><span class="p">,</span><span class="s2">&quot;license&quot;</span><span class="p">,</span><span class="s2">&quot;summary&quot;</span><span class="p">]:</span>
-        <span class="n">cdr_da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cdr_ds</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> 
-    <span class="n">cdr_da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;reference&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Meier, W. N., F. Fetterer, A. K. Windnagel, and S. Stewart. 2021. NOAA/NSIDC Climate Data Record of Passive Microwave Sea Ice Concentration, Version 4. Mean monthly aggregated, northern hemisphere. Boulder, Colorado USA. NSIDC: National Snow and Ice Data Center https://doi.org/10.7265/efmz-2t65. 08-21-2021.&quot;</span>
-    
-    <span class="k">return</span> <span class="n">cdr_da</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Paths to data </span>
-<span class="n">cdr_nrt_filepaths</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">cdr_path</span><span class="o">+</span><span class="s2">&quot;NRT/*.nc&quot;</span><span class="p">)</span>  <span class="c1">#NRT data, available as single netcdf files by month in 2021 </span>
-<span class="n">cdr_agg</span> <span class="o">=</span> <span class="n">cdr_path</span><span class="o">+</span><span class="s2">&quot;seaice_conc_monthly_nh_197811_202012_v04r00.nc&quot;</span> <span class="c1"># Aggreggated monthly data, in one file 1979-2020</span>
-
-<span class="c1"># Read in data </span>
-<span class="n">cdr_da</span> <span class="o">=</span> <span class="n">read_cdr_data</span><span class="p">(</span><span class="n">filepaths</span><span class="o">=</span><span class="n">cdr_nrt_filepaths</span><span class="o">+</span><span class="p">[</span><span class="n">cdr_agg</span><span class="p">],</span> <span class="n">varname</span><span class="o">=</span><span class="s2">&quot;cdr_seaice_conc_monthly&quot;</span><span class="p">)</span>
-<span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="n">date_range</span><span class="p">)</span> <span class="c1"># Select desired date range set at top of notebook </span>
-<span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cdr_da</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&gt;</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1"># Restrict to ICESat-2 latitude</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="remove-flagged-concentration-data">
-<h3>Remove flagged concentration data<a class="headerlink" href="#remove-flagged-concentration-data" title="Permalink to this headline">¶</a></h3>
-<p>Remove data on land and at the pole hole, which are assigned an aphysical value greater than 1</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdr_da</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Before removing flagged data&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/data_wrangling_17_0.png" src="_images/data_wrangling_17_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove data &gt; 1</span>
-<span class="n">cdr_da</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cdr_da</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
-
-<span class="c1"># Plot</span>
-<span class="n">cdr_da</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;After removing flagged data&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/data_wrangling_18_0.png" src="_images/data_wrangling_18_0.png" />
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="nsidc-region-mask-and-coordinate-tools-for-the-arctic">
-<h2>NSIDC region mask and coordinate tools for the Arctic<a class="headerlink" href="#nsidc-region-mask-and-coordinate-tools-for-the-arctic" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getRegionMask</span><span class="p">(</span><span class="n">dataPath</span><span class="p">):</span> 
-    <span class="sd">&quot;&quot;&quot;Gets NSIDC region mask for map projection</span>
-<span class="sd">    </span>
-<span class="sd">     Args:</span>
-<span class="sd">         dataPath (str): path to NSIDC region mask</span>
-<span class="sd">         </span>
-<span class="sd">     Returns: </span>
-<span class="sd">         shapedMask (numpy array): NSIDC arctic region mask gridded to shape [448, 304]</span>
-<span class="sd">         shapedLons (numpy array): longitudes gridded to shape [448, 304]</span>
-<span class="sd">         shapedLats (numpy array): latitudes gridded to shape [448, 304] </span>
-<span class="sd">    &quot;&quot;&quot;</span> 
-    <span class="n">gridShape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">448</span><span class="p">,</span> <span class="mi">304</span><span class="p">]</span> <span class="c1"># Shape of grid to reshape data to </span>
-    
-    <span class="n">regionMask</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">dataPath</span> <span class="o">+</span> <span class="s1">&#39;/sect_fixed_n.msk&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="c1"># Open region mask </span>
-    <span class="n">shapedMask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="n">regionMask</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">),</span> <span class="n">gridShape</span><span class="p">)</span> <span class="c1"># Reshape mask to grid shape</span>
-    
-    <span class="n">maskLons</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">dataPath</span> <span class="o">+</span> <span class="s1">&#39;/psn25lons_v3.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="c1"># Open region mask longitudes</span>
-    <span class="n">maskLats</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">dataPath</span> <span class="o">+</span> <span class="s1">&#39;/psn25lats_v3.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="c1"># Open region mask latitudes</span>
-    <span class="n">shapedLons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="n">maskLons</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;&lt;i4&#39;</span><span class="p">)</span><span class="o">/</span><span class="mf">100000.</span><span class="p">,</span> <span class="n">gridShape</span><span class="p">)</span> <span class="c1"># Reshape longitudes to grid shape</span>
-    <span class="n">shapedLats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="n">maskLats</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;&lt;i4&#39;</span><span class="p">)</span><span class="o">/</span><span class="mf">100000.</span><span class="p">,</span> <span class="n">gridShape</span><span class="p">)</span> <span class="c1"># Reshape latitudes to grid shape</span>
-
-    <span class="k">return</span> <span class="n">shapedMask</span><span class="p">,</span> <span class="n">shapedLons</span><span class="p">,</span> <span class="n">shapedLats</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in data</span>
-<span class="n">regionMask</span><span class="p">,</span> <span class="n">maskLons</span><span class="p">,</span> <span class="n">maskLats</span> <span class="o">=</span> <span class="n">getRegionMask</span><span class="p">(</span><span class="n">regionMask_path</span><span class="p">)</span>
-
-<span class="c1"># Coords and attributes for region mask</span>
-<span class="c1"># This will be used later to add as a coordinate to the final dataset </span>
-<span class="n">regionMaskCoords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;region_mask&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">regionMask</span><span class="p">)}</span>
-<span class="n">regionMaskKeys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">])</span>
-<span class="n">regionMaskLabels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Lakes, extended coast&#39;</span><span class="p">,</span><span class="s1">&#39;non-region oceans&#39;</span><span class="p">,</span> <span class="s1">&#39;Sea of Okhotsk and Japan&#39;</span><span class="p">,</span><span class="s1">&#39;Bering Sea&#39;</span><span class="p">,</span><span class="s1">&#39;Hudson Bay&#39;</span><span class="p">,</span><span class="s1">&#39;Gulf of St. Lawrence&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;Baffin Bay, Davis Strait &amp; Labrador Sea&#39;</span><span class="p">,</span><span class="s1">&#39;Greenland Sea&#39;</span><span class="p">,</span> <span class="s1">&#39;Barents Seas&#39;</span><span class="p">,</span><span class="s1">&#39;Kara Sea&#39;</span><span class="p">,</span><span class="s1">&#39;Laptev Sea&#39;</span><span class="p">,</span><span class="s1">&#39;East Siberian Sea&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;Chukchi Sea&#39;</span><span class="p">,</span><span class="s1">&#39;Beaufort Sea&#39;</span><span class="p">,</span><span class="s1">&#39;Canadian Archipelago&#39;</span><span class="p">,</span><span class="s1">&#39;Arctic Ocean&#39;</span><span class="p">,</span><span class="s1">&#39;Land&#39;</span><span class="p">,</span><span class="s1">&#39;Coast&#39;</span><span class="p">])</span>
-<span class="n">regionMaskAttrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;NSIDC region mask for the Arctic&#39;</span><span class="p">,</span> 
-                   <span class="s1">&#39;keys&#39;</span><span class="p">:</span> <span class="n">regionMaskKeys</span><span class="p">,</span> <span class="s1">&#39;labels&#39;</span> <span class="p">:</span> 
-                   <span class="n">regionMaskLabels</span><span class="p">,</span> <span class="s1">&#39;note&#39;</span><span class="p">:</span> <span class="s1">&#39;keys and labels ordered to match by index&#39;</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is2_ds</span> <span class="o">=</span> <span class="n">read_is2_data</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;IS2SITMOGR4/v002&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -826,70 +622,69 @@
 </div>
 </div>
 </div>
-<div class="section" id="nsidc-sea-ice-motion-vectors">
-<h2>NSIDC sea ice motion vectors<a class="headerlink" href="#nsidc-sea-ice-motion-vectors" title="Permalink to this headline">¶</a></h2>
-<p>As of Aug 2021, this dataset does not have data for 2021, so I create an empty dataset filled with nans for Jan - Apr 2021</p>
+<div class="section" id="osi-saf-sea-ice-drifts">
+<h2>OSI-SAF Sea Ice Drifts<a class="headerlink" href="#osi-saf-sea-ice-drifts" title="Permalink to this headline">¶</a></h2>
+<p>First, we read in the data and resample it to produce monthly means. Then, we reproject the data to the ICESat-2 projection (EPSG 3411).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_uv_from_xy</span><span class="p">(</span><span class="n">xdrift</span><span class="p">,</span> <span class="n">ydrift</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;convert the drift vectors to zonal/meridional, and calculate magnitude</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">alpha</span> <span class="o">=</span> <span class="n">lon</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.</span> <span class="c1">#convert longitudes to radians </span>
-        <span class="n">uvelT</span> <span class="o">=</span> <span class="n">ydrift</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="n">xdrift</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
-        <span class="n">vvelT</span> <span class="o">=</span> <span class="n">ydrift</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">-</span> <span class="n">xdrift</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
-        <span class="n">vectorMag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">uvelT</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">vvelT</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">uvelT</span><span class="p">,</span> <span class="n">vvelT</span><span class="p">,</span> <span class="n">vectorMag</span>
-
-<span class="k">def</span> <span class="nf">getDriftData</span><span class="p">(</span><span class="n">dataPath</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Gets weekly NSIDC sea ice drift data for the Arctic, resamples monthly, and returns a dataset</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_projected_vectors</span><span class="p">(</span><span class="n">fmonthly</span><span class="p">,</span> <span class="n">proj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Project osisaf drifts to map projection (x/y pointing in the new map projection coordinates)</span>
 <span class="sd">    </span>
 <span class="sd">    Args: </span>
-<span class="sd">        dataPath (str): path to local directory of weekly drift data </span>
-
+<span class="sd">        fmonthly (xr.Dataset): monthly OSI-SAF vectors </span>
+<span class="sd">        proj (str): map projection to use (i.e. pyproj.Proj(&quot;+init=EPSG:3411&quot;))</span>
+<span class="sd">    </span>
 <span class="sd">    Returns: </span>
-<span class="sd">        monthlyDrifts (xarray DataArray): sea ice drift data, resampled to monthly means, with descriptive coordinates and attributes</span>
-<span class="sd">        </span>
-<span class="sd">    Note: This function uses two different datasets from the NSIDC for drift in order to get the most recent data. Drift dataset from 1978-2018 was combined with quicklook drift dataset from 2019-present, maintaining attitributes of the 1978-2018 dataset</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        fmonthly (xr.Dataset): input data reprojected to proj </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span> 
     
-    <span class="c1">#combine nc weekly files into a single xarray dataset</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">dataPath</span> <span class="o">+</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dataPath</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dataPath</span> <span class="o">+</span> <span class="n">f</span><span class="p">)</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.nc&#39;</span><span class="p">)]</span>
-    <span class="n">weeklyDrifts</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+    <span class="c1"># Transform to map project coordinates (basemap&#39;s axes, assume they have unit of m)</span>
+    <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="n">proj</span><span class="p">(</span><span class="n">fmonthly</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">fmonthly</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="o">=</span><span class="n">proj</span><span class="p">(</span><span class="n">fmonthly</span><span class="o">.</span><span class="n">lon1</span><span class="p">,</span> <span class="n">fmonthly</span><span class="o">.</span><span class="n">lat1</span><span class="p">)</span>
 
-    <span class="c1">#get transformed u,v variables and add to dataset</span>
-    <span class="n">uvelT</span><span class="p">,</span> <span class="n">vvelT</span><span class="p">,</span> <span class="n">vectorMag</span> <span class="o">=</span> <span class="n">get_uv_from_xy</span><span class="p">(</span><span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
-    <span class="n">weeklyDrifts</span> <span class="o">=</span> <span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">drifts_uT</span> <span class="o">=</span> <span class="n">uvelT</span><span class="p">,</span> <span class="n">drifts_vT</span> <span class="o">=</span> <span class="n">vvelT</span><span class="p">,</span> <span class="n">drifts_magnitude</span> <span class="o">=</span> <span class="n">vectorMag</span><span class="p">)</span>
+    <span class="c1"># Normalize drift components to m/s (x1-x0 is already m, so we just divide by 2-days worth of seconds)</span>
+    <span class="n">xt</span><span class="o">=</span><span class="p">(</span><span class="n">x1</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mf">2.</span><span class="p">)</span>
+    <span class="n">yt</span><span class="o">=</span><span class="p">(</span><span class="n">y1</span><span class="o">-</span><span class="n">y0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mf">2.</span><span class="p">)</span>
     
-    <span class="c1">#resample to get monthly data </span>
-    <span class="n">monthlyDrifts</span> <span class="o">=</span> <span class="n">weeklyDrifts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;MS&#39;</span><span class="p">,</span> <span class="n">keep_attrs</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">fmonthly</span><span class="p">[</span><span class="s1">&#39;xpts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;yc&#39;</span><span class="p">,</span> <span class="s1">&#39;xc&#39;</span><span class="p">])</span> 
+    
+    <span class="n">fmonthly</span><span class="p">[</span><span class="s1">&#39;ypts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;yc&#39;</span><span class="p">,</span> <span class="s1">&#39;xc&#39;</span><span class="p">])</span> 
+    
+    <span class="n">fmonthly</span><span class="p">[</span><span class="s1">&#39;x_vel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;yc&#39;</span><span class="p">,</span> <span class="s1">&#39;xc&#39;</span><span class="p">])</span> 
+    
+    <span class="n">fmonthly</span><span class="p">[</span><span class="s1">&#39;y_vel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">yt</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;yc&#39;</span><span class="p">,</span> <span class="s1">&#39;xc&#39;</span><span class="p">])</span> 
+    
+    <span class="n">fmonthly</span><span class="p">[</span><span class="s1">&#39;mag_vel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xt</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">yt</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;yc&#39;</span><span class="p">,</span> <span class="s1">&#39;xc&#39;</span><span class="p">])</span> 
 
-    <span class="c1">#convert to same time format as ICESat-2 </span>
-    <span class="n">monthlyDrifts</span> <span class="o">=</span> <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%m-</span><span class="si">%d</span><span class="s1">-%Y&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
+    <span class="n">fmonthly</span> <span class="o">=</span> <span class="n">fmonthly</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;dt0&#39;</span><span class="p">,</span> <span class="s1">&#39;dt1&#39;</span><span class="p">,</span> <span class="s1">&#39;lon1&#39;</span><span class="p">,</span> <span class="s1">&#39;lat1&#39;</span><span class="p">,</span> <span class="s1">&#39;dX&#39;</span><span class="p">,</span> <span class="s1">&#39;dY&#39;</span><span class="p">])</span>
     
-    <span class="c1">#add attributes</span>
-    <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">drifts_uT</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s1">&#39;along-x component of the ice motion (u variable) converted to zonal/meridional&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span><span class="s1">&#39;cm/s&#39;</span><span class="p">,</span> <span class="s1">&#39;long_name&#39;</span><span class="p">:</span><span class="s1">&#39;sea ice x velocity&#39;</span><span class="p">}</span>
-    <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">drifts_vT</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s1">&#39;along-y component of the ice motion (v variable) converted to zonal/meridional&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span><span class="s1">&#39;cm/s&#39;</span><span class="p">,</span> <span class="s1">&#39;long_name&#39;</span><span class="p">:</span><span class="s1">&#39;sea ice y velocity&#39;</span><span class="p">}</span>
-    <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">drifts_magnitude</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;drift vector magnitude&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span><span class="s1">&#39;cm/s&#39;</span><span class="p">}</span>
-    <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;njkeeney comment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;drift dataset from 1978-2018 was combined with quicklook drift dataset from 2019-present, maintaining attitributes of the 1978-2018 dataset&#39;</span>
-    <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;citation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Tschudi, M., W. N. Meier, J. S. Stewart, C. Fowler, and J. Maslanik. 2019. Polar Pathfinder Daily 25 km EASE-Grid Sea Ice Motion Vectors, Version 4. Weekly sea ice motion. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: https://doi.org/10.5067/INAWUWO7QH7B. July 2020.&#39;</span>
-    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">monthlyDrifts</span><span class="o">.</span><span class="n">data_vars</span><span class="p">:</span> 
-        <span class="k">if</span> <span class="n">var</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;drifts_magnitude&#39;</span><span class="p">,</span><span class="s1">&#39;drifts_uT&#39;</span><span class="p">,</span> <span class="s1">&#39;drifts_vT&#39;</span><span class="p">]:</span> 
-            <span class="n">monthlyDrifts</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">weeklyDrifts</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span> <span class="c1">#resampling function causes attributes to be lost, so add them back here</span>
+    <span class="c1"># Do some filtering as we&#39;re getting some weird values in the Canadian Archipelago</span>
+    <span class="n">fmonthly</span> <span class="o">=</span> <span class="n">fmonthly</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">fmonthly</span><span class="o">.</span><span class="n">mag_vel</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Add attributes</span>
+    <span class="n">fmonthly</span><span class="o">.</span><span class="n">x_vel</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s1">&#39;along-x component of the ice motion&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span><span class="s1">&#39;cm/s&#39;</span><span class="p">,</span> <span class="s1">&#39;long_name&#39;</span><span class="p">:</span><span class="s1">&#39;sea ice x velocity&#39;</span><span class="p">}</span>
+    <span class="n">fmonthly</span><span class="o">.</span><span class="n">y_vel</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s1">&#39;along-y component of the ice motion&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span><span class="s1">&#39;cm/s&#39;</span><span class="p">,</span> <span class="s1">&#39;long_name&#39;</span><span class="p">:</span><span class="s1">&#39;sea ice y velocity&#39;</span><span class="p">}</span>
+    <span class="n">fmonthly</span><span class="o">.</span><span class="n">mag_vel</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;drift vector magnitude&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span><span class="s1">&#39;cm/s&#39;</span><span class="p">}</span>
+    <span class="n">fmonthly</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;citation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Lavergne, T., Eastwood, S., Teffah, Z., Schyberg, H., and Breivik, L.-A.: Sea ice motion from low-resolution satellite sensors: An alternative method and its validation in the Arctic, J. Geophys. Res., 115, C10032, https://doi.org/10.1029/2009JC005958, 2010.&#39;</span>
     
-    <span class="k">return</span> <span class="n">monthlyDrifts</span>
+    <span class="k">return</span> <span class="n">fmonthly</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drifts</span> <span class="o">=</span> <span class="n">getDriftData</span><span class="p">(</span><span class="n">dataPath</span><span class="o">=</span><span class="n">drifts_path</span><span class="p">)</span>
-<span class="n">drifts</span> <span class="o">=</span> <span class="n">drifts</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">drifts</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&gt;</span> <span class="n">drifts</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1"># Restrict to ICESat-2 latitude </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in data </span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">drifts_path</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.nc&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;nh&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">]</span>
+<span class="n">files_xr</span> <span class="o">=</span> <span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+<span class="n">driftsDaily</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">files_xr</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
 
-<span class="c1"># Create empty dataset for 2021 since drifts is missing data </span>
-<span class="n">drifts_empty_2021</span> <span class="o">=</span> <span class="n">create_empty_xr_ds</span><span class="p">(</span><span class="n">xr_ds</span><span class="o">=</span><span class="n">drifts</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;2021-01&quot;</span><span class="p">,</span> <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;2021-04&quot;</span><span class="p">)</span>
-<span class="n">drifts</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">drifts</span><span class="p">,</span> <span class="n">drifts_empty_2021</span><span class="p">])</span>
-<span class="n">drifts</span> <span class="o">=</span> <span class="n">drifts</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">date_range</span><span class="p">)</span> <span class="c1"># Select for date range of interest</span>
+<span class="c1"># Resample monthly </span>
+<span class="n">driftsMonthly</span> <span class="o">=</span> <span class="n">driftsDaily</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s1">&#39;MS&#39;</span><span class="p">,</span> <span class="n">keep_attrs</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> 
+
+<span class="c1"># Project to CRS of ICeSat-2 grid</span>
+<span class="n">monthlyDrifts_proj</span> <span class="o">=</span> <span class="n">get_projected_vectors</span><span class="p">(</span><span class="n">fmonthly</span><span class="o">=</span><span class="n">driftsMonthly</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">proj</span><span class="o">=</span><span class="n">pyproj</span><span class="o">.</span><span class="n">Proj</span><span class="p">(</span><span class="s2">&quot;+init=EPSG:3411&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -897,8 +692,21 @@
 </div>
 </div>
 <div class="section" id="regrid-all-datasets-to-icesat-2-grid">
-<h1>3) Regrid all datasets to ICESat-2 grid<a class="headerlink" href="#regrid-all-datasets-to-icesat-2-grid" title="Permalink to this headline">¶</a></h1>
+<h1>Regrid all datasets to ICESat-2 grid<a class="headerlink" href="#regrid-all-datasets-to-icesat-2-grid" title="Permalink to this headline">¶</a></h1>
 <p>In order to merge all the datasets into a singe netcdf4 file, they need to be on the same grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize map projection and project data to it</span>
+<span class="n">out_proj</span> <span class="o">=</span> <span class="s1">&#39;EPSG:3411&#39;</span>
+<span class="n">out_lons</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">values</span>
+<span class="n">out_lats</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">mapProj</span> <span class="o">=</span> <span class="n">pyproj</span><span class="o">.</span><span class="n">Proj</span><span class="p">(</span><span class="s2">&quot;+init=&quot;</span> <span class="o">+</span> <span class="n">out_proj</span><span class="p">)</span>
+<span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span> <span class="o">=</span> <span class="n">mapProj</span><span class="p">(</span><span class="n">out_lons</span><span class="p">,</span> <span class="n">out_lats</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">regridToICESat2</span><span class="p">(</span><span class="n">dataArrayNEW</span><span class="p">,</span> <span class="n">xptsNEW</span><span class="p">,</span> <span class="n">yptsNEW</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">):</span>  
@@ -926,34 +734,7 @@
 </div>
 </div>
 <div class="section" id="id1">
-<h2>Sea ice concentration<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>These datasets are on the same grid but have slightly different lat/lon values</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#map projection from ICESat-2 data (can be viewed in is2.projection.attrs[&#39;srid&#39;])</span>
-<span class="n">out_proj</span> <span class="o">=</span> <span class="s1">&#39;EPSG:3411&#39;</span>
-<span class="n">out_lons</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">values</span>
-<span class="n">out_lats</span> <span class="o">=</span> <span class="n">is2_ds</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">values</span>
-
-<span class="c1">#initialize map projection and project data to it</span>
-<span class="n">mapProj</span> <span class="o">=</span> <span class="n">pyproj</span><span class="o">.</span><span class="n">Proj</span><span class="p">(</span><span class="s2">&quot;+init=&quot;</span> <span class="o">+</span> <span class="n">out_proj</span><span class="p">)</span>
-<span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span> <span class="o">=</span> <span class="n">mapProj</span><span class="p">(</span><span class="n">out_lons</span><span class="p">,</span> <span class="n">out_lats</span><span class="p">)</span>
-<span class="n">xptsCDR</span><span class="p">,</span> <span class="n">yptsCDR</span> <span class="o">=</span> <span class="n">mapProj</span><span class="p">(</span><span class="n">cdr_da</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-
-<span class="c1">#regrid data </span>
-<span class="n">cdr_regridded</span> <span class="o">=</span> <span class="n">regridToICESat2</span><span class="p">(</span><span class="n">cdr_da</span><span class="p">,</span> <span class="n">xptsCDR</span><span class="p">,</span> <span class="n">yptsCDR</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">)</span>
-<span class="n">cdr_regridded</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">cdr_regridded</span><span class="p">,</span> 
-                             <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">],</span> 
-                             <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">out_lats</span><span class="p">),</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">out_lons</span><span class="p">),</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">},</span> 
-                             <span class="n">name</span> <span class="o">=</span> <span class="n">cdr_da</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="n">cdr_regridded</span> <span class="o">=</span> <span class="n">cdr_regridded</span><span class="o">.</span><span class="n">to_dataset</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="id2">
-<h2>ERA5 climate reanalysis<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>ERA5 climate reanalysis<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choose data variables of interest </span>
@@ -980,8 +761,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>PIOMAS sea ice thickness<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2>PIOMAS sea ice thickness<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#project data to ICESat-2 map projection</span>
@@ -1000,25 +781,25 @@
 </div>
 </div>
 </div>
-<div class="section" id="sea-ice-motion-vectors">
-<h2>Sea ice motion vectors<a class="headerlink" href="#sea-ice-motion-vectors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>OSI-SAF Sea Ice Drifts<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#project data to ICESat-2 map projection</span>
-<span class="n">xptsDRIFTS</span><span class="p">,</span> <span class="n">yptsDRIFTS</span> <span class="o">=</span> <span class="n">mapProj</span><span class="p">(</span><span class="n">drifts</span><span class="o">.</span><span class="n">longitude</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">drifts</span><span class="o">.</span><span class="n">latitude</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">xptsDRIFTS</span><span class="p">,</span> <span class="n">yptsDRIFTS</span> <span class="o">=</span> <span class="n">mapProj</span><span class="p">(</span><span class="n">monthlyDrifts_proj</span><span class="o">.</span><span class="n">lon</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">monthlyDrifts_proj</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
 <span class="c1"># Loop through variables of interest and regrid </span>
 <span class="n">drifts_list</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;drifts_uT&#39;</span><span class="p">,</span> <span class="s1">&#39;drifts_vT&#39;</span><span class="p">,</span> <span class="s1">&#39;drifts_magnitude&#39;</span><span class="p">]:</span> 
-    <span class="n">driftsGridded</span> <span class="o">=</span> <span class="n">regridToICESat2</span><span class="p">(</span><span class="n">drifts</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="n">xptsDRIFTS</span><span class="p">,</span> <span class="n">yptsDRIFTS</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;x_vel&quot;</span><span class="p">,</span><span class="s2">&quot;y_vel&quot;</span><span class="p">]:</span> 
+    <span class="n">driftsGridded</span> <span class="o">=</span> <span class="n">regridToICESat2</span><span class="p">(</span><span class="n">monthlyDrifts_proj</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="n">xptsDRIFTS</span><span class="p">,</span> <span class="n">yptsDRIFTS</span><span class="p">,</span> <span class="n">xptsIS2</span><span class="p">,</span> <span class="n">yptsIS2</span><span class="p">)</span>
 
     <span class="n">driftsArray</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">driftsGridded</span><span class="p">,</span> 
                                <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">],</span> 
-                               <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">out_lats</span><span class="p">),</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">out_lons</span><span class="p">),</span> <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">drifts</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">},</span> 
+                               <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">out_lats</span><span class="p">),</span> <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">out_lons</span><span class="p">),</span> <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">monthlyDrifts_proj</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">},</span> 
                                <span class="n">name</span> <span class="o">=</span> <span class="n">var</span><span class="p">)</span>
 
-    <span class="n">driftsArray</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">drifts</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span>
-    <span class="n">driftsArray</span> <span class="o">=</span> <span class="n">driftsArray</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">drifts</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+    <span class="n">driftsArray</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">monthlyDrifts_proj</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span>
+    <span class="n">driftsArray</span> <span class="o">=</span> <span class="n">driftsArray</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">monthlyDrifts_proj</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
     <span class="n">drifts_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">driftsArray</span><span class="p">)</span>
 
 <span class="n">drifts_regridded</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">drifts_list</span><span class="p">)</span>
@@ -1029,61 +810,14 @@
 </div>
 </div>
 <div class="section" id="compile-and-save-final-dataset">
-<h1>4) Compile and save final dataset<a class="headerlink" href="#compile-and-save-final-dataset" title="Permalink to this headline">¶</a></h1>
-<p>Now that all the data is on the same grid, we can use xarray to merge all the datasets. We’ll also add the region mask as a coordinate.</p>
+<h1>Compile and save final dataset<a class="headerlink" href="#compile-and-save-final-dataset" title="Permalink to this headline">¶</a></h1>
+<p>Now that all the data is on the same grid, we can use xarray to merge all the datasets.</p>
 <div class="section" id="combine-datasets">
 <h2>Combine datasets<a class="headerlink" href="#combine-datasets" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">is2_ds</span><span class="p">,</span> <span class="n">cdr_regridded</span><span class="p">,</span> <span class="n">pio_regridded</span><span class="p">,</span> <span class="n">ERA5_regridded</span><span class="p">,</span> <span class="n">drifts_regridded</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="add-region-mask-as-a-coordinate-to-the-final-dataset">
-<h2>Add region mask as a coordinate to the final dataset<a class="headerlink" href="#add-region-mask-as-a-coordinate-to-the-final-dataset" title="Permalink to this headline">¶</a></h2>
-<p>This allows the user to easily mask regions when analyzing the data. See the region masking notebook for more information on the utility of this.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_ds</span> <span class="o">=</span> <span class="n">final_ds</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="n">regionMaskCoords</span><span class="p">)</span>
-<span class="n">final_ds</span><span class="o">.</span><span class="n">region_mask</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">regionMaskAttrs</span>
-<span class="n">final_ds</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span><span class="s1">&#39;Data used in ICESat-2 jupyter book&#39;</span><span class="p">,</span> 
-                  <span class="s1">&#39;note&#39;</span><span class="p">:</span> <span class="s1">&#39;See individual data variables for references&#39;</span><span class="p">,</span> 
-                  <span class="s1">&#39;creation date&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">())}</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">final_ds</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
-Dimensions:                  (time: 30, y: 448, x: 304)
-Coordinates:
-  * time                     (time) datetime64[ns] 2018-11-01 ... 2021-04-01
-    longitude                (y, x) float32 168.3 168.1 168.0 ... -10.18 -9.999
-    latitude                 (y, x) float32 31.1 31.2 31.3 ... 34.68 34.58 34.47
-    xgrid                    (y, x) float32 -3.838e+06 -3.812e+06 ... 3.738e+06
-    ygrid                    (y, x) float32 5.838e+06 5.838e+06 ... -5.338e+06
-    region_mask              (y, x) uint8 1 1 1 1 1 1 1 1 1 ... 1 1 1 1 1 1 1 1
-Dimensions without coordinates: y, x
-Data variables: (12/21)
-    projection               (time) float64 -2.147e+09 -2.147e+09 ... -2.147e+09
-    ice_thickness            (time, y, x) float32 nan nan nan ... nan nan nan
-    ice_thickness_unc        (time, y, x) float32 nan nan nan ... nan nan nan
-    num_segments             (time, y, x) float32 nan nan nan ... nan nan nan
-    mean_day_of_month        (time, y, x) float32 nan nan nan ... nan nan nan
-    snow_depth               (time, y, x) float32 nan nan nan ... nan nan nan
-    ...                       ...
-    piomas_ice_thickness     (time, y, x) float32 0.0 0.0 0.0 ... 0.0 0.0 0.0
-    t2m                      (time, y, x) float32 nan 11.68 ... 7.272 7.321
-    msdwlwrf                 (time, y, x) float32 nan 380.6 ... 335.3 334.9
-    drifts_uT                (time, y, x) float32 nan nan nan ... nan nan nan
-    drifts_vT                (time, y, x) float32 nan nan nan ... nan nan nan
-    drifts_magnitude         (time, y, x) float32 nan nan nan ... nan nan nan
-Attributes:
-    description:    Data used in ICESat-2 jupyter book
-    note:           See individual data variables for references
-    creation date:  2021-11-04
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">is2_ds</span><span class="p">,</span> <span class="n">pio_regridded</span><span class="p">,</span> <span class="n">ERA5_regridded</span><span class="p">,</span> <span class="n">drifts_regridded</span><span class="p">])</span>
+<span class="n">final_ds</span> <span class="o">=</span> <span class="n">final_ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="s2">&quot;Nov 2018&quot;</span><span class="p">,</span><span class="n">final_ds</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span> <span class="c1"># Remove Sep &amp; Oct 2018, which have no data from ICESat-2</span>
 </pre></div>
 </div>
 </div>
@@ -1111,14 +845,6 @@ Attributes:
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot save file because file by same name already exists&quot;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span> 
     <span class="k">pass</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-data.nc&quot; saved to directory &quot;/Users/nicolekeeney/code/icesat2-book&quot;
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File &quot;icesat2-book-data.nc&quot; saved to directory &quot;../icesat2-book-data/
 </pre></div>
 </div>
 </div>

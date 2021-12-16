@@ -52,7 +52,6 @@
     <link rel="shortcut icon" href="_static/logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Intro to the ATLAS/ICESat-2 Monthly Gridded Sea Ice Thickness Dataset" href="is2_intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -87,8 +86,9 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
- <li class="toctree-l1 current">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="home.html">
+   <!-- #region -->
    ICESat-2 Sea Ice Thickness Data Analysis and Visualization
   </a>
  </li>
@@ -127,11 +127,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="sea_ice_drift.html">
-   Sea ice drift vectors
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="atmospheric_variables.html">
    Atmospheric variables
   </a>
@@ -163,11 +158,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="utils/markdown_rendering/read_data_utils.html">
    Functions for reading data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="utils/markdown_rendering/wrangling_utils.html">
-   Functions for data wrangling
   </a>
  </li>
  <li class="toctree-l1">
@@ -270,6 +260,11 @@
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contact">
+   Contact
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#introduction">
    Introduction
   </a>
@@ -295,11 +290,6 @@
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#contact">
-   Contact
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#activating-the-conda-environment">
    Activating the conda environment
   </a>
@@ -308,8 +298,6 @@
   <a class="reference internal nav-link" href="#updating-the-jupyter-book">
    Updating the Jupyter Book
   </a>
-  <ul class="visible nav section-nav flex-column">
-  </ul>
  </li>
 </ul>
 
@@ -324,6 +312,17 @@
                 
   <div class="section" id="icesat-2-sea-ice-thickness-data-analysis-and-visualization">
 <h1>ICESat-2 Sea Ice Thickness Data Analysis and Visualization<a class="headerlink" href="#icesat-2-sea-ice-thickness-data-analysis-and-visualization" title="Permalink to this headline">¶</a></h1>
+<p><strong>View this repository in our Jupyter Book:</strong> <a class="reference external" href="https://nicolekeeney.com/icesat2-book">https://nicolekeeney.com/icesat2-book</a></p>
+<p><img alt="ICESat-2 maps" src="_images/maps_thickness_winter.png" /></p>
+</div>
+<div class="section" id="contact">
+<h1>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h1>
+<p><strong>Nicole Keeney (Primary author)</strong><br>
+<a class="reference external" href="mailto:nicolejkeeney&#37;&#52;&#48;gmail&#46;com">nicolejkeeney<span>&#64;</span>gmail<span>&#46;</span>com</a><br>
+GitHub: nicolejkeeney<br></p>
+<p><strong>Alek Petty (Supervisor, ICESat-2 sea ice data lead)</strong><br>
+<a class="reference external" href="mailto:alek&#46;a&#46;petty&#37;&#52;&#48;nasa&#46;gov">alek<span>&#46;</span>a<span>&#46;</span>petty<span>&#64;</span>nasa<span>&#46;</span>gov</a><br>
+GitHub: akpetty<br></p>
 </div>
 <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
@@ -332,7 +331,7 @@
 </div>
 <div class="section" id="jupyter-book-description">
 <h1>Jupyter Book description<a class="headerlink" href="#jupyter-book-description" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://jupyterbook.org/intro.html">Jupyter Books</a> provide a novel means of compiling Jupyter Notebooks into one convenient and well-indexed location. Here, jupyter notebooks are used to provide a visual demonstration of our efforts to analyze the monthly gridded ICESat-2 winter Arctic sea ice data (freeboard and thickness), along with other relevant datasets to help us understand recent winter Arctic sea ice growth.<br><br>We’ve also set up the book so that users can easily run the code without needing to download anything– even python– by using a hosting service called Binder. To run a notebook (chapter pages in the book) in Binder, just click the <strong>Binder</strong> tab under the rocket ship icon at the top of each notebook. This option is configured for all notebooks except the modules in the Helper Functions section and the data wrangling notebook.</p>
+<p><a class="reference external" href="https://jupyterbook.org/intro.html">Jupyter Books</a> provide a novel means of compiling Jupyter Notebooks into one convenient and well-indexed location. Here, jupyter notebooks are used to provide a visual demonstration of our efforts to analyze the monthly gridded ICESat-2 winter Arctic sea ice data (freeboard and thickness), along with other relevant datasets to help us understand recent winter Arctic sea ice growth.<br><br>We’ve also set up the book so that users can easily run the code without needing to download anything by using a hosting service called Binder. To run a notebook (chapter pages in the book) in Binder, just click the <strong>Binder</strong> tab under the rocket ship icon at the top of each notebook. This option is configured for all notebooks except the modules in the Helper Functions section and the data wrangling notebook.</p>
 </div>
 <div class="section" id="accessing-the-data">
 <h1>Accessing the data<a class="headerlink" href="#accessing-the-data" title="Permalink to this headline">¶</a></h1>
@@ -344,22 +343,14 @@
 <ul class="simple">
 <li><p>9/4/2020: Version 1</p></li>
 <li><p>11/18/2020: Updated with version 2 ICESat-2 data product for <a class="reference external" href="https://agu.confex.com/agu/fm20/meetingapp.cgi/Paper/684153">AGU Fall 2020 poster highlighting the book</a>.</p></li>
-<li><p>6/14/2021: Updated for the publication of Petty et al. (2021) with final ICESat-2 data product and cleaner notebooks. Transitioned from Google Colab interactivity to Binder.</p></li>
+<li><p>6/14/2021: Transitioned from Google Colab interactivity to Binder.</p></li>
 <li><p>10/25/2021: Added interactive plotting using hvplot. Improved interpolation/smoothing method for ICESat-2 data and added notebook to demonstrate steps.</p></li>
+<li><p>12/15/2021: Updated notebooks to reflect new data variables in ICESat-2 data v2. Added drift vectors.</p></li>
 </ul>
 </div>
 <div class="section" id="a-note-on-xarray">
 <h1>A note on xarray<a class="headerlink" href="#a-note-on-xarray" title="Permalink to this headline">¶</a></h1>
 <p>All of the notebooks in this notebook utilize <a class="reference external" href="http://xarray.pydata.org/en/stable/">xarray</a>, a python package built for working with multi-dimensional data like the monthly gridded sea ice data. Xarray is especially useful for time series data and allows for easily plotting data on map projections via compatability with the python packages cartopy and hvplot.</p>
-</div>
-<div class="section" id="contact">
-<h1>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h1>
-<p><strong>Nicole Keeney (Primary author)</strong>
-<br><a class="reference external" href="mailto:nicolejkeeney&#37;&#52;&#48;gmail&#46;com">nicolejkeeney<span>&#64;</span>gmail<span>&#46;</span>com</a>
-<br>GitHub: nicolejkeeney</p>
-<p><strong>Alek Petty (Supervisor, ICESat-2 sea ice data lead)</strong>
-<br><a class="reference external" href="mailto:alek&#46;a&#46;petty&#37;&#52;&#48;nasa&#46;gov">alek<span>&#46;</span>a<span>&#46;</span>petty<span>&#64;</span>nasa<span>&#46;</span>gov</a>
-<br>GitHub: akpetty</p>
 </div>
 <div class="section" id="activating-the-conda-environment">
 <h1>Activating the conda environment<a class="headerlink" href="#activating-the-conda-environment" title="Permalink to this headline">¶</a></h1>
@@ -392,14 +383,6 @@ To create the environment, run the following in the command line:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ghp</span><span class="o">-</span><span class="kn">import</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">p</span> <span class="o">-</span><span class="n">f</span> <span class="n">_build</span><span class="o">/</span><span class="n">html</span>
 </pre></div>
 </div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -431,15 +414,6 @@ To create the environment, run the following in the command line:</p>
 
 <div class='prev-next-bottom'>
     
-     <div id="next">
-        <a class="right-next" href="is2_intro.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Intro to the ATLAS/ICESat-2 Monthly Gridded Sea Ice Thickness Dataset</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
 
 </div>
         

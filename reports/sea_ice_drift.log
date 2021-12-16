@@ -1,0 +1,57 @@
+Traceback (most recent call last):
+  File "/Users/nicolekeeney/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/Users/nicolekeeney/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/nbclient/client.py", line 1117, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/nicolekeeney/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/nbclient/util.py", line 78, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/Users/nicolekeeney/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/nbclient/util.py", line 57, in just_run
+    return loop.run_until_complete(coro)
+  File "/Users/nicolekeeney/opt/anaconda3/envs/icesat2_book/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/Users/nicolekeeney/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/nbclient/client.py", line 558, in async_execute
+    await self.async_execute_cell(
+  File "/Users/nicolekeeney/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/nbclient/client.py", line 862, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/Users/nicolekeeney/opt/anaconda3/envs/icesat2_book/lib/python3.8/site-packages/nbclient/client.py", line 765, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import xarray as xr # For working with gridded climate data 
+from utils.read_data_utils import read_book_data # Helper function for reading the data from the bucket
+from utils.wrangling_utils import restrictRegionally # Region restriction 
+from utils.plotting_utils import static_winter_comparison_lineplot, interactiveArcticMaps, compute_gridcell_winter_means # Plotting utils 
+
+
+
+import numpy as np 
+import pandas as pd
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+import matplotlib.pyplot as plt
+from matplotlib.axes import Axes
+from cartopy.mpl.geoaxes import GeoAxes
+GeoAxes._pcolormesh_patched = Axes.pcolormesh # Helps avoid some weird issues with the polar projection 
+
+# Plotting dependencies
+%config InlineBackend.figure_format = 'retina'
+import matplotlib as mpl
+mpl.rcParams['figure.dpi'] = 150 # Sets figure size in the notebook
+
+# Remove warnings to improve display
+import warnings 
+warnings.filterwarnings('ignore') 
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;32m/var/folders/8v/cr06mz0n3bjd5jr12_9v6n200000gn/T/ipykernel_75863/2404728724.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;32mimport[0m [0mxarray[0m [0;32mas[0m [0mxr[0m [0;31m# For working with gridded climate data[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      2[0m [0;32mfrom[0m [0mutils[0m[0;34m.[0m[0mread_data_utils[0m [0;32mimport[0m [0mread_book_data[0m [0;31m# Helper function for reading the data from the bucket[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 3[0;31m [0;32mfrom[0m [0mutils[0m[0;34m.[0m[0mwrangling_utils[0m [0;32mimport[0m [0mrestrictRegionally[0m [0;31m# Region restriction[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      4[0m [0;32mfrom[0m [0mutils[0m[0;34m.[0m[0mplotting_utils[0m [0;32mimport[0m [0mstatic_winter_comparison_lineplot[0m[0;34m,[0m [0minteractiveArcticMaps[0m[0;34m,[0m [0mcompute_gridcell_winter_means[0m [0;31m# Plotting utils[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0;34m[0m[0m
+
+[0;31mModuleNotFoundError[0m: No module named 'utils.wrangling_utils'
+ModuleNotFoundError: No module named 'utils.wrangling_utils'
+

@@ -53,7 +53,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Sea ice thickness" href="sea_ice_thickness.html" />
-    <link rel="prev" title="ICESat-2 Sea Ice Thickness Data Analysis and Visualization" href="README.html" />
+    <link rel="prev" title="ICESat-2 Sea Ice Thickness Data Analysis and Visualization" href="home.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -89,7 +89,8 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="README.html">
+  <a class="reference internal" href="home.html">
+   <!-- #region -->
    ICESat-2 Sea Ice Thickness Data Analysis and Visualization
   </a>
  </li>
@@ -128,11 +129,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="sea_ice_drift.html">
-   Sea ice drift vectors
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="atmospheric_variables.html">
    Atmospheric variables
   </a>
@@ -164,11 +160,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="utils/markdown_rendering/read_data_utils.html">
    Functions for reading data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="utils/markdown_rendering/wrangling_utils.html">
-   Functions for data wrangling
   </a>
  </li>
  <li class="toctree-l1">
@@ -289,22 +280,22 @@
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#read-in-icesat-2-netcdf4-files-using-xarray">
-   1) Read in ICESat-2 netcdf4 files using xarray
+   Read in ICESat-2 netcdf4 files using xarray
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#overlay-sea-ice-thickness-on-a-map-of-the-arctic">
-   2) Overlay sea ice thickness on a map of the Arctic
+   Overlay sea ice thickness on a map of the Arctic
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#simple-sea-ice-thickness-maps">
-   2) Simple sea ice thickness maps
+   Simple sea ice thickness maps
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#plot-mean-sea-ice-freeboard-over-time">
-   3) Plot mean sea ice freeboard over time
+   Plot mean sea ice freeboard over time
   </a>
  </li>
 </ul>
@@ -345,7 +336,7 @@
 </div>
 </div>
 <div class="section" id="read-in-icesat-2-netcdf4-files-using-xarray">
-<h1>1) Read in ICESat-2 netcdf4 files using xarray<a class="headerlink" href="#read-in-icesat-2-netcdf4-files-using-xarray" title="Permalink to this headline">¶</a></h1>
+<h1>Read in ICESat-2 netcdf4 files using xarray<a class="headerlink" href="#read-in-icesat-2-netcdf4-files-using-xarray" title="Permalink to this headline">¶</a></h1>
 <p>Here, we’ll read in the data from the jupyter book using a function <code class="docutils literal notranslate"><span class="pre">read_is2_data</span></code> , defined in the <code class="docutils literal notranslate"><span class="pre">read_data_utils</span></code> module. You can also download this same data from the NSIDC. See the <code class="docutils literal notranslate"><span class="pre">data_wrangling</span></code> notebook for more information on this dataset.<br><br> The function reads in the data as an xarray Dataset object. <a class="reference external" href="http://xarray.pydata.org/en/stable/">xarray</a> is a python package built for working with gridded data and is particularly useful for climate data in the form of netcdf4 files</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -386,7 +377,7 @@ Coordinates:
     xgrid              (y, x) float32 -3.838e+06 -3.812e+06 ... 3.738e+06
     ygrid              (y, x) float32 5.838e+06 5.838e+06 ... -5.338e+06
 Dimensions without coordinates: y, x
-Data variables: (12/14)
+Data variables: (12/15)
     projection         (time) float64 -2.147e+09 -2.147e+09 ... -2.147e+09
     ice_thickness      (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     ice_thickness_unc  (time, y, x) float32 nan nan nan nan ... nan nan nan nan
@@ -394,24 +385,24 @@ Data variables: (12/14)
     mean_day_of_month  (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     snow_depth         (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     ...                 ...
-    ice_type           (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     ice_density        (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     ice_thickness_int  (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     freeboard_int      (time, y, x) float32 nan nan nan nan ... nan nan nan nan
     snow_depth_int     (time, y, x) float32 nan nan nan nan ... nan nan nan nan
-    sea_ice_conc       (time, y, x) float32 0.0 0.0 0.0 0.0 ... 0.0 0.0 0.0 0.0
+    sea_ice_conc       (time, y, x) float32 nan nan nan nan ... nan nan nan nan
+    region_mask        (time, y, x) float64 0.0 0.0 0.0 0.0 ... 0.0 0.0 0.0 0.0
 Attributes:
     contact:      Alek Petty (alek.a.petty@nasa.gov)
-    description:  Gridded Jan 2020 Arctic sea ice thickness and ancillary dat...
+    description:  Gridded Oct 2019 Arctic sea ice thickness and ancillary dat...
     reference:    Data doi: 10.5067/CV6JEXEE31HF. Original methodology descri...
-    history:      Created 01/11/21
+    history:      Created 10/12/21
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="overlay-sea-ice-thickness-on-a-map-of-the-arctic">
-<h1>2) Overlay sea ice thickness on a map of the Arctic<a class="headerlink" href="#overlay-sea-ice-thickness-on-a-map-of-the-arctic" title="Permalink to this headline">¶</a></h1>
+<h1>Overlay sea ice thickness on a map of the Arctic<a class="headerlink" href="#overlay-sea-ice-thickness-on-a-map-of-the-arctic" title="Permalink to this headline">¶</a></h1>
 <p>xarray allows us to generate a quick and simple map of the data in just a few lines of code. Below, we’ll plot sea ice thickness for a single month.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -433,7 +424,7 @@ Attributes:
 </div>
 </div>
 <div class="section" id="simple-sea-ice-thickness-maps">
-<h1>2) Simple sea ice thickness maps<a class="headerlink" href="#simple-sea-ice-thickness-maps" title="Permalink to this headline">¶</a></h1>
+<h1>Simple sea ice thickness maps<a class="headerlink" href="#simple-sea-ice-thickness-maps" title="Permalink to this headline">¶</a></h1>
 <p>Using the function arguments <code class="docutils literal notranslate"><span class="pre">col</span></code> and <code class="docutils literal notranslate"><span class="pre">col_wrap</span></code>, we can modify the code for plotting one month of data to plot several months of data. Below, we’ll plot sea ice thickness for Nov 2020 - Apr 2021.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -460,7 +451,7 @@ Attributes:
 </div>
 </div>
 <div class="section" id="plot-mean-sea-ice-freeboard-over-time">
-<h1>3) Plot mean sea ice freeboard over time<a class="headerlink" href="#plot-mean-sea-ice-freeboard-over-time" title="Permalink to this headline">¶</a></h1>
+<h1>Plot mean sea ice freeboard over time<a class="headerlink" href="#plot-mean-sea-ice-freeboard-over-time" title="Permalink to this headline">¶</a></h1>
 <p>Maybe we want to know how the mean has changed over time. Below, we’ll compute the mean monthly sea ice freeboard for Sep 2020 - Apr 2021, and display the information in a simple lineplot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -513,11 +504,12 @@ Attributes:
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="README.html" title="previous page">
+        <a class="left-prev" href="home.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">ICESat-2 Sea Ice Thickness Data Analysis and Visualization</p>
+                <p class="prevnext-title"><!-- #region -->
+ICESat-2 Sea Ice Thickness Data Analysis and Visualization</p>
             </div>
         </a>
     </div>
