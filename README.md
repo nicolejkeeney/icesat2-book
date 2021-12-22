@@ -4,12 +4,6 @@ ICESat-2 Sea Ice Thickness Data Analysis and Visualization
 
 **View this repository in our Jupyter Book:** https://nicolekeeney.com/icesat2-book
 
-ICESat-2 Sea Ice Thickness Data Analysis and Visualization
-=============================================
-
-![ICESat-2 maps](figs/maps_thickness_winter.png "ICESat-2 mean winter sea ice thickness")
-
-
 ![ICESat-2 maps](figs/maps_thickness_winter.png "ICESat-2 mean winter sea ice thickness")
 
 
