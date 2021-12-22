@@ -37,8 +37,3 @@ If you find any typos or errors in the code or have any suggestions for the book
  
 # A note on xarray 
 All of the notebooks in this notebook utilize [xarray](http://xarray.pydata.org/en/stable/), a python package built for working with multi-dimensional data like the monthly gridded sea ice data. Xarray is especially useful for time series data and allows for easily plotting data on map projections via compatability with the python packages cartopy and hvplot. 
-<!-- #endregion -->
-
-```python
-
-```
