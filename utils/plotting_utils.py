@@ -51,7 +51,6 @@ def get_winter_data(da, year_start=None, start_month="Sep", end_month="Apr", for
         else: 
             da_winter = da.sel(time=months_in_da)
     else: 
-        print("WARNING: No winter season found for "+str(year_start)+"-"+str(int(year_start)+1)+". Returning None.")
         da_winter = None
         
     return da_winter
@@ -74,7 +73,6 @@ def compute_gridcell_winter_means(da, years=None, start_month="Nov", end_month="
     
     if years is None: 
         years = np.unique(pd.to_datetime(da.time.values).strftime("%Y")) # Unique years in the dataset 
-        print("No years specified. Using "+", ".join(years))
 
     winter_means = []
     for year in years: # Loop through each year and grab the winter months, compute winter mean, and append to list 
@@ -495,7 +493,6 @@ def interactive_winter_comparison_lineplot(da, years=None, title="Winter compari
     
     if years is None: 
         years = np.unique(pd.to_datetime(da.time.values).strftime("%Y")) # Unique years in the dataset 
-        print("No years specified. Using "+", ".join(years))
     
     winter_means_list = []
     for year in years:

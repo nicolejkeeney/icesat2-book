@@ -7,9 +7,9 @@ parts:
 - caption: ANALYSIS & VISUALIZATION
   chapters: 
   - file: sea_ice_thickness
-  - file: pio_vs_is2
   - file: sea_ice_characteristics 
   - file: atmospheric_variables 
+  - file: pio_vs_is2
 - caption: DATA WRANGLING & INTERPOLATION
   chapters:
   - file: data_wrangling
