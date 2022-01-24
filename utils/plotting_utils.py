@@ -199,6 +199,15 @@ def staticArcticMaps_overlayDrifts(da, drifts_x, drifts_y, alpha=1, vector_val=0
         Figure displayed in notebook 
     
     """ 
+    # Make sure alpha is between 0 and 1 
+    if alpha > 1: 
+        print("Argument alpha must be between 0 and 1. You inputted " +str(alpha)+ ". Setting alpha to 1.")
+        alpha = 1 
+    elif alpha < 0: 
+        print("Argument alpha must be between 0 and 1. You inputted " +str(alpha)+ ". Setting alpha to 0.5.")
+        alpha = 0.5
+    elif alpha == 0: 
+        print("You set alpha=0. This indicates full transparency of the input data. No data will be displayed on the map.")
     
     # Check that drifts and da have the same time coordinates 
     for drift in [drifts_x,drifts_y]:
