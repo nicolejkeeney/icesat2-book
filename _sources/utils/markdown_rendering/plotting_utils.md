@@ -1,5 +1,5 @@
 # Functions for plotting and mapping
-This is a markdown rendering of the `plotting_utils` module used in the notebooks. It is provided here for user reference, and may not reflect any changes to the code after 12/15/2021. The code can be viewed and downloaded from the github repository.
+This is a markdown rendering of the `plotting_utils` module used in the notebooks. It is provided here for user reference, and may not reflect any changes to the code after 01/24/2022. The code can be viewed and downloaded from the github repository.
 
 
 ```
@@ -55,7 +55,6 @@ def get_winter_data(da, year_start=None, start_month="Sep", end_month="Apr", for
         else: 
             da_winter = da.sel(time=months_in_da)
     else: 
-        print("WARNING: No winter season found for "+str(year_start)+"-"+str(int(year_start)+1)+". Returning None.")
         da_winter = None
         
     return da_winter
@@ -80,7 +79,6 @@ def compute_gridcell_winter_means(da, years=None, start_month="Nov", end_month="
     
     if years is None: 
         years = np.unique(pd.to_datetime(da.time.values).strftime("%Y")) # Unique years in the dataset 
-        print("No years specified. Using "+", ".join(years))
 
     winter_means = []
     for year in years: # Loop through each year and grab the winter months, compute winter mean, and append to list 
@@ -211,6 +209,15 @@ def staticArcticMaps_overlayDrifts(da, drifts_x, drifts_y, alpha=1, vector_val=0
         Figure displayed in notebook 
     
     """ 
+    # Make sure alpha is between 0 and 1 
+    if alpha > 1: 
+        print("Argument alpha must be between 0 and 1. You inputted " +str(alpha)+ ". Setting alpha to 1.")
+        alpha = 1 
+    elif alpha < 0: 
+        print("Argument alpha must be between 0 and 1. You inputted " +str(alpha)+ ". Setting alpha to 0.5.")
+        alpha = 0.5
+    elif alpha == 0: 
+        print("You set alpha=0. This indicates full transparency of the input data. No data will be displayed on the map.")
     
     # Check that drifts and da have the same time coordinates 
     for drift in [drifts_x,drifts_y]:
@@ -513,7 +520,6 @@ def interactive_winter_comparison_lineplot(da, years=None, title="Winter compari
     
     if years is None: 
         years = np.unique(pd.to_datetime(da.time.values).strftime("%Y")) # Unique years in the dataset 
-        print("No years specified. Using "+", ".join(years))
     
     winter_means_list = []
     for year in years:

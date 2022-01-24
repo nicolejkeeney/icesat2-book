@@ -260,7 +260,7 @@
                 
   <div class="section" id="functions-for-plotting-and-mapping">
 <h1>Functions for plotting and mapping<a class="headerlink" href="#functions-for-plotting-and-mapping" title="Permalink to this headline">¶</a></h1>
-<p>This is a markdown rendering of the <code class="docutils literal notranslate"><span class="pre">plotting_utils</span></code> module used in the notebooks. It is provided here for user reference, and may not reflect any changes to the code after 12/15/2021. The code can be viewed and downloaded from the github repository.</p>
+<p>This is a markdown rendering of the <code class="docutils literal notranslate"><span class="pre">plotting_utils</span></code> module used in the notebooks. It is provided here for user reference, and may not reflect any changes to the code after 01/24/2022. The code can be viewed and downloaded from the github repository.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; plotting_utils.py </span>
 
 <span class="sd">Helper functions for generating maps and plots </span>
@@ -311,7 +311,6 @@
         <span class="k">else</span><span class="p">:</span> 
             <span class="n">da_winter</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">months_in_da</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span> 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: No winter season found for &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">year_start</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">year_start</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;. Returning None.&quot;</span><span class="p">)</span>
         <span class="n">da_winter</span> <span class="o">=</span> <span class="kc">None</span>
         
     <span class="k">return</span> <span class="n">da_winter</span>
@@ -334,7 +333,6 @@
     
     <span class="k">if</span> <span class="n">years</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
         <span class="n">years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y&quot;</span><span class="p">))</span> <span class="c1"># Unique years in the dataset </span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No years specified. Using &quot;</span><span class="o">+</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">years</span><span class="p">))</span>
 
     <span class="n">winter_means</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">years</span><span class="p">:</span> <span class="c1"># Loop through each year and grab the winter months, compute winter mean, and append to list </span>
@@ -461,6 +459,15 @@
 <span class="sd">        Figure displayed in notebook </span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="c1"># Make sure alpha is between 0 and 1 </span>
+    <span class="k">if</span> <span class="n">alpha</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Argument alpha must be between 0 and 1. You inputted &quot;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;. Setting alpha to 1.&quot;</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span> 
+    <span class="k">elif</span> <span class="n">alpha</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Argument alpha must be between 0 and 1. You inputted &quot;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;. Setting alpha to 0.5.&quot;</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="k">elif</span> <span class="n">alpha</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You set alpha=0. This indicates full transparency of the input data. No data will be displayed on the map.&quot;</span><span class="p">)</span>
     
     <span class="c1"># Check that drifts and da have the same time coordinates </span>
     <span class="k">for</span> <span class="n">drift</span> <span class="ow">in</span> <span class="p">[</span><span class="n">drifts_x</span><span class="p">,</span><span class="n">drifts_y</span><span class="p">]:</span>
@@ -755,7 +762,6 @@
     
     <span class="k">if</span> <span class="n">years</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
         <span class="n">years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y&quot;</span><span class="p">))</span> <span class="c1"># Unique years in the dataset </span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No years specified. Using &quot;</span><span class="o">+</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">years</span><span class="p">))</span>
     
     <span class="n">winter_means_list</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">years</span><span class="p">:</span>
