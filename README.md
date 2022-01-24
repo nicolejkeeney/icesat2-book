@@ -59,8 +59,11 @@ Simple instructions for how to construct/update this book are pasted below for t
 ```
 jb build icesat2-book
 ```
-5. cd into local book directory... There must be a way to do this without changing in and out of the book directory, but I never bothered to figure out how. 
-6. Next you'll update the github page associated with all the html files. You won't be able to see any of the changes to the webpage hosting the book until you do this. In the command line, run: 
+5. Move back cd local book directory... There must be a way to do this without changing in and out of the book directory, but if there is, it's not very intuitive. 
+```
+cd icesat2-book
+```
+7. Next you'll update the github page associated with all the html files. You won't be able to see any of the changes to the webpage hosting the book until you do this. In the command line, run: 
 ```
 ghp-import -n -p -f _build/html
 ```
