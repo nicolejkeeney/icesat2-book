@@ -33,7 +33,7 @@ If you find any typos or errors in the code or have any suggestions for the book
  - 11/18/2020: Updated with version 2 ICESat-2 data product for [AGU Fall 2020 poster highlighting the book](https://ui.adsabs.harvard.edu/abs/2020AGUFMC014.0012K/abstract). 
  - 6/14/2021: Transitioned from Google Colab interactivity to Binder. 
  - 10/25/2021: Added interactive plotting using hvplot. Improved interpolation/smoothing method for ICESat-2 data and added notebook to demonstrate steps. 
- - 12/22/2021: Updated notebooks to reflect new data variables in ICESat-2 data v2. Added drift vectors. 
+ - 01/24/2022: Updated notebooks to reflect new data variables in ICESat-2 data v2. Added drift vectors. 
  
 # A note on xarray 
 All of the notebooks in this notebook utilize [xarray](http://xarray.pydata.org/en/stable/), a python package built for working with multi-dimensional data like the monthly gridded sea ice data. Xarray is especially useful for time series data and allows for easily plotting data on map projections via compatability with the python packages cartopy and hvplot. 
