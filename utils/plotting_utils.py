@@ -395,7 +395,7 @@ def interactive_winter_mean_maps(da, years=None, end_year=None, start_month="Sep
     return pl_means
 
 
-def static_winter_comparison_lineplot(da, da_unc=None, years=None, figsize=(5,3), start_month="Sep", end_month="Apr", title="", set_ylabel = '', set_units = '', legend=True, savefig=True, region_str='', force_complete_season=False): 
+def static_winter_comparison_lineplot(da, da_unc=None, years=None, figsize=(5,3), start_month="Sep", end_month="Apr", title="", set_ylabel = '', set_units = '', legend=True, savefig=True, save_label='', force_complete_season=False): 
     """ Make a lineplot with markers comparing monthly mean data across winter seasons 
     
     Args: 
@@ -406,7 +406,7 @@ def static_winter_comparison_lineplot(da, da_unc=None, years=None, figsize=(5,3)
         set_units (str, optional): prescribed y label unit string
         legend (bool): print legend
         savefig (bool): output figure
-        region_str (str, optional): regional string for output
+        save_label (str, optional): additional string for output
         figsize (tuple, optional): figure size to display in notebook (default to (5,3))
         start_month (str, optional): first month in winter (default to September)
         end_month (str, optional): second month in winter; this is the following calender year after start_month (default to April)
@@ -476,7 +476,7 @@ def static_winter_comparison_lineplot(da, da_unc=None, years=None, figsize=(5,3)
 
     # save figure
     if savefig:
-        plt.savefig('./figs/'+da.attrs["long_name"]+start_month+end_month+str(years[0])+'-'+str(years[-1])+region_str+'.pdf', 
+        plt.savefig('./figs/'+da.attrs["long_name"]+start_month+end_month+str(years[0])+'-'+str(years[-1])+save_label+'.pdf', 
                     dpi=300, facecolor="white", bbox_inches='tight')
 
     plt.show()
