@@ -2,7 +2,7 @@
 ICESat-2 Sea Ice Thickness Data Analysis and Visualization
 =============================================
 
-**View this repository (and run the code interactively!) in our Jupyter Book:** https://nicolekeeney.com/icesat2-book
+**See version 2 here:** https://www.icesat-2-sea-ice-state.info/content/home.html
 
 ![ICESat-2 maps](figs/maps_thickness_winter.png "ICESat-2 mean winter sea ice thickness")
 
