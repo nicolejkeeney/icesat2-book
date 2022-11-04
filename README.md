@@ -1,5 +1,8 @@
 <!-- #region -->
-**WARNING:** This code base is a work in progress. You've found our outdated version 1; this version no longer has a functional Jupyter Book. Our current, updated code base (version 2) is available in this [GitHub repository](https://github.com/akpetty/icesat2-book) and as a Jupyter Book at [this link](https://www.icesat-2-sea-ice-state.info/)
+
+## Version warning 
+
+This code base is a work in progress. You've found our outdated version 1; this version no longer has a functional Jupyter Book. Our current, updated code base (version 2) is available in this [GitHub repository](https://github.com/akpetty/icesat2-book) and as a Jupyter Book at [this link](https://www.icesat-2-sea-ice-state.info/)
 
 ICESat-2 Sea Ice Thickness Data Analysis and Visualization
 =============================================
